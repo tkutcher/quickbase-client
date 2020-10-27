@@ -1,0 +1,50 @@
+## Project-Specific
+
+## System Files
+.DS_Store
+
+## IDE's
+# Include PyCharm run configurations, dictionaries, and copyright setup.
+.idea/*
+!.idea/*.iml
+!.idea/runConfigurations
+!.idea/dictionaries
+!.idea/copyright
+
+
+## Virtual Environments
+venv/
+.venv/
+
+## Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.py[cod]
+*$py.class
+
+## Distribution / packaging
+build/
+dist/
+eggs/
+wheels/
+*.egg-info/
+*.egg
+MANIFEST
+
+## Unit test / coverage reports / caches
+htmlcov/
+coverage/
+.coverage
+.coverage.*
+.pytest_cache/
+.xunit/
+.tox
+
+
+## Environment files
+.env
+
+## Sphinx-built Documentation
+docs/_build
+docs/_static
+docs/_templates

@@ -1,0 +1,21 @@
+[coverage:run]
+branch = True
+data_file = .cov/.coverage
+
+[coverage:report]
+include = src/*.py
+precision = 2
+exclude_lines =
+    pragma: no cover
+    def init_logger
+    def __repr__
+    if __name__ == \'__main__\':
+    if __name__ == "__main__":
+    raise AssertionError
+    raise NotImplementedError
+
+[coverage:html]
+directory = .cov/htmlcov
+
+[coverage:xml]
+output = .cov/coverage.xml
