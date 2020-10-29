@@ -3,6 +3,7 @@ from typing import Dict
 from typing import List
 from typing import Tuple
 
+from quickbase_client.orm.app import QuickBaseApp
 from quickbase_client.orm.field import QuickBaseField
 
 # help from https://programmer.help/blogs/python-how-to-implement-orm-with-metaclasses.html
@@ -29,6 +30,9 @@ class QuickBaseTableMeta(type):
 
 class QuickBaseTable(metaclass=QuickBaseTableMeta):
     __dbid__ = None
+
+    app: QuickBaseApp = None
+    reports = {}
 
     def __init__(self, **kwargs):
         for attr in self.__mappings__:
