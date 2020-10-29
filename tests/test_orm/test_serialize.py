@@ -7,7 +7,7 @@ from quickbase_client.orm.serialize import RecordJsonSerializer
 
 class TestRecordJsonSerializer:
 
-    def test_encode_simple(self, example_table):
+    def test_serialize_makes_dict_by_fid(self, example_table):
         rec = example_table(
             field_1='A',
             field_2=['A', 'B'],
@@ -16,6 +16,16 @@ class TestRecordJsonSerializer:
         serializer = RecordJsonSerializer()
         data = serializer.serialize(rec)
         assert all((x + 1) in data for x in range(3))
+
+    def test_serialize_adds_value_level(self, example_table):
+        rec = example_table(
+            field_1='A',
+            field_2=['A', 'B'],
+            field_3=99.2,
+            field_4=date(year=2020, month=10, day=28))
+        serializer = RecordJsonSerializer()
+        data = serializer.serialize(rec)
+        assert all('value' in data[x + 1] for x in range(3))
 
 
 class TestJsonEncoder:
