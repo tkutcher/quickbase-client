@@ -1,3 +1,8 @@
+from typing import Any
+from typing import Dict
+from typing import List
+from typing import Tuple
+
 from quickbase_client.orm.field import QuickBaseField
 
 # help from https://programmer.help/blogs/python-how-to-implement-orm-with-metaclasses.html
@@ -34,5 +39,8 @@ class QuickBaseTable(metaclass=QuickBaseTableMeta):
             setattr(self, name, value)
 
     @classmethod
-    def get_field_info(cls, attr):
+    def get_field_info(cls, attr: str) -> QuickBaseField:
         return cls.__mappings__[attr]
+
+    def as_field_pairs(self) -> List[Tuple[QuickBaseField, Any]]:
+        return [(self.get_field_info(attr), v) for attr, v in self.__dict__.items()]
