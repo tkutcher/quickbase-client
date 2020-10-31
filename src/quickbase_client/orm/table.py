@@ -7,6 +7,7 @@ from quickbase_client.orm.app import QuickBaseApp
 from quickbase_client.orm.field import QuickBaseField
 
 # help from https://programmer.help/blogs/python-how-to-implement-orm-with-metaclasses.html
+from quickbase_client.orm.report import QuickBaseReport
 
 
 class QuickBaseTableMeta(type):
@@ -30,9 +31,10 @@ class QuickBaseTableMeta(type):
 
 class QuickBaseTable(metaclass=QuickBaseTableMeta):
     __dbid__ = None
+    __tablename__ = ''
+    __app__: QuickBaseApp = None
 
-    app: QuickBaseApp = None
-    reports = {}
+    __reports__: Dict[str, QuickBaseReport] = {}
 
     def __init__(self, **kwargs):
         for attr in self.__mappings__:
@@ -43,8 +45,20 @@ class QuickBaseTable(metaclass=QuickBaseTableMeta):
             setattr(self, name, value)
 
     @classmethod
+    def app_id(cls) -> str:
+        return cls.__app__.app_id
+
+    @classmethod
+    def realm_hostname(cls) -> str:
+        return cls.__app__.realm_hostname
+
+    @classmethod
     def get_field_info(cls, attr: str) -> QuickBaseField:
         return cls.__mappings__[attr]
+
+    @classmethod
+    def get_report(cls, name):
+        return cls.__reports__[name]
 
     def as_field_pairs(self) -> List[Tuple[QuickBaseField, Any]]:
         return [(self.get_field_info(attr), v) for attr, v in self.__dict__.items()]

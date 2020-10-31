@@ -5,13 +5,15 @@ import pytest
 
 
 def _data_from_file(data_file):
-    p = pathlib.Path(__file__).parent / 'data' / data_file
+    p = pathlib.Path(__file__).parent / 'data' / 'mocks' / data_file
     with open(str(p), 'r') as f:
         return json.load(f)
 
 
 _mocks = [
-    ('GET', '/tables?appId=aaaaaa', 'get_tables.json')
+    ('GET', '/apps/abcdefg', 'get_app.json'),
+    ('GET', '/tables?appId=abcdefg', 'get_tables_for_app.json'),
+    ('GET', '/tables/aaaaaa?appId=abcdefg', 'get_table.json'),
 ]
 
 

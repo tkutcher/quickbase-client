@@ -27,7 +27,7 @@ class QuickBaseFieldType(Enum):
 class QuickBaseField(object):
     fid: int
     field_type: QuickBaseFieldType
+    label: str = ''
 
 
-# FUTURE - could actually store all of the field metadata here, for now just
-#   enumerating the types.
+# FUTURE - could actually store type-specific field metadata

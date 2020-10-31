@@ -1,29 +1,35 @@
 from datetime import date
 
 import pytest
+from quickbase_client.orm.app import QuickBaseApp
+from quickbase_client.orm.field import QuickBaseField
 
 from quickbase_client.orm.field import QuickBaseFieldType as Qb
+from quickbase_client.orm.table import QuickBaseTable
+
+
+@pytest.fixture()
+def example_table():
+    class ExampleTable(QuickBaseTable):
+        __dbid__ = 'bqx7xre7a'
+        __tablename__ = 'Examples'
+        __app__ = QuickBaseApp(app_id='abcdefg', name='QBCPY', realm_hostname='example.quickbase.com')
+        field_1 = QuickBaseField(fid=6, field_type=Qb.TEXT)
+        field_2 = QuickBaseField(fid=7, field_type=Qb.NUMERIC)
+    return ExampleTable
 
 
 class TestQuickBaseTable:
 
     def test_can_create_record_objects(self, example_table):
-        rec = example_table(
-            field_1='A',
-            field_2=['A', 'B'],
-            field_3=99.2,
-            field_4=date(year=2020, month=10, day=28))
+        rec = example_table(field_1='A', field_2=46)
         assert rec.field_1 == 'A'
-        assert rec.field_2 == ['A', 'B']
-        assert rec.field_3 == 99.2
-        assert rec.field_4 == date(year=2020, month=10, day=28)
+        assert rec.field_2 == 46
 
     def test_not_all_required(self, example_table):
         rec = example_table(field_1='A')
         assert rec.field_1 == 'A'
         assert rec.field_2 is None
-        assert rec.field_3 is None
-        assert rec.field_4 is None
 
     def test_cannot_set_unspecified_attributes(self, example_table):
         with pytest.raises(AttributeError) as e:
@@ -33,3 +39,6 @@ class TestQuickBaseTable:
     def test_get_field_info(self, example_table):
         field_info = example_table.get_field_info('field_1')
         assert field_info.field_type == Qb.TEXT
+
+    def test_app_id(self, example_table):
+        assert example_table.app_id() == 'abcdefg'

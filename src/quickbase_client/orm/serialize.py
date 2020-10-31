@@ -12,6 +12,8 @@ class QuickBaseJsonEncoder(json.JSONEncoder):
     def default(self, o):
         if isinstance(o, datetime.datetime) or isinstance(o, date):
             return o.isoformat()
+        if isinstance(o, bool):
+            return o
         return super().default(o)
 
 
