@@ -4,6 +4,7 @@ from datetime import date
 import pytest
 from quickbase_client.orm.app import QuickBaseApp
 from quickbase_client.orm.field import QuickBaseField
+from quickbase_client.orm.field import QuickBaseFieldType
 from quickbase_client.orm.field import QuickBaseFieldType as Qb
 from quickbase_client.orm.serialize import QuickBaseJsonEncoder
 from quickbase_client.orm.serialize import RecordJsonSerializer
@@ -46,6 +47,10 @@ class TestRecordJsonSerializer:
 class TestJsonEncoder:
 
     def test_encodes_dates(self):
-        data = {1: date(year=2020, month=12, day=9)}
+        data = {1: date(year=2020, month=12, day=9),
+                2: True,
+                3: 'hello'}
         s = json.dumps(data, cls=QuickBaseJsonEncoder)
         assert '2020-12-09' in s
+        assert 'true' in s
+        assert 'hello' in s
