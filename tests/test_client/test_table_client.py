@@ -1,6 +1,8 @@
+import json
+
 import pytest
-from quickbase_client.client import request_factory
 from quickbase_client.client.table_client import QuickBaseTableClient
+from quickbase_client.query.query_base import QuickBaseQuery
 
 
 class TestQuickBaseTableClient(object):
@@ -28,12 +30,33 @@ class TestQuickBaseTableClient(object):
         ('Content-Type', 'application/json'),
         ('Authorization', 'QB-USER-TOKEN myusertoken'),
         ('QB-Realm-Hostname', 'dicorp.quickbase.com')])
-    def test_request_includes_proper_headers(self, monkeypatch, debugs_table, header, val):
+    def test_request_includes_proper_headers(self, request_spy, debugs_table, header, val):
         client = QuickBaseTableClient(debugs_table, user_token='myusertoken')
-        monkeypatch.setattr(request_factory.requests, 'request',
-                            lambda *args_, **kwargs_: (args_, kwargs_))
         args, kwargs = client.get_table()
         headers = kwargs['headers']
         assert header in headers
         assert headers[header] == val
+
+    def test_add_record_posts_data(self, requests_mock, request_spy, debugs_table):
+        requests_mock.post(f'https://api.quickbase.com/v1/records', json={'blah': 'bleh'})
+        client = QuickBaseTableClient(debugs_table, user_token='doesnotmatter')
+        record = debugs_table(some_basic_text_field='hi', some_checkbox=False)
+        args, kwargs = client.add_record(record)
+        posted_json = json.loads(kwargs['json'])
+        assert posted_json['to'] == 'aaaaaa'
+        assert posted_json['data']['6']['value'] == 'hi'
+
+    def test_add_record_does_not_post_null_values(self, request_spy, debugs_table):
+        client = QuickBaseTableClient(debugs_table, user_token='doesnotmatter')
+        record = debugs_table(some_basic_text_field='hi', some_checkbox=False)
+        args, kwargs = client.add_record(record)
+        posted_json = json.loads(kwargs['json'])
+        assert posted_json['to'] == 'aaaaaa'
+        assert '7' not in posted_json['data']
+
+    def test_query(self, request_spy, debugs_table):
+        client = QuickBaseTableClient(debugs_table, user_token='doesnotmatter')
+        q = QuickBaseQuery(where="{'18'.EX.19}")
+        _, kwargs = client.query(q)
+        assert "{'18'.EX.19}" in kwargs['json']
 

@@ -5,6 +5,7 @@ from quickbase_client.orm.app import QuickBaseApp
 from quickbase_client.orm.field import QuickBaseField
 
 from quickbase_client.orm.field import QuickBaseFieldType as Qb
+from quickbase_client.orm.report import QuickBaseReport
 from quickbase_client.orm.table import QuickBaseTable
 
 
@@ -14,6 +15,9 @@ def example_table():
         __dbid__ = 'bqx7xre7a'
         __tablename__ = 'Examples'
         __app__ = QuickBaseApp(app_id='abcdefg', name='QBCPY', realm_hostname='example.quickbase.com')
+        __reports__ = {
+            'Report A': QuickBaseReport(report_id=1, name='Report A')
+        }
         field_1 = QuickBaseField(fid=6, field_type=Qb.TEXT)
         field_2 = QuickBaseField(fid=7, field_type=Qb.NUMERIC)
     return ExampleTable
@@ -42,3 +46,9 @@ class TestQuickBaseTable:
 
     def test_app_id(self, example_table):
         assert example_table.app_id() == 'abcdefg'
+
+    def test_schema(self, example_table):
+        assert example_table.schema.field_1 == example_table.get_field_info('field_1')
+
+    def test_get_report(self, example_table):
+        assert example_table.get_report('Report A').report_id == 1

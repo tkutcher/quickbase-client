@@ -2,6 +2,7 @@ import json
 import pathlib
 
 import pytest
+from quickbase_client.client import request_factory
 
 
 def _data_from_file(data_file):
@@ -22,3 +23,10 @@ def qb_api_mock(requests_mock):
     for method, endpoint, f in _mocks:
         requests_mock.request(
             method, f'https://api.quickbase.com/v1{endpoint}', json=_data_from_file(f))
+
+
+@pytest.fixture()
+def request_spy(monkeypatch):
+    def _spy(*args_, **kwargs_):
+        return args_, kwargs_
+    monkeypatch.setattr(request_factory.requests, 'request', _spy)

@@ -7,6 +7,7 @@ from quickbase_client.orm.field import QuickBaseField
 from quickbase_client.orm.report import QuickBaseReport
 from quickbase_client.orm.serialize import RecordJsonSerializer
 from quickbase_client.orm.table import QuickBaseTable
+from quickbase_client.query.query_base import QuickBaseQuery
 
 
 class QuickBaseTableClient(object):
@@ -67,5 +68,12 @@ class QuickBaseTableClient(object):
             merge_field_id=merge_field_id,
             fields_to_return=fields_to_return)
 
-    def query(self, query_obj):
-        return self.api.query(self.table_id)  # FUTURE
+    def query(self, query_obj: QuickBaseQuery):
+        return self.api.query(
+            table_id=self.table_id,
+            fields_to_select=query_obj.select,
+            where_str=query_obj.where,
+            sort_by=query_obj.sort_by,
+            group_by=query_obj.group_by,
+            options=query_obj.options
+        )

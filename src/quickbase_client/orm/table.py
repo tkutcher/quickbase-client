@@ -33,7 +33,6 @@ class QuickBaseTableMeta(type):
 
     @property
     def schema(cls):
-        print('here')
         return cls._schema
 
 
@@ -80,6 +79,3 @@ class QuickBaseTable(metaclass=QuickBaseTableMeta):
     @classmethod
     def get_report(cls, name):
         return cls.__reports__[name]
-
-    def as_field_pairs(self) -> List[Tuple[QuickBaseField, Any]]:
-        return [(self.get_field_info(attr), v) for attr, v in self.__dict__.items()]

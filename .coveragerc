@@ -8,6 +8,7 @@ precision = 2
 exclude_lines =
     pragma: no cover
     def init_logger
+    pass
     def __repr__
     if __name__ == \'__main__\':
     if __name__ == "__main__":
