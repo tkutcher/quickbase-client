@@ -1,13 +1,11 @@
-from typing import Any
 from typing import Dict
-from typing import List
-from typing import Tuple
 
 from quickbase_client.orm.app import QuickBaseApp
 from quickbase_client.orm.field import QuickBaseField
+from quickbase_client.orm.report import QuickBaseReport
+
 
 # help from https://programmer.help/blogs/python-how-to-implement-orm-with-metaclasses.html
-from quickbase_client.orm.report import QuickBaseReport
 
 
 class QuickBaseTableMeta(type):

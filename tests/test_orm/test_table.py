@@ -1,10 +1,9 @@
-from datetime import date
-
 import pytest
-from quickbase_client.orm.app import QuickBaseApp
-from quickbase_client.orm.field import QuickBaseField
 
-from quickbase_client.orm.field import QuickBaseFieldType as Qb
+from quickbase_client.orm.app import QuickBaseApp
+from quickbase_client.orm.field import QB_NUMERIC
+from quickbase_client.orm.field import QB_TEXT
+from quickbase_client.orm.field import QuickBaseField
 from quickbase_client.orm.report import QuickBaseReport
 from quickbase_client.orm.table import QuickBaseTable
 
@@ -18,8 +17,8 @@ def example_table():
         __reports__ = {
             'Report A': QuickBaseReport(report_id=1, name='Report A')
         }
-        field_1 = QuickBaseField(fid=6, field_type=Qb.TEXT)
-        field_2 = QuickBaseField(fid=7, field_type=Qb.NUMERIC)
+        field_1 = QuickBaseField(fid=6, field_type=QB_TEXT)
+        field_2 = QuickBaseField(fid=7, field_type=QB_NUMERIC)
     return ExampleTable
 
 
@@ -42,7 +41,7 @@ class TestQuickBaseTable:
 
     def test_get_field_info(self, example_table):
         field_info = example_table.get_field_info('field_1')
-        assert field_info.field_type == Qb.TEXT
+        assert field_info.field_type == QB_TEXT
 
     def test_app_id(self, example_table):
         assert example_table.app_id() == 'abcdefg'

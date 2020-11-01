@@ -1,11 +1,13 @@
-import json
 from datetime import date
+import json
 
 import pytest
+
 from quickbase_client.orm.app import QuickBaseApp
+from quickbase_client.orm.field import QB_CHECKBOX
+from quickbase_client.orm.field import QB_DATETIME
+from quickbase_client.orm.field import QB_TEXT
 from quickbase_client.orm.field import QuickBaseField
-from quickbase_client.orm.field import QuickBaseFieldType
-from quickbase_client.orm.field import QuickBaseFieldType as Qb
 from quickbase_client.orm.serialize import QuickBaseJsonEncoder
 from quickbase_client.orm.serialize import RecordJsonSerializer
 from quickbase_client.orm.table import QuickBaseTable
@@ -17,9 +19,9 @@ def example_table():
         __dbid__ = 'bqx7xre7a'
         __tablename__ = 'Examples'
         __app__ = QuickBaseApp(app_id='abcdefg', name='QBCPY', realm_hostname='example.quickbase.com')
-        text_field = QuickBaseField(fid=8, field_type=Qb.TEXT)
-        date_field = QuickBaseField(fid=6, field_type=Qb.DATETIME)
-        bool_field = QuickBaseField(fid=7, field_type=Qb.CHECKBOX)
+        text_field = QuickBaseField(fid=8, field_type=QB_TEXT)
+        date_field = QuickBaseField(fid=6, field_type=QB_DATETIME)
+        bool_field = QuickBaseField(fid=7, field_type=QB_CHECKBOX)
     return ExampleTable
 
 

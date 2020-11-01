@@ -1,7 +1,7 @@
 import abc
 import datetime
-import json
 from datetime import date
+import json
 from typing import Dict
 
 from quickbase_client.orm.table import QuickBaseTable

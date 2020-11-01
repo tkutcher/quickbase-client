@@ -48,8 +48,8 @@ class QuickBaseTableClient(object):
 
     def _get_report_id(self, report: Union[QuickBaseReport, str, int]):
         return report if isinstance(report, int) else\
-            report.report_id if isinstance(report, QuickBaseReport) else\
-                self.table.get_report(report).report_id
+            report.report_id if isinstance(report, QuickBaseReport) else \
+            self.table.get_report(report).report_id
 
     def get_report(self, report):
         report_id = self._get_report_id(report)

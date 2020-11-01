@@ -1,6 +1,7 @@
 import json
 
 import pytest
+
 from quickbase_client.client.table_client import QuickBaseTableClient
 from quickbase_client.query.query_base import QuickBaseQuery
 
@@ -38,7 +39,7 @@ class TestQuickBaseTableClient(object):
         assert headers[header] == val
 
     def test_add_record_posts_data(self, requests_mock, request_spy, debugs_table):
-        requests_mock.post(f'https://api.quickbase.com/v1/records', json={'blah': 'bleh'})
+        requests_mock.post('https://api.quickbase.com/v1/records', json={'blah': 'bleh'})
         client = QuickBaseTableClient(debugs_table, user_token='doesnotmatter')
         record = debugs_table(some_basic_text_field='hi', some_checkbox=False)
         args, kwargs = client.add_record(record)
@@ -59,4 +60,3 @@ class TestQuickBaseTableClient(object):
         q = QuickBaseQuery(where="{'18'.EX.19}")
         _, kwargs = client.query(q)
         assert "{'18'.EX.19}" in kwargs['json']
-

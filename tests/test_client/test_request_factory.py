@@ -1,4 +1,5 @@
 import pytest
+
 from quickbase_client.client.request_factory import QuickBaseRequestFactory
 
 

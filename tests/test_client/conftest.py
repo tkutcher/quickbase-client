@@ -2,6 +2,7 @@ import json
 import pathlib
 
 import pytest
+
 from quickbase_client.client import request_factory
 
 

@@ -21,7 +21,7 @@ def query_value_stringify(val, _quote=True):
     if isinstance(val, list):
         return quoter('; '.join([query_value_stringify(v, _quote=False) for v in val]))
     if isinstance(val, QuickBaseField):
-        return quoter(f"_FID_{val.fid}")
+        return quoter(f'_FID_{val.fid}')
     if isinstance(val, int) or isinstance(val, float):
         return str(val)  # don't quote
     return quoter(str(val))

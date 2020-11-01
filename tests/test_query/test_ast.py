@@ -1,16 +1,18 @@
 from datetime import date
 
 import pytest
+
+from quickbase_client.orm.field import QB_DATE
+from quickbase_client.orm.field import QB_TEXT
 from quickbase_client.orm.field import QuickBaseField
-from quickbase_client.orm.field import QuickBaseFieldType as Qb
+from quickbase_client.query import ast
 from quickbase_client.query.ast import eq_
 from quickbase_client.query.ast import qb_query_ast
 from quickbase_client.query.query_base import QuickBaseQuery
-from quickbase_client.query import ast
 
 
-mock_field = QuickBaseField(fid=18, field_type=Qb.TEXT)
-mock_field_2 = QuickBaseField(fid=19, field_type=Qb.DATE)
+mock_field = QuickBaseField(fid=18, field_type=QB_TEXT)
+mock_field_2 = QuickBaseField(fid=19, field_type=QB_DATE)
 
 
 class TestAstQueryBuilding:
