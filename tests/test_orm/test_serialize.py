@@ -10,7 +10,6 @@ from quickbase_client.orm.serialize import RecordJsonSerializer
 from quickbase_client.orm.table import QuickBaseTable
 
 
-
 @pytest.fixture()
 def example_table():
     class ExampleTable(QuickBaseTable):

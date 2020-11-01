@@ -33,6 +33,8 @@ class RecordJsonSerializer(RecordSerializer):
     def serialize(self, record: 'QuickBaseTable') -> Dict:
         o = {}
         for attr, v in record.__dict__.items():
+            if attr[0] == '_':
+                continue
             field_info = record.get_field_info(attr)
             o[field_info.fid] = {'value': v}
         return o
