@@ -51,3 +51,6 @@ class TestQuickBaseTable:
 
     def test_get_report(self, example_table):
         assert example_table.get_report('Report A').report_id == 1
+
+    def test_make_client(self, example_table):
+        c = example_table.client('foo')

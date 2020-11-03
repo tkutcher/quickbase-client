@@ -1,3 +1,6 @@
+import json
+import pathlib
+
 import pytest
 
 from quickbase_client.orm.app import QuickBaseApp
@@ -44,3 +47,25 @@ def debugs_table(example_app):
         record_owner = QuickBaseField(fid=4, field_type=QB_NUMERIC)
         last_modified_by = QuickBaseField(fid=5, field_type=QB_NUMERIC)
     return DebugsTable
+
+
+def _data_from_file(data_file):
+    p = pathlib.Path(__file__).parent / 'data' / 'mocks' / data_file
+    with open(str(p), 'r') as f:
+        return json.load(f)
+
+
+_mocks = [
+    ('GET', '/apps/abcdef', 'get_app_abcdef.json'),
+    ('GET', '/tables?appId=abcdef', 'get_tables_for_app_abcdef.json'),
+    ('GET', '/fields?tableId=aaaaaa', 'get_fields_for_table_aaaaaa.json'),
+    ('GET', '/fields?tableId=bbbbbb', 'get_fields_for_table_bbbbbb.json'),
+]
+
+
+@pytest.fixture()
+def qb_api_mock(requests_mock):
+    for method, endpoint, f in _mocks:
+        requests_mock.request(
+            method, f'https://api.quickbase.com/v1{endpoint}', json=_data_from_file(f))
+

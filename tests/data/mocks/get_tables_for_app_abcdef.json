@@ -1,0 +1,39 @@
+
+[
+  {
+    "id": "aaaaaa",
+    "name": "Debugs",
+    "description": "",
+    "alias": "_DBID_DEBUGS",
+    "nextFieldId": 15,
+    "defaultSortFieldId": 2,
+    "nextRecordId": 5,
+    "keyFieldId": 3,
+    "singleRecordName": "Debug",
+    "pluralRecordName": "Debugs",
+    "defaultSortOrder": "DESC",
+    "created": "2020-10-30T18:58:57Z",
+    "updated": "2020-11-03T04:22:09Z",
+    "sizeLimit": "500 MB",
+    "spaceRemaining": "500 MB",
+    "spaceUsed": "1 KB"
+  },
+  {
+    "id": "bbbbbb",
+    "name": "Ideas",
+    "description": "",
+    "alias": "_DBID_IDEAS",
+    "nextFieldId": 7,
+    "defaultSortFieldId": 2,
+    "nextRecordId": 1,
+    "keyFieldId": 3,
+    "singleRecordName": "Idea",
+    "pluralRecordName": "Ideas",
+    "defaultSortOrder": "DESC",
+    "created": "2020-11-03T04:22:09Z",
+    "updated": "2020-11-03T04:22:17Z",
+    "sizeLimit": "500 MB",
+    "spaceRemaining": "500 MB",
+    "spaceUsed": "0 KB"
+  }
+]

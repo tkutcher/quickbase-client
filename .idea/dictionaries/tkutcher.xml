@@ -3,12 +3,16 @@
     <words>
       <w>aaaaaa</w>
       <w>abcdefg</w>
+      <w>argparse</w>
       <w>dbid</w>
       <w>dicorp</w>
       <w>dunder</w>
       <w>mutlichoice</w>
+      <w>pyfile</w>
       <w>qbcpy</w>
       <w>quickbase</w>
+      <w>snakecase</w>
+      <w>versionid</w>
     </words>
   </dictionary>
 </component>
