@@ -68,4 +68,3 @@ def qb_api_mock(requests_mock):
     for method, endpoint, f in _mocks:
         requests_mock.request(
             method, f'https://api.quickbase.com/v1{endpoint}', json=_data_from_file(f))
-

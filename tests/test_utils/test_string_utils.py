@@ -39,4 +39,3 @@ class TestMakeVarName:
     def test_no_keywords(self):
         v = make_var_name('yield')
         assert v == 'yield_'
-

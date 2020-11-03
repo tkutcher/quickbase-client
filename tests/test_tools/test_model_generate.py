@@ -2,6 +2,7 @@ import os
 from tempfile import TemporaryDirectory
 
 import pytest
+
 from quickbase_client.tools import model_generate
 from quickbase_client.tools.model_generate import ModelGenerator
 

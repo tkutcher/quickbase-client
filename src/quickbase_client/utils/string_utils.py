@@ -1,7 +1,7 @@
+from collections import namedtuple
 import keyword
 import re
 import string
-from collections import namedtuple
 
 import stringcase
 
@@ -24,7 +24,7 @@ def make_var_name(s: str, case='snake', number_strategy='drop'):
     if s.upper() == s:
         s = s.lower()  # patch to avoid ABC => a_b_c for snake case.
     case_func, special_replacer = _case_map[case]
-    v = re.sub('[\W_]+', special_replacer, s)
+    v = re.sub(r'[\W_]+', special_replacer, s)
     v = case_func(v)
 
     v = _number_map[number_strategy](v) if v[0].isnumeric() else v

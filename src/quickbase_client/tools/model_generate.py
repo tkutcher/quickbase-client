@@ -1,6 +1,5 @@
 import os
 
-from quickbase_client import QuickBaseFieldType
 from quickbase_client.client.api import QuickBaseApiClient
 from quickbase_client.orm.field import get_field_type_by_string
 from quickbase_client.tools.script import Script
@@ -45,12 +44,12 @@ class TablePyFileWriter(PyFileWriter):
         self.pyfile\
             .add_comment(f'{file_name}.py - QuickBaseTable for {table_name}')\
             .space()\
-            .add_line(f'from quickbase_client.client.table_client import QuickBaseTableClient')\
-            .add_line(f'from quickbase_client.orm.app import QuickBaseApp')\
-            .add_line(f'from quickbase_client.orm.field import QuickBaseField')\
-            .add_line(f'from quickbase_client.orm.field import QuickBaseFieldType as Qb')\
-            .add_line(f'# from quickbase_client.orm.report import QuickBaseReport')\
-            .add_line(f'from quickbase_client.orm.table import QuickBaseTable')\
+            .add_line('from quickbase_client import QuickBaseTableClient')\
+            .add_line('from quickbase_client import QuickBaseApp')\
+            .add_line('from quickbase_client import QuickBaseField')\
+            .add_line('from quickbase_client import QuickBaseFieldType as Qb')\
+            .add_line('# from quickbase_client import QuickBaseReport')\
+            .add_line('from quickbase_client import QuickBaseTable')\
             .space()\
             .add_line(f'from .app import {app_var_name}')\
             .space()
@@ -61,13 +60,13 @@ class TablePyFileWriter(PyFileWriter):
             .add_line(f'{class_name}(QuickBaseTable):')\
             .indent()\
             .add_line(f"__dbid__ = '{table_id}'")\
-            .add_line(f"__app__ = {app_var_name}")\
+            .add_line(f'__app__ = {app_var_name}')\
             .space()\
-            .add_line(f"date_created = QuickBaseField(fid=1, field_type=Qb.DATETIME)")\
-            .add_line(f"date_modified = QuickBaseField(fid=2, field_type=Qb.DATETIME)")\
-            .add_line(f"recordid = QuickBaseField(fid=3, field_type=Qb.NUMERIC)")\
-            .add_line(f"record_owner = QuickBaseField(fid=4, field_type=Qb.USER)")\
-            .add_line(f"last_modified = QuickBaseField(fid=5, field_type=Qb.USER)")\
+            .add_line('date_created = QuickBaseField(fid=1, field_type=Qb.DATETIME)')\
+            .add_line('date_modified = QuickBaseField(fid=2, field_type=Qb.DATETIME)')\
+            .add_line('recordid = QuickBaseField(fid=3, field_type=Qb.NUMERIC)')\
+            .add_line('record_owner = QuickBaseField(fid=4, field_type=Qb.USER)')\
+            .add_line('last_modified = QuickBaseField(fid=5, field_type=Qb.USER)')\
             .space()
 
     def add_table_field(self, field_name, field_id, field_kind):
