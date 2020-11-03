@@ -31,3 +31,12 @@ class TestMakeVarName:
     def test_snake_all_caps(self):
         v = make_var_name('ABC')
         assert v == 'abc'
+
+    def test_snake_no_duplicate_underscores(self):
+        v = make_var_name('a_b_c')
+        assert v == 'a_b_c'
+
+    def test_no_keywords(self):
+        v = make_var_name('yield')
+        assert v == 'yield_'
+
