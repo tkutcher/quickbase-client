@@ -53,3 +53,22 @@ class TestModelGenerator:
         app_module = gen.pkg_writer.modules['app']
         s = app_module.get_file_as_string()
         assert 'Qbcpy = QuickBaseApp(' in s
+
+    def test_creates_table_files(self, run_generator):
+        def _asserts(d):
+            assert os.path.exists(os.path.join(d, 'qbcpy', 'debug.py'))
+            assert os.path.exists(os.path.join(d, 'qbcpy', 'idea.py'))
+        run_generator(_asserts)
+
+    def test_writes_table_class(self, run_generator):
+        gen = run_generator()
+        m = gen.pkg_writer.modules['debug']
+        assert 'QuickBaseTable):' in m.get_file_as_string()
+
+    def test_good_var_names(self, run_generator):
+        gen = run_generator()
+        m = gen.pkg_writer.modules['debug']
+        s = m.get_file_as_string()
+        assert 'def_' in s
+        assert 'funky_label' in s and '_funky' not in s
+        assert 'some_basic_text_field' in s
