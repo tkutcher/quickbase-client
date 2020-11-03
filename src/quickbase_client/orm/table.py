@@ -77,3 +77,8 @@ class QuickBaseTable(metaclass=QuickBaseTableMeta):
     @classmethod
     def get_report(cls, name):
         return cls.__reports__[name]
+
+    @classmethod
+    def client(cls, user_token):
+        from quickbase_client.client.table_client import QuickBaseTableClient
+        return QuickBaseTableClient(cls, user_token)
