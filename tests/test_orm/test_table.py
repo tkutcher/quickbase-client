@@ -1,4 +1,5 @@
 import pytest
+from quickbase_client.client.table_client import QuickBaseTableClient
 
 from quickbase_client.orm.app import QuickBaseApp
 from quickbase_client.orm.field import QB_NUMERIC
@@ -54,3 +55,4 @@ class TestQuickBaseTable:
 
     def test_make_client(self, example_table):
         c = example_table.client('foo')
+        assert isinstance(c, QuickBaseTableClient)

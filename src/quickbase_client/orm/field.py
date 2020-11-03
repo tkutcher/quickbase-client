@@ -20,6 +20,7 @@ class QuickBaseFieldType(Enum):
     CHECKBOX = 400
     ADDRESS = 500
     EMAIL_ADDRESS = 501
+    USER = 600
     OTHER = 900
 
 
@@ -39,7 +40,24 @@ QB_DURATION = QuickBaseFieldType.DURATION
 QB_CHECKBOX = QuickBaseFieldType.CHECKBOX
 QB_ADDRESS = QuickBaseFieldType.ADDRESS
 QB_EMAIL_ADDRESS = QuickBaseFieldType.EMAIL_ADDRESS
+QB_USER = QuickBaseFieldType.USER
 QB_OTHER = QuickBaseFieldType.OTHER
+
+
+_qb_api_type_lookup = {
+    'text': QuickBaseFieldType.TEXT,
+    'text-multi-line': QuickBaseFieldType.TEXT_MULTILINE,
+    'checkbox': QuickBaseFieldType.CHECKBOX,
+    'timestamp': QuickBaseFieldType.DATETIME,
+    'numeric': QuickBaseFieldType.NUMERIC,
+    'date': QuickBaseFieldType.DATE,
+    'rich-text': QuickBaseFieldType.RICH_TEXT,
+    'text-multiple-choice': QuickBaseFieldType.TEXT_MULTIPLE_CHOICE,
+}
+
+
+def get_field_type_by_string(s):
+    return _qb_api_type_lookup.get(s, QuickBaseFieldType.OTHER)
 
 
 @attr.s(auto_attribs=True)
