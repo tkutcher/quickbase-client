@@ -55,11 +55,21 @@ class BasicPyFileWriter(PyFileWriter):
 
     def __init__(self, indent='    '):
         super().__init__()
-        self.indent = indent
+        self._indent = indent
         self.lines = []
+        self.level = 0
 
-    def add_line(self, s, level=0):
-        self.lines.append(f'{self.indent * level}{s}')
+    def indent(self):
+        self.level += 1
+        return self
+
+    def dedent(self):
+        self.level -= 1
+        return self
+
+    def add_line(self, s, level=None):
+        level = self.level if level is None else level
+        self.lines.append(f'{self._indent * level}{s}')
         return self
 
     def space(self):
