@@ -8,10 +8,12 @@
       <w>dicorp</w>
       <w>dunder</w>
       <w>mutlichoice</w>
+      <w>noqa</w>
       <w>pyfile</w>
       <w>qbcpy</w>
       <w>quickbase</w>
       <w>snakecase</w>
+      <w>subparser</w>
       <w>tablename</w>
       <w>versionid</w>
     </words>

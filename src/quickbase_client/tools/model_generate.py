@@ -1,4 +1,5 @@
 import os
+import sys
 
 from quickbase_client.client.api import QuickBaseApiClient
 from quickbase_client.orm.field import get_field_type_by_string
@@ -9,6 +10,7 @@ from quickbase_client.utils.pywriting_utils import PyPackageWriter
 from quickbase_client.utils.string_utils import id_from_iso_string
 from quickbase_client.utils.string_utils import make_unique_var_name
 from quickbase_client.utils.string_utils import make_var_name
+from quickbase_client.utils.string_utils import parse_realm_and_app_id_from_url
 
 
 class AppPyFileWriter(PyFileWriter):
@@ -82,11 +84,12 @@ class TablePyFileWriter(PyFileWriter):
 
 
 class ModelGenerator(Script):
+    registration_name = 'model-generate'
 
-    def __init__(self, realm_hostname, user_token, app_id, pkg_dir=None):
+    def __init__(self, realm_hostname, app_id, user_token, pkg_dir=None):
         self.realm_hostname = realm_hostname
-        self.user_token = user_token
         self.app_id = app_id
+        self.user_token = user_token
         self.app_var_name = None
         self.table_vars = {}
 
@@ -97,6 +100,26 @@ class ModelGenerator(Script):
             pkg_dir = models_pkg.pkg_path
 
         self.pkg_writer = PyPackageWriter(pkg_name='PLACEHOLDER', parent_dir=pkg_dir)
+
+    @staticmethod
+    def add_argparse_args(parser):
+        parser.add_argument('-a', '--app-url', nargs='?', required=True,
+                            help='the URL of the home page of the app')
+        parser.add_argument('-d', '--pkg-dir', nargs='?', default=None,
+                            help='the directory to put the package in, defaults to "models"')
+        parser.add_argument('-t', '--user-tok', nargs='?', default=None,
+                            help='the user token to authenticate - if not provided will read from'
+                                 'environment variable QB_USER_TOKEN')
+
+    @staticmethod
+    def instantiate_from_ns(ns) -> 'Script':
+        realm_hostname, app_id = parse_realm_and_app_id_from_url(ns.app_url)
+        try:
+            user_tok = ns.user_tok if ns.user_tok is not None else os.environ['QB_USER_TOKEN']
+            return ModelGenerator(realm_hostname, app_id, user_token=user_tok, pkg_dir=ns.pkg_dir)
+        except (KeyError, OSError):
+            raise EnvironmentError('ERROR: expected either a -t argument or a '
+                                   'QB_USER_TOKEN environment variable')
 
     def add_app_file(self, app_data):
         name = app_data['name']
@@ -139,9 +162,9 @@ class ModelGenerator(Script):
         self.pkg_writer.write()
 
 
-if __name__ == '__main__':
-    tok = os.getenv('QB_USER_TOKEN')
-    gen = ModelGenerator(realm_hostname='dicorp.quickbase.com',
-                         user_token=tok,
-                         app_id='bqxuhmrkw')
-    gen.run()
+# if __name__ == '__main__':
+#     tok = os.getenv('QB_USER_TOKEN')
+#     gen = ModelGenerator(realm_hostname='dicorp.quickbase.com',
+#                          user_token=tok,
+#                          app_id='bqxuhmrkw')
+#     gen.run()

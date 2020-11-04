@@ -12,8 +12,8 @@ def run_generator(qb_api_mock, monkeypatch):
     def _post_run_generator(f=lambda d: None):
         with TemporaryDirectory() as d:
             monkeypatch.setattr(model_generate.os, 'getcwd', lambda: d)
-            gen = ModelGenerator(realm_hostname='example.quickbase.com', user_token='foo',
-                                 app_id='abcdef', pkg_dir=d)
+            gen = ModelGenerator(realm_hostname='example.quickbase.com', app_id='abcdef',
+                                 user_token='foo', pkg_dir=d)
             gen.run()
             f(d)
         return gen
@@ -25,8 +25,8 @@ class TestModelGenerator:
     def test_write_to_models_dir_from_cwd_by_default(self, qb_api_mock, monkeypatch):
         with TemporaryDirectory() as d:
             monkeypatch.setattr(model_generate.os, 'getcwd', lambda: d)
-            gen = ModelGenerator(realm_hostname='example.quickbase.com', user_token='foo',
-                                 app_id='abcdef')
+            gen = ModelGenerator(realm_hostname='example.quickbase.com', app_id='abcdef',
+                                 user_token='foo')
             gen.run()
             assert os.path.exists(os.path.join(d, 'models'))
             assert os.path.exists(os.path.join(d, 'models', '__init__.py'))
@@ -47,7 +47,7 @@ class TestModelGenerator:
         app_module = gen.pkg_writer.modules['app']
         s = app_module.get_file_as_string()
         assert '__versionid__ = ' in s
-        assert '20201103042209Z' in s
+        assert '20201103042209' in s
 
     def test_app_file_creates_var(self, run_generator):
         gen = run_generator()

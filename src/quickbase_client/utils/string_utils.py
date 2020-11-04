@@ -1,5 +1,6 @@
 from collections import namedtuple
 import keyword
+from urllib.parse import urlparse
 import re
 import string
 
@@ -47,4 +48,13 @@ def make_unique_var_name(s: str, taken, case='snake', number_strategy='drop'):
 
 
 def id_from_iso_string(s):
-    return s.replace(':', '').replace('T', '').replace('-', '')
+    return s.replace(':', '')\
+        .replace('T', '')\
+        .replace('Z', '')\
+        .replace('-', '')\
+        .replace('.', '')
+
+
+def parse_realm_and_app_id_from_url(url):
+    parsed = urlparse(url)
+    return parsed.hostname, parsed.path.split('/')[-1]

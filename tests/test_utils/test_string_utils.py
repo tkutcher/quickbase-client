@@ -1,4 +1,6 @@
+from quickbase_client.utils.string_utils import id_from_iso_string
 from quickbase_client.utils.string_utils import make_var_name
+from quickbase_client.utils.string_utils import parse_realm_and_app_id_from_url
 
 
 class TestMakeVarName:
@@ -39,3 +41,19 @@ class TestMakeVarName:
     def test_no_keywords(self):
         v = make_var_name('yield')
         assert v == 'yield_'
+
+
+class TestIdFromIsoString:
+
+    def test_makes_string(self):
+        s = id_from_iso_string('2020-10-10T00:00:00.00Z')
+        assert s == '2020101000000000'
+
+
+class TestParseRealmAndAppIdFromUrl:
+
+    def test_parses(self):
+        url = 'https://dicorp.quickbase.com/db/bqx7xre7a?a=td'
+        realm, app_id = parse_realm_and_app_id_from_url(url)
+        assert realm == 'dicorp.quickbase.com'
+        assert app_id == 'bqx7xre7a'
