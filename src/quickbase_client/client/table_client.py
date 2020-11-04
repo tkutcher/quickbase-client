@@ -69,7 +69,8 @@ class QuickBaseTableClient(object):
             merge_field_id=merge_field_id,
             fields_to_return=fields_to_return)
 
-    def query(self, query_obj: QuickBaseQuery, raw=False):
+    def query(self, query_obj: QuickBaseQuery = None, raw=False):
+        query_obj = QuickBaseQuery(where=None) if query_obj is None else query_obj
         data = self.api.query(
             table_id=self.table_id,
             fields_to_select=query_obj.select,
@@ -77,4 +78,4 @@ class QuickBaseTableClient(object):
             sort_by=query_obj.sort_by,
             group_by=query_obj.group_by,
             options=query_obj.options)
-        return data if raw else self.serializer.deserialize(data)
+        return data if raw else [self.serializer.deserialize(x) for x in data.json()['data']]

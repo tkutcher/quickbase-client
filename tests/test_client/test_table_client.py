@@ -55,8 +55,15 @@ class TestQuickBaseTableClient(object):
         assert posted_json['to'] == 'aaaaaa'
         assert '7' not in posted_json['data']
 
-    def test_query(self, request_spy, debugs_table):
+    def test_query_raw_response(self, request_spy, debugs_table):
         client = QuickBaseTableClient(debugs_table, user_token='doesnotmatter')
         q = QuickBaseQuery(where="{'18'.EX.19}")
         _, kwargs = client.query(q, raw=True)
         assert "{'18'.EX.19}" in json.dumps(kwargs['json'])
+
+    def test_query_deserialized_response(self, debugs_table, qb_api_mock):
+        client = QuickBaseTableClient(debugs_table, user_token='doesnotmatter')
+        recs = client.query()
+        for rec in recs:
+            assert isinstance(rec, debugs_table)
+            assert rec.some_basic_text_field is not None

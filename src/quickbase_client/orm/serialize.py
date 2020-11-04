@@ -1,6 +1,6 @@
 import abc
-from datetime import datetime
 from datetime import date
+from datetime import datetime
 import json
 from typing import Dict
 from typing import Type
@@ -49,12 +49,15 @@ class RecordJsonSerializer(RecordSerializer):
             field_info = c.get_field_info(a)
 
             # could be cleaner elsewhere
-            if field_info.field_type == QuickBaseFieldType.DATE:
-                val = datetime.strptime(v['value'], '%Y-%m-%d').date()
-            elif field_info.field_type == QuickBaseFieldType.DATETIME:
-                val = datetime.fromisoformat(v['value'].rstrip('Z'))
-            else:
-                val = v['value']
+            try:
+                if field_info.field_type == QuickBaseFieldType.DATE:
+                    val = datetime.strptime(v['value'], '%Y-%m-%d').date()
+                elif field_info.field_type == QuickBaseFieldType.DATETIME:
+                    val = datetime.fromisoformat(v['value'].rstrip('Z'))
+                else:
+                    val = v['value']
+            except (ValueError, KeyError):
+                val = None
             setattr(c, a, val)
 
         return c
