@@ -1,0 +1,173 @@
+{
+  "data": [
+    {
+      "10": {
+        "value": 18.0
+      },
+      "11": {
+        "value": "2020-10-03"
+      },
+      "12": {
+        "value": "ooooo"
+      },
+      "13": {
+        "value": "choice A"
+      },
+      "14": {
+        "value": "hmmm"
+      },
+      "6": {
+        "value": "First field"
+      },
+      "7": {
+        "value": "a few\r\nlines for\r\nthe first field"
+      },
+      "8": {
+        "value": true
+      },
+      "9": {
+        "value": "2020-10-31T04:00:00Z"
+      }
+    },
+    {
+      "10": {
+        "value": 100.2
+      },
+      "11": {
+        "value": ""
+      },
+      "12": {
+        "value": "this label"
+      },
+      "13": {
+        "value": "3rd choice"
+      },
+      "14": {
+        "value": "yikes"
+      },
+      "6": {
+        "value": "Second field"
+      },
+      "7": {
+        "value": "here\r\nis another\r\nblah"
+      },
+      "8": {
+        "value": false
+      },
+      "9": {
+        "value": ""
+      }
+    },
+    {
+      "10": {
+        "value": 4.0
+      },
+      "11": {
+        "value": "2020-10-03"
+      },
+      "12": {
+        "value": ""
+      },
+      "13": {
+        "value": ""
+      },
+      "14": {
+        "value": ""
+      },
+      "6": {
+        "value": "One more record"
+      },
+      "7": {
+        "value": ""
+      },
+      "8": {
+        "value": true
+      },
+      "9": {
+        "value": ""
+      }
+    },
+    {
+      "10": {
+        "value": null
+      },
+      "11": {
+        "value": ""
+      },
+      "12": {
+        "value": ""
+      },
+      "13": {
+        "value": ""
+      },
+      "14": {
+        "value": ""
+      },
+      "6": {
+        "value": "Fourth Record"
+      },
+      "7": {
+        "value": "mmmmmm\r\nuuu\r\nllllllll\r\nttt\r\niiiiii\r\nline"
+      },
+      "8": {
+        "value": true
+      },
+      "9": {
+        "value": ""
+      }
+    }
+  ],
+  "fields": [
+    {
+      "id": 6,
+      "label": "Some Basic Text Field",
+      "type": "text"
+    },
+    {
+      "id": 7,
+      "label": "A multiLine text-field",
+      "type": "text-multi-line"
+    },
+    {
+      "id": 8,
+      "label": "some checkbox",
+      "type": "checkbox"
+    },
+    {
+      "id": 9,
+      "label": "a datetime",
+      "type": "timestamp"
+    },
+    {
+      "id": 10,
+      "label": "my number",
+      "type": "numeric"
+    },
+    {
+      "id": 11,
+      "label": "just a date",
+      "type": "date"
+    },
+    {
+      "id": 12,
+      "label": "1 funky label",
+      "type": "rich-text"
+    },
+    {
+      "id": 13,
+      "label": "multichoice",
+      "type": "text-multiple-choice"
+    },
+    {
+      "id": 14,
+      "label": "def",
+      "type": "text"
+    }
+  ],
+  "metadata": {
+    "numFields": 9,
+    "numRecords": 4,
+    "skip": 0,
+    "totalRecords": 4
+  }
+}

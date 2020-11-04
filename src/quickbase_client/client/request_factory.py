@@ -36,7 +36,7 @@ class QuickBaseRequestFactory(object):
             method=method.upper(),
             url=url,
             headers=headers,
-            json=self.encoder.encode(data),
+            json=data,
             params=params
         )
 

@@ -13,20 +13,23 @@ class QuickBaseTableMeta(type):
         name --> QuickBaseFieldType
     """
     def __new__(mcs, name, bases, attrs):
-        mappings = dict()
+        mappings = {}
+        fidmap = {}
         mcs._schema = QuickBaseTableSchema()
 
         for k, v in attrs.items():
             if isinstance(v, QuickBaseField):
                 mappings[k] = v
+                fidmap[v.fid] = k
                 setattr(mcs._schema, k, v)
 
         # Delete these properties that are already stored in the dictionary
         for k in mappings.keys():
             attrs.pop(k)
 
-        attrs['__mappings__'] = mappings  # Save mapping between attributes and columns
-        attrs['__schema__'] = mcs._schema  # Save mapping between attributes and columns
+        attrs['__mappings__'] = mappings
+        attrs['__fidmap__'] = fidmap
+        attrs['__schema__'] = mcs._schema
         return type.__new__(mcs, name, bases, attrs)
 
     @property
@@ -46,21 +49,13 @@ class QuickBaseTable(metaclass=QuickBaseTableMeta):
     __reports__: Dict[str, QuickBaseReport] = {}
 
     def __init__(self, **kwargs):
-        self._schema = QuickBaseTableSchema()
 
         for attr, field_def in self.__mappings__.items():
-            setattr(self, attr, None)
-            setattr(self._schema, attr, field_def)
+            v = kwargs.pop(attr) if attr in kwargs else None
+            setattr(self, attr, v)
 
-        for name, value in kwargs.items():
-            if name not in self.__mappings__:
-                raise AttributeError(f'no attribute named {name}')
-            setattr(self, name, value)
-
-    # QUESTION - does this psuedo-typehint help IDE's?
-    # @classmethod
-    # def schema(cls) -> 'QuickBaseTable':
-    #     return cls.__schema__
+        for name, _ in kwargs.items():  # simple way to get the kwarg name if not empty
+            raise AttributeError(f'no attribute named {name}')
 
     @classmethod
     def app_id(cls) -> str:
@@ -77,6 +72,10 @@ class QuickBaseTable(metaclass=QuickBaseTableMeta):
     @classmethod
     def get_report(cls, name):
         return cls.__reports__[name]
+
+    @classmethod
+    def get_attr_from_fid(cls, fid):
+        return cls.__fidmap__[fid]
 
     @classmethod
     def client(cls, user_token):

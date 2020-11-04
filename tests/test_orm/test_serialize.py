@@ -1,3 +1,4 @@
+import pathlib
 from datetime import date
 import json
 
@@ -32,7 +33,7 @@ class TestRecordJsonSerializer:
             text_field='hello',
             date_field=date(year=2020, month=10, day=28),
             bool_field=True)
-        serializer = RecordJsonSerializer()
+        serializer = RecordJsonSerializer(example_table)
         data = serializer.serialize(rec)
         assert all(x in data for x in range(6, 8))
 
@@ -41,9 +42,17 @@ class TestRecordJsonSerializer:
             text_field='hello',
             date_field=date(year=2020, month=10, day=28),
             bool_field=True)
-        serializer = RecordJsonSerializer()
+        serializer = RecordJsonSerializer(example_table)
         data = serializer.serialize(rec)
         assert all('value' in data[x + 1] for x in range(6, 8))
+
+    def test_deserialize_to_debugs_table(self, debugs_table, mock_json_loader):
+        data = mock_json_loader('get_records_for_table_aaaaaa.json')
+        serializer = RecordJsonSerializer(table_cls=debugs_table)
+        o = serializer.deserialize(data['data'][0])
+        assert o.some_basic_text_field == 'First field'
+        assert o.my_number == 18
+        assert o.just_a_date == date(year=2020, month=10, day=3)
 
 
 class TestJsonEncoder:

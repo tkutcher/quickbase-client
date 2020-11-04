@@ -60,6 +60,7 @@ _mocks = [
     ('GET', '/tables?appId=abcdef', 'get_tables_for_app_abcdef.json'),
     ('GET', '/fields?tableId=aaaaaa', 'get_fields_for_table_aaaaaa.json'),
     ('GET', '/fields?tableId=bbbbbb', 'get_fields_for_table_bbbbbb.json'),
+    ('POST', '/records/query', 'get_records_for_table_aaaaaa.json'),
 ]
 
 
@@ -68,3 +69,8 @@ def qb_api_mock(requests_mock):
     for method, endpoint, f in _mocks:
         requests_mock.request(
             method, f'https://api.quickbase.com/v1{endpoint}', json=_data_from_file(f))
+
+
+@pytest.fixture()
+def mock_json_loader():
+    return _data_from_file

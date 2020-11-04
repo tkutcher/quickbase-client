@@ -1,3 +1,5 @@
+import json
+
 from quickbase_client.client.api import QuickBaseApiClient
 
 
@@ -19,4 +21,4 @@ class TestQuickBaseApiClient(object):
     def test_query(self, request_spy):
         client = QuickBaseApiClient(user_token='foo', realm_hostname='dicorp.quickbase.com')
         _, kwargs = client.query(table_id='aaaaaa', where_str="{'18'.EX.19}")
-        assert "{'18'.EX.19}" in kwargs['json']
+        assert "{'18'.EX.19}" in json.dumps(kwargs['json'])

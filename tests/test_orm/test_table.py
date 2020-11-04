@@ -50,6 +50,10 @@ class TestQuickBaseTable:
     def test_schema(self, example_table):
         assert example_table.schema.field_1 == example_table.get_field_info('field_1')
 
+    def test_fid_lookup(self, example_table):
+        a = example_table.get_attr_from_fid(6)
+        assert a == 'field_1'
+
     def test_get_report(self, example_table):
         assert example_table.get_report('Report A').report_id == 1
 

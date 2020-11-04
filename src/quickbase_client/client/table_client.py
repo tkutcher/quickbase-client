@@ -14,6 +14,7 @@ class QuickBaseTableClient(object):
 
     def __init__(self, table: Type[QuickBaseTable], user_token, agent='python'):
         self.table = table
+        self.serializer = RecordJsonSerializer(table_cls=self.table)
         self.api = QuickBaseApiClient(user_token, table.realm_hostname(), agent=agent)
 
     @property
@@ -61,19 +62,19 @@ class QuickBaseTableClient(object):
 
     def add_record(self, rec: Union[QuickBaseTable, Any],
                    merge_field_id=None, fields_to_return=None):
-        data = RecordJsonSerializer().serialize(rec) if isinstance(rec, QuickBaseTable) else rec
+        data = self.serializer.serialize(rec) if isinstance(rec, QuickBaseTable) else rec
         return self.api.add_record(
             table_id=self.table_id,
             data=data,
             merge_field_id=merge_field_id,
             fields_to_return=fields_to_return)
 
-    def query(self, query_obj: QuickBaseQuery):
-        return self.api.query(
+    def query(self, query_obj: QuickBaseQuery, raw=False):
+        data = self.api.query(
             table_id=self.table_id,
             fields_to_select=query_obj.select,
             where_str=query_obj.where,
             sort_by=query_obj.sort_by,
             group_by=query_obj.group_by,
-            options=query_obj.options
-        )
+            options=query_obj.options)
+        return data if raw else self.serializer.deserialize(data)
