@@ -60,6 +60,7 @@ _mocks = [
     ('GET', '/tables?appId=abcdef', 'get_tables_for_app_abcdef.json'),
     ('GET', '/fields?tableId=aaaaaa', 'get_fields_for_table_aaaaaa.json'),
     ('GET', '/fields?tableId=bbbbbb', 'get_fields_for_table_bbbbbb.json'),
+    ('GET', '/fields?tableId=cccccc', 'get_fields_for_table_cccccc.json'),
     ('POST', '/records/query', 'get_records_for_table_aaaaaa.json'),
 ]
 

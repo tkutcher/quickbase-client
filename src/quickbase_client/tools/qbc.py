@@ -11,7 +11,8 @@ def _run(ns):
     script_instance = ns.script_cls.instantiate_from_ns(ns)
     if script_instance:
         retval = script_instance.run()
-        print('done!')
+        if retval:
+            print('done!')
         return retval
     else:
         return 1

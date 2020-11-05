@@ -47,10 +47,16 @@ QB_OTHER = QuickBaseFieldType.OTHER
 _qb_api_type_lookup = {
     'text': QuickBaseFieldType.TEXT,
     'text-multi-line': QuickBaseFieldType.TEXT_MULTILINE,
+    'multitext': QuickBaseFieldType.TEXT_MULTI_SELECT,
     'checkbox': QuickBaseFieldType.CHECKBOX,
     'timestamp': QuickBaseFieldType.DATETIME,
     'numeric': QuickBaseFieldType.NUMERIC,
+    'currency': QuickBaseFieldType.NUMERIC_CURRENCY,
+    'percent': QuickBaseFieldType.NUMERIC_PERCENT,
+    'rating': QuickBaseFieldType.NUMERIC_RATING,
+    'duration': QuickBaseFieldType.DURATION,
     'date': QuickBaseFieldType.DATE,
+    'timeofday': QuickBaseFieldType.TIME_OF_DAY,
     'rich-text': QuickBaseFieldType.RICH_TEXT,
     'text-multiple-choice': QuickBaseFieldType.TEXT_MULTIPLE_CHOICE,
 }
@@ -65,6 +71,11 @@ class QuickBaseField(object):
     fid: int
     field_type: QuickBaseFieldType
     label: str = ''
+    formula: str = None
+
+    @property
+    def is_formula(self):
+        return self.formula is not None and self.formula != ''
 
 
 # FUTURE - could actually store more type-specific field metadata

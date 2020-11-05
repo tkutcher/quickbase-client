@@ -39,9 +39,8 @@ def make_var_name(s: str, case='snake', number_strategy='drop'):
 
 def make_unique_var_name(s: str, taken, case='snake', number_strategy='drop'):
     var_name = make_var_name(s, case, number_strategy)
-    i = 2
     if var_name in taken:
-        while i < 1000:
+        for i in range(2, 1000):
             if f'{var_name}_{i}' not in taken:
                 return f'{var_name}_{i}'
     return var_name

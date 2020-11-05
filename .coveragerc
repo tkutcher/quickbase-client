@@ -1,6 +1,8 @@
 [coverage:run]
 branch = True
 data_file = .cov/.coverage
+omit =
+    src/quickbase_client/__version__.py
 
 [coverage:report]
 include = src/*.py

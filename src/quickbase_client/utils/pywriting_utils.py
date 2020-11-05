@@ -46,6 +46,9 @@ class BasicPyFileWriter(PyFileWriter):
     A simple class to help writing out python files. Could alternatively render jinja templates
     but this gives a little more potential flexibility and the general files we are trying
     to write are not complex enough to really need a jinja template. Plus this is just more fun.
+
+    This lets you call make_ref and get back another writer object that will be expanded in that
+    spot. I.e. so you can insert code earlier in the file at a later point in the algorithm.
     """
 
     # @attr.s(auto_attribs=True)
@@ -67,6 +70,11 @@ class BasicPyFileWriter(PyFileWriter):
         self.level -= 1
         return self
 
+    def make_ref(self):
+        w = BasicPyFileWriter(indent=self._indent)
+        self.lines.append(w)
+        return w
+
     def add_line(self, s, level=None):
         level = self.level if level is None else level
         self.lines.append(f'{self._indent * level}{s}')
@@ -79,4 +87,6 @@ class BasicPyFileWriter(PyFileWriter):
         return self.add_line(f'# {comment}', level)
 
     def get_file_as_string(self):
-        return '\n'.join(self.lines) + '\n'
+        lns = [ln.get_file_as_string() if isinstance(ln, PyFileWriter) else ln
+               for ln in self.lines]
+        return '\n'.join(lns)

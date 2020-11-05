@@ -27,6 +27,29 @@ class TestScriptManager:
         mgr.register_script(MyScript)
         assert mgr.get_script_by_name('myscript') is MyScript
 
+    def test_error_add_duplicate_script(self):
+        class MyScript(Script):
+            registration_name = 'myscript'
+
+            def run(self):
+                pass
+
+            @staticmethod
+            def add_argparse_args(parser):
+                pass
+
+            @staticmethod
+            def instantiate_from_ns(ns) -> 'Script':
+                return MyScript()
+
+        class MyScript2(MyScript):
+            registration_name = 'myscript'
+
+        mgr = ScriptManager()
+        mgr.register_script(MyScript)
+        with pytest.raises(KeyError):
+            mgr.register_script(MyScript2)
+
 
 class TestCoreScriptLoader:
 

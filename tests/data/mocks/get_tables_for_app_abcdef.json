@@ -35,5 +35,23 @@
     "sizeLimit": "500 MB",
     "spaceRemaining": "500 MB",
     "spaceUsed": "0 KB"
+  },
+  {
+    "id": "cccccc",
+    "name": "Ideas",
+    "description": "",
+    "alias": "_DBID_IDEAS_2",
+    "nextFieldId": 7,
+    "defaultSortFieldId": 2,
+    "nextRecordId": 1,
+    "keyFieldId": 3,
+    "singleRecordName": "Idea",
+    "pluralRecordName": "Ideas",
+    "defaultSortOrder": "DESC",
+    "created": "2020-11-03T04:22:09Z",
+    "updated": "2020-11-03T04:22:17Z",
+    "sizeLimit": "500 MB",
+    "spaceRemaining": "500 MB",
+    "spaceUsed": "0 KB"
   }
 ]

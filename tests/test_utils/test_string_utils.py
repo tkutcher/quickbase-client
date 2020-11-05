@@ -1,4 +1,5 @@
 from quickbase_client.utils.string_utils import id_from_iso_string
+from quickbase_client.utils.string_utils import make_unique_var_name
 from quickbase_client.utils.string_utils import make_var_name
 from quickbase_client.utils.string_utils import parse_realm_and_app_id_from_url
 
@@ -41,6 +42,15 @@ class TestMakeVarName:
     def test_no_keywords(self):
         v = make_var_name('yield')
         assert v == 'yield_'
+
+
+class TestMakeUniqueVarName:
+
+    def test_make_unique(self):
+        taken = ['myvar', 'myvar1', 'myvar_1', 'myvar_2']
+        v = make_unique_var_name('myvar', taken)
+        assert v not in taken
+        assert 'myvar' in v
 
 
 class TestIdFromIsoString:
