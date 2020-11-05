@@ -1,4 +1,5 @@
 from typing import Any
+from typing import List
 from typing import Type
 from typing import Union
 
@@ -60,14 +61,20 @@ class QuickBaseTableClient(object):
         report_id = self._get_report_id(report)
         return self.api.run_report(report_id, self.table_id, skip=skip, top=top)
 
-    def add_record(self, rec: Union[QuickBaseTable, Any],
-                   merge_field_id=None, fields_to_return=None):
-        data = self.serializer.serialize(rec) if isinstance(rec, QuickBaseTable) else rec
+    def _encode_rec(self, rec):
+        return self.serializer.serialize(rec) if isinstance(rec, QuickBaseTable) else rec
+
+    def add_records(self, recs: List[Union[QuickBaseTable, Any]], merge_field_id=None,
+                    fields_to_return=None):
+        data = [self._encode_rec(rec) for rec in recs]
         return self.api.add_record(
             table_id=self.table_id,
             data=data,
             merge_field_id=merge_field_id,
             fields_to_return=fields_to_return)
+
+    def add_record(self, rec, *args, **kwargs):
+        return self.add_records([rec], *args, **kwargs)
 
     def query(self, query_obj: QuickBaseQuery = None, raw=False):
         query_obj = QuickBaseQuery(where=None) if query_obj is None else query_obj
