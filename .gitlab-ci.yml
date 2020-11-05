@@ -33,6 +33,7 @@ test:
     - poetry install
   script:
     - tox
+    - poetry run pytest --cov
   artifacts:
     reports:
       junit: .xunit/tests.xml
