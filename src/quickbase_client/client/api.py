@@ -44,9 +44,10 @@ class QuickBaseApiClient(object):
 
     def run_report(self, report_id, table_id, skip=None, top=None):
         payload = make_payload({'skip': skip, 'top': top})
-        return self.rf.post(f'/reports/{report_id}/run', params={'tableId': table_id}, data=payload)
+        return self.rf.post(f'/reports/{report_id}/run', params={'tableId': table_id},
+                            data=payload)
 
-    def add_record(self, table_id, data=None, merge_field_id=None, fields_to_return=None):
+    def add_records(self, table_id, data=None, merge_field_id=None, fields_to_return=None):
         return self.rf.post('/records', data=make_payload({
             'to': table_id,
             'data': data,

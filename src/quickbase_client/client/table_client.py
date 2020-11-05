@@ -67,7 +67,7 @@ class QuickBaseTableClient(object):
     def add_records(self, recs: List[Union[QuickBaseTable, Any]], merge_field_id=None,
                     fields_to_return=None):
         data = [self._encode_rec(rec) for rec in recs]
-        return self.api.add_record(
+        return self.api.add_records(
             table_id=self.table_id,
             data=data,
             merge_field_id=merge_field_id,
