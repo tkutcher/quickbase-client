@@ -1,8 +1,8 @@
 from collections import namedtuple
 import keyword
-from urllib.parse import urlparse
 import re
 import string
+from urllib.parse import urlparse
 
 import stringcase
 
@@ -56,5 +56,6 @@ def id_from_iso_string(s):
 
 
 def parse_realm_and_app_id_from_url(url):
+    url = f'https://{url}' if 'https://' not in url else url
     parsed = urlparse(url)
     return parsed.hostname, parsed.path.split('/')[-1]

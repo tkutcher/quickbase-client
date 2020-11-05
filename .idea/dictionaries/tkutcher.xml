@@ -2,6 +2,7 @@
   <dictionary name="tkutcher">
     <words>
       <w>aaaaaa</w>
+      <w>abcdef</w>
       <w>abcdefg</w>
       <w>argparse</w>
       <w>dbid</w>
@@ -16,6 +17,7 @@
       <w>subparser</w>
       <w>tablename</w>
       <w>versionid</w>
+      <w>whocares</w>
     </words>
   </dictionary>
 </component>

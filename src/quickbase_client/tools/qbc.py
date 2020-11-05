@@ -9,10 +9,10 @@ scripts = CoreScriptLoader().load_scripts()
 def _run(ns):
     script_instance = ns.script_cls.instantiate_from_ns(ns)
     if script_instance:
-        script_instance.run()
+        return script_instance.run()
 
 
-def main():
+def main(args=None):
     parser = argparse.ArgumentParser()
     parser.add_argument('--show-stacktrace', action='store_true')
 
@@ -28,16 +28,17 @@ def main():
         script.add_argparse_args(script_parser)
         script_parser.set_defaults(script_cls=script)
 
-    ns = parser.parse_args()
+    ns = parser.parse_args() if args is None else parser.parse_args(args)
 
     try:
-        ns.func(ns)
+        return ns.func(ns)
     except Exception as e:  # noqa
         if ns.show_stacktrace:
             raise e
         sys.stderr.write(str(e) + '\n'),
         sys.stderr.write('\trerun with qbc --show-stacktrace for more output\n')
         sys.stderr.write('\texample: qbc --show-stacktrace run blah\n')
+        exit(1)
 
 
 if __name__ == '__main__':

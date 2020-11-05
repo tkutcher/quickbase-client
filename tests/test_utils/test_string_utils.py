@@ -57,3 +57,9 @@ class TestParseRealmAndAppIdFromUrl:
         realm, app_id = parse_realm_and_app_id_from_url(url)
         assert realm == 'dicorp.quickbase.com'
         assert app_id == 'bqx7xre7a'
+
+    def test_parses_without_protocol(self):
+        url = 'dicorp.quickbase.com/db/bqx7xre7a?a=td'
+        realm, app_id = parse_realm_and_app_id_from_url(url)
+        assert realm == 'dicorp.quickbase.com'
+        assert app_id == 'bqx7xre7a'

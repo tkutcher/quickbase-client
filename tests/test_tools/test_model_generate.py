@@ -4,6 +4,7 @@ from tempfile import TemporaryDirectory
 import pytest
 
 from quickbase_client.tools import model_generate
+from quickbase_client.tools import qbc
 from quickbase_client.tools.model_generate import ModelGenerator
 
 
@@ -73,3 +74,32 @@ class TestModelGenerator:
         assert 'def_' in s
         assert 'funky_label' in s and '_funky' not in s
         assert 'some_basic_text_field' in s
+
+    def test_script_args(self, monkeypatch, run_generator):
+        def _intercept_run(self_):
+            return self_
+        monkeypatch.setattr(ModelGenerator, 'run', _intercept_run)
+
+        with TemporaryDirectory() as d:
+            monkeypatch.setattr(model_generate.os, 'getcwd', lambda: d)
+            c = qbc.main(['run', 'model-generate', '--app-url',
+                          'https://example.quickbase.com/db/abcdef', '-t', 'whocares'])
+            assert c.realm_hostname == 'example.quickbase.com'
+            assert c.app_id == 'abcdef'
+            assert c.user_token == 'whocares'
+
+    def test_loads_token_from_environment(self, monkeypatch):
+        def _intercept_run(self_):
+            return self_
+        monkeypatch.setattr(ModelGenerator, 'run', _intercept_run)
+
+        with TemporaryDirectory() as d:
+            monkeypatch.setattr(model_generate.os, 'getcwd', lambda: d)
+
+            with pytest.raises(SystemExit):
+                qbc.main(['run', 'model-generate', '--app-url',
+                          'https://example.quickbase.com/db/abcdef'])
+            os.environ.setdefault('QB_USER_TOKEN', 'foo')
+            c = qbc.main(['run', 'model-generate', '--app-url',
+                          'https://example.quickbase.com/db/abcdef'])
+            assert c.user_token == 'foo'

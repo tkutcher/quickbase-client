@@ -1,5 +1,4 @@
 import os
-import sys
 
 from quickbase_client.client.api import QuickBaseApiClient
 from quickbase_client.orm.field import get_field_type_by_string
@@ -160,11 +159,3 @@ class ModelGenerator(Script):
             self.add_table_file(table, fields.json())
 
         self.pkg_writer.write()
-
-
-# if __name__ == '__main__':
-#     tok = os.getenv('QB_USER_TOKEN')
-#     gen = ModelGenerator(realm_hostname='dicorp.quickbase.com',
-#                          user_token=tok,
-#                          app_id='bqxuhmrkw')
-#     gen.run()
