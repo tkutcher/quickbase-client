@@ -30,6 +30,9 @@ flake8 = "^3.8.4"
 flake8-quotes = "^3.2.0"
 flake8-import-order = "^0.18.1"
 
+[tool.poetry.scripts]
+qbc = 'quickbase_client.tools.qbc:main'
+
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
