@@ -1,0 +1,38 @@
+image: "python:3"
+
+before_script:
+  - curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+  - PATH=$PATH:$HOME/.poetry/bin
+  - poetry install
+
+stages:
+  - Static Analysis
+  - Test
+
+
+# Run flake8 using flake8-pytest to see results in GitLab
+lint:
+  stage: Static Analysis
+  allow_failure: true
+  needs: []
+  script:
+    - poetry run python -m pytest --flake8 --junitxml=.xunit/flake8.xml
+  artifacts:
+    reports:
+      junit: .xunit/flake8.xml
+
+
+# Run pytest tests in different environments using tox
+test:
+  stage: Test
+  needs: []
+  image: themattrix/tox
+  before_script:
+    - curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+    - PATH=$PATH:$HOME/.poetry/bin
+    - poetry install
+  script:
+    - tox
+  artifacts:
+    reports:
+      junit: .xunit/tests.xml
