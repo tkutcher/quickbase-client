@@ -65,7 +65,10 @@ class TestModelGenerator:
     def test_writes_table_class(self, run_generator):
         gen = run_generator()
         m = gen.pkg_writer.modules['debug']
-        assert 'QuickBaseTable):' in m.get_file_as_string()
+        s = m.get_file_as_string()
+        assert 'QuickBaseTable):' in s
+        assert 'class' in s
+        assert 'field_type=' in s
 
     def test_good_var_names(self, run_generator):
         gen = run_generator()
@@ -96,9 +99,11 @@ class TestModelGenerator:
         with TemporaryDirectory() as d:
             monkeypatch.setattr(model_generate.os, 'getcwd', lambda: d)
 
+            os.environ.pop('QB_USER_TOKEN')
             with pytest.raises(SystemExit):
                 qbc.main(['run', 'model-generate', '--app-url',
                           'https://example.quickbase.com/db/abcdef'])
+
             os.environ.setdefault('QB_USER_TOKEN', 'foo')
             c = qbc.main(['run', 'model-generate', '--app-url',
                           'https://example.quickbase.com/db/abcdef'])

@@ -7,9 +7,14 @@ scripts = CoreScriptLoader().load_scripts()
 
 
 def _run(ns):
+    print('running...')
     script_instance = ns.script_cls.instantiate_from_ns(ns)
     if script_instance:
-        return script_instance.run()
+        retval = script_instance.run()
+        print('done!')
+        return retval
+    else:
+        return 1
 
 
 def main(args=None):

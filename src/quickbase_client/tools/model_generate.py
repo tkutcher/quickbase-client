@@ -41,24 +41,23 @@ class TablePyFileWriter(PyFileWriter):
         self.pyfile = BasicPyFileWriter()
         self.field_vars = {}
 
-    def add_header_comments_and_imports(self, app_var_name, file_name, table_name):
+    def add_header_comments_and_imports(self, app_import_path, app_var_name, file_name,
+                                        table_name):
         self.pyfile\
             .add_comment(f'{file_name}.py - QuickBaseTable for {table_name}')\
             .space()\
-            .add_line('from quickbase_client import QuickBaseTableClient')\
-            .add_line('from quickbase_client import QuickBaseApp')\
             .add_line('from quickbase_client import QuickBaseField')\
             .add_line('from quickbase_client import QuickBaseFieldType as Qb')\
             .add_line('# from quickbase_client import QuickBaseReport')\
             .add_line('from quickbase_client import QuickBaseTable')\
             .space()\
-            .add_line(f'from .app import {app_var_name}')\
-            .space()
+            .add_line(f'from {app_import_path}.app import {app_var_name}')\
+            .space().space()
 
     def add_table_class_decl(self, table_ident, table_id, app_var_name):
         class_name = make_var_name(table_ident, case='pascal')
         self.pyfile\
-            .add_line(f'{class_name}(QuickBaseTable):')\
+            .add_line(f'class {class_name}(QuickBaseTable):')\
             .indent()\
             .add_line(f"__dbid__ = '{table_id}'")\
             .add_line(f'__app__ = {app_var_name}')\
@@ -76,7 +75,7 @@ class TablePyFileWriter(PyFileWriter):
         var_name = make_unique_var_name(field_name, taken=self.field_vars)
         field_kind = str(get_field_type_by_string(field_kind)).split('.')[1]
         self.pyfile\
-            .add_line(f'{var_name} = QuickBaseField(fid={field_id}, field_kind=Qb.{field_kind})')
+            .add_line(f'{var_name} = QuickBaseField(fid={field_id}, field_type=Qb.{field_kind})')
 
     def get_file_as_string(self):
         return self.pyfile.get_file_as_string()
@@ -91,12 +90,14 @@ class ModelGenerator(Script):
         self.user_token = user_token
         self.app_var_name = None
         self.table_vars = {}
+        self.pkg_import_stmt = ''
 
         if pkg_dir is None:
             models_pkg = PyPackageWriter(pkg_name='models', parent_dir=os.getcwd())
             if not os.path.exists(models_pkg.pkg_path):
                 models_pkg.write()
             pkg_dir = models_pkg.pkg_path
+            self.pkg_import_stmt = 'models'
 
         self.pkg_writer = PyPackageWriter(pkg_name='PLACEHOLDER', parent_dir=pkg_dir)
 
@@ -123,6 +124,7 @@ class ModelGenerator(Script):
     def add_app_file(self, app_data):
         name = app_data['name']
         self.pkg_writer.pkg_name = make_var_name(name, case='snake')
+        self.pkg_import_stmt += ('.' if self.pkg_import_stmt else '') + self.pkg_writer.pkg_name
         description = app_data['description']
         updated = app_data['updated']
         versionid = id_from_iso_string(updated)
@@ -140,7 +142,8 @@ class ModelGenerator(Script):
             table_ident = table['alias'].replace('_DBID_', '')
             file_name = make_var_name(table_ident)
         w = TablePyFileWriter()
-        w.add_header_comments_and_imports(self.app_var_name, file_name, table['name'])
+        w.add_header_comments_and_imports(self.pkg_import_stmt, self.app_var_name, file_name,
+                                          table['name'])
         w.add_table_class_decl(table_ident, table['id'], self.app_var_name)
         for f in fields:
             w.add_table_field(f['label'], f['id'], f['fieldType'])
