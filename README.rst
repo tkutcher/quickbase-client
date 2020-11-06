@@ -17,6 +17,8 @@ A High-Level QuickBase Python API Client & Model Generator
     :target: https://quickbase-client.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
 
+|
+
 .. inclusion-marker-do-not-remove
 
 
@@ -65,11 +67,16 @@ Next, say you have a hypothetical QuickBase Application named MyApp at
 against a repository like Issues & Pipelines.
 
 
-.. FIXME - once committing to dev should maybe just reference the image via link and html.
+.. Using HTML so GitHub and PyPI render it.
 
-.. image:: /images/example_table.png
-    :width: 500
-    :alt: Example Table
+.. raw:: html
+
+    <img
+        src="https://raw.githubusercontent.com/tkutcher/quickbase-client/dev/docs/source/images/example_table.png"
+        alt="Example Table"
+        width="500">
+
+|
 
 Running the following:
 
