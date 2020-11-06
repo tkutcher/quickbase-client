@@ -46,5 +46,6 @@ coverage/
 
 ## Sphinx-built Documentation
 docs/_build
+docs/build
 docs/_static
 docs/_templates

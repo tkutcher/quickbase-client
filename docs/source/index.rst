@@ -13,6 +13,7 @@ Welcome to QuickBase-Client's documentation!
 
 .. include:: ../../README.rst
    :start-after: inclusion-marker-do-not-remove
+   :end-before: exclusion-marker-do-not-remove
 
 |
 
