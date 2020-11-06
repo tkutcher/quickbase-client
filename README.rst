@@ -19,7 +19,6 @@ A High-Level QuickBase Python API Client & Model Generator
 
 .. inclusion-marker-do-not-remove
 
-|
 
 .. raw:: html
 

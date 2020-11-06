@@ -7,3 +7,4 @@ API Reference
    :caption: Contents:
 
    models.rst
+   querying.rst

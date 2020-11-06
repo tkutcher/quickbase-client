@@ -1,3 +1,33 @@
+"""This module includes functions which create :class:`~QuickBaseQuery` objects.
+
+These can be assembled in an AST-like fashion to build a complex query using higher-level
+english-readable functions rather than going through the query language (note you can always
+create a :class:`~QuickBaseQuery` and provide the where string to use that).
+
+Example:
+
+.. code-block:: python
+
+    schema = MyTable.schema
+    my_query = and_(
+        eq_(schema.date_opened, schema.date_created),
+        on_or_before_(schema.date_closed, date(2020, 11, 16))
+    )
+    print(my_query.where) # ({'9'.EX.'_FID_1'}AND{'10'.OBF.'11-16-2020'})
+
+All of the methods (except the two conjunction ones), take a
+:class:`~QuickBaseField` and a value as a parameter. If you pass a `QuickBaseField`
+for the value, it will compare to the actual field (see above). But note if you pass
+an attribute of a QuickBaseTable class it would be the value in memory of that attribute.
+If you want to compare to the actual field, use the schema property of the table or
+:meth:`quickbase_client.QuickBaseTable.get_field_info`.
+
+
+Note all of these methods are named with a trailing ``_`` to maintain consistency and
+never clash with a python keyword or anything.
+"""
+
+
 from quickbase_client.query.query_base import QuickBaseQuery
 from quickbase_client.query.query_utils import make_query_string
 
@@ -11,6 +41,9 @@ def qb_query_ast(func):
 def _conjunction(kind, *clauses):
     return f'({kind.join([c.where for c in clauses])})'
 
+
+# Note the decorator makes it tricky for sphinx to read the autodoc so docs
+# are just in the docs folder for these functions.
 
 @qb_query_ast
 def or_(*clauses):
@@ -34,11 +67,13 @@ def not_contains_(field, val):
 
 @qb_query_ast
 def has_(field, val):
+    """Has (HAS)."""
     return make_query_string(field, 'HAS', val)
 
 
 @qb_query_ast
 def not_has_(field, val):
+    """Not Has (XHAS)."""
     return make_query_string(field, 'XHAS', val)
 
 

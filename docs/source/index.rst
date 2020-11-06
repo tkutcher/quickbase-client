@@ -17,7 +17,6 @@ Welcome to QuickBase-Client's documentation!
    :start-after: inclusion-marker-do-not-remove
    :end-before: exclusion-marker-do-not-remove
 
-|
 
 Indices and tables
 ==================

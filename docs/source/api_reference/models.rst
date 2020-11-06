@@ -15,6 +15,7 @@ QuickBaseApp
     :members:
     :undoc-members:
 
+|
 
 QuickBaseTable
 ---------------
@@ -22,6 +23,7 @@ QuickBaseTable
 .. autoclass:: quickbase_client.QuickBaseTable
     :members:
 
+|
 
 QuickBaseField
 ---------------
@@ -29,6 +31,7 @@ QuickBaseField
 .. autoclass:: quickbase_client.QuickBaseField
     :members:
 
+|
 
 QuickBaseFieldType
 ------------------
