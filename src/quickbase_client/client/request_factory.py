@@ -29,6 +29,14 @@ class QuickBaseRequestFactory(object):
         }
 
     def make_request(self, method, endpoint, additional_headers=None, params=None, data=None):
+        """Make a request (synchronously) and return the Response.
+
+        :param method: The (string) HTTP method.
+        :param endpoint: The endpoint of the API (starting after "v1/" for example).
+        :param additional_headers: A dict of extra headers.
+        :param params: Query parameters.
+        :param data: The data to send in the body.
+        """
         additional_headers = {} if additional_headers is None else additional_headers
         headers = {**self.base_headers, **additional_headers}
         url = f'https://api.quickbase.com/v1/{endpoint.lstrip("/")}'

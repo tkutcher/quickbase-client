@@ -6,6 +6,11 @@ def make_payload(d):
 
 
 class QuickBaseApiClient(object):
+    """The lower-level client to make API requests.
+
+    Use :meth:`~request` to make an arbitrary request that forwards to
+    :meth:`~QuickBaseRequestFactory.make_request`
+    """
 
     def __init__(self, user_token, realm_hostname, agent='python', allow_deletes=False):
         self.rf = QuickBaseRequestFactory(
