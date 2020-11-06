@@ -7,8 +7,10 @@ Welcome to QuickBase-Client's documentation!
 ============================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Contents:
+
+   api_reference/index.rst
 
 
 .. include:: ../../README.rst

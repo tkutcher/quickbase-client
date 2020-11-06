@@ -4,6 +4,17 @@ import attr
 
 
 class QuickBaseFieldType(Enum):
+    """An Enumeration of Field Types.
+
+    .. note::
+        Formula fields use the underlying type.
+
+    In the generated classes, the import for this class is usually aliased
+    as ``Qb`` to make it easier to write like ``Qb.TEXT``.
+
+    These also all have constants in ``quickbase_client.orm.field`` module prefixed with
+    ``QB_``.
+    """
     TEXT = 100
     TEXT_MULTILINE = 101
     TEXT_MULTIPLE_CHOICE = 102
@@ -68,6 +79,14 @@ def get_field_type_by_string(s):
 
 @attr.s(auto_attribs=True)
 class QuickBaseField(object):
+    """The metadata for a specific field.
+
+    :ivar fid: The field id.
+    :ivar field_type: The :class:`~QuickBaseFieldType` of the field.
+    :ivar label: The label for the field.
+    :ivar formula: The QuickBase string formula.
+    """
+
     fid: int
     field_type: QuickBaseFieldType
     label: str = ''
