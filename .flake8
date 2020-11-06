@@ -3,7 +3,7 @@ max-line-length = 100
 count = True
 enable-extensions = Q I
 ignore = examples/*
-exclude = dist,build,*.pyc,build,*.egg,.git,.pytest_cache,.venv
+exclude = dist,build,*.pyc,build,*.egg,.git,.pytest_cache,.venv,docs,.tox
 per-file-ignores=
     tests/*:E5,E702
 
