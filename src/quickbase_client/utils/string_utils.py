@@ -22,12 +22,24 @@ _number_map = {
 
 
 def make_var_name(s: str, case='snake', number_strategy='drop'):
-    if s.upper() == s:
-        s = s.lower()  # patch to avoid ABC => a_b_c for snake case.
     case_func, special_replacer = _case_map[case]
-    v = re.sub(r'[\W_]+', special_replacer, s)
-    v = case_func(v)
 
+    # replace special chars, and strip them from the ends
+    v = re.sub(r'[\W_]+', special_replacer, s)
+    v = v.strip(special_replacer)
+
+    # force consecutive caps to not split things up
+    minimizing = False
+    s = ''
+    for c in v:
+        if c.isupper() and minimizing:
+            c = c.lower()
+        else:
+            minimizing = c.isupper()
+        s += c
+
+    # do the actual conversion and handle leading numbers
+    v = case_func(s)
     v = _number_map[number_strategy](v) if v[0].isnumeric() else v
 
     if v[0] == '_' and number_strategy != 'underscore':

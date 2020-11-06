@@ -43,6 +43,14 @@ class TestMakeVarName:
         v = make_var_name('yield')
         assert v == 'yield_'
 
+    def test_multi_caps(self):
+        v = make_var_name('abcCAPS')
+        assert v == 'abc_caps'
+
+    def test_trailing_special_characters(self):
+        v = make_var_name('Is Open?')
+        assert v == 'is_open'
+
 
 class TestMakeUniqueVarName:
 
