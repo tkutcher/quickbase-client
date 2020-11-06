@@ -31,6 +31,7 @@ flake8-quotes = "^3.2.0"
 flake8-import-order = "^0.18.1"
 pytest-flake8 = "^1.0.6"
 tox = "^3.20.1"
+Sphinx = "^3.3.0"
 
 [tool.poetry.scripts]
 qbc = 'quickbase_client.tools.qbc:main'
