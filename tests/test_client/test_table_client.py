@@ -1,3 +1,4 @@
+from datetime import date
 import json
 
 import pytest
@@ -45,7 +46,16 @@ class TestQuickBaseTableClient(object):
         args, kwargs = client.add_record(record)
         posted_json = kwargs['json']
         assert posted_json['to'] == 'aaaaaa'
-        assert posted_json['data'][0][6]['value'] == 'hi'
+        assert posted_json['data'][0]['6']['value'] == 'hi'
+
+    def test_serializes_dates(self, requests_mock, request_spy, debugs_table):
+        requests_mock.post('https://api.quickbase.com/v1/records', json={'blah': 'bleh'})
+        client = QuickBaseTableClient(debugs_table, user_token='doesnotmatter')
+        record = debugs_table(some_basic_text_field='hi',
+                              just_a_date=date(year=2020, month=2, day=7))
+        args, kwargs = client.add_record(record)
+        posted_json = kwargs['json']
+        assert '2020-02-07' in json.dumps(posted_json['data'])
 
     def test_add_record_does_not_post_null_values(self, request_spy, debugs_table):
         client = QuickBaseTableClient(debugs_table, user_token='doesnotmatter')

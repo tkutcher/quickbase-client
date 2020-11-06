@@ -1,3 +1,5 @@
+import json
+
 import requests
 
 from quickbase_client.orm.serialize import QuickBaseJsonEncoder
@@ -32,6 +34,7 @@ class QuickBaseRequestFactory(object):
         url = f'https://api.quickbase.com/v1/{endpoint.lstrip("/")}'
         if method == 'DELETE' and not self.allow_deletes:
             raise RuntimeError('to allow deletes, please set allow_deletes=True')
+        data = json.loads(self.encoder.encode(data))  # ew - but easiest way to serialize dates
         return requests.request(
             method=method.upper(),
             url=url,
