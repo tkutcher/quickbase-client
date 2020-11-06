@@ -19,17 +19,11 @@ A High-Level QuickBase Python API Client & Model Generator
 
 |
 
-.. inclusion-marker-do-not-remove
 
-
-.. raw:: html
-
-    <i>
-        QuickBase-Client is a library for interacting with QuickBase applications through their
-        <a href="https://developer.quickbase.com/auth">RESTful JSON API</a>. It has features to
-        generate model classes for tables in your QuickBase app, and provides high level classes to
-        interface between Python objects and the QuickBase tables.
-    </i>
+*QuickBase-Client is a library for interacting with QuickBase applications through their
+RESTful JSON API (https://developer.quickbase.com/). It has features to generate model classes
+for tables in your QuickBase app, and provides high level classes to interface between Python
+objects and the QuickBase tables.*
 
 |
 
@@ -67,14 +61,9 @@ Next, say you have a hypothetical QuickBase Application named MyApp at
 against a repository like Issues & Pipelines.
 
 
-.. Using HTML so GitHub and PyPI render it.
-
-.. raw:: html
-
-    <img
-        src="https://raw.githubusercontent.com/tkutcher/quickbase-client/dev/docs/source/images/example_table.png"
-        alt="Example Table"
-        width="500">
+.. image:: /images/example_table.png
+    :width: 500
+    :alt: Example Table
 
 |
 
