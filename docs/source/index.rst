@@ -11,6 +11,7 @@ Welcome to QuickBase-Client's documentation!
    :caption: Contents:
 
    api_reference/index.rst
+   cli_tools/index.rst
 
 
 .. include:: ../../README.rst
