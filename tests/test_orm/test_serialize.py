@@ -1,4 +1,5 @@
 from datetime import date
+from datetime import datetime
 import json
 
 import pytest
@@ -64,3 +65,11 @@ class TestJsonEncoder:
         assert '2020-12-09' in s
         assert 'true' in s
         assert 'hello' in s
+
+    def test_encodes_datetimes(self):
+        data = {1: datetime(year=2020, month=12, day=9, hour=2),
+                2: True,
+                3: 'hello'}
+        s = json.dumps(data, cls=QuickBaseJsonEncoder)
+        assert '2020-12-09T02:00:00' in s
+        assert '.' not in json.loads(s)['1']

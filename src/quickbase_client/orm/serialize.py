@@ -8,11 +8,15 @@ from typing import Type
 from quickbase_client.orm.field import QuickBaseFieldType
 from quickbase_client.orm.table import QuickBaseTable
 
+# TODO - encoder should be build dynamically from app date props.
+
 
 class QuickBaseJsonEncoder(json.JSONEncoder):
 
     def default(self, o):
-        if isinstance(o, datetime) or isinstance(o, date):
+        if isinstance(o, datetime):
+            return o.isoformat().split('.')[0]
+        elif isinstance(o, date):
             return o.isoformat()
         return super().default(o)  # pragma: no cover
 
