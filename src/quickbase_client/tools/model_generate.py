@@ -31,7 +31,7 @@ class AppPyFileWriter(PyFileWriter):
     def add_app_var(self, app_id, app_name, var_name, realm_hostname):
         self.pyfile.add_line(
             f"{var_name} = QuickBaseApp(app_id='{app_id}', name='{app_name}', "
-            f"realm_hostname='{realm_hostname}')")
+            f"realm_hostname='{realm_hostname}')").space()
 
     def get_file_as_string(self):
         return self.pyfile.get_file_as_string()
@@ -90,6 +90,9 @@ class TablePyFileWriter(PyFileWriter):
             .add_line(f'{var_name} = QuickBaseField('
                       f'fid={field_id}, '
                       f'field_type=Qb.{field_kind}{formula_str})')
+
+    def done_writing(self):
+        self.formula_outlet.space()
 
     def get_file_as_string(self):
         return self.pyfile.get_file_as_string()
@@ -161,6 +164,7 @@ class ModelGenerator(Script):
         w.add_table_class_decl(table_ident, table['id'], self.app_var_name)
         for f in fields:
             w.add_table_field(f['label'], f['id'], f['fieldType'], f['properties'])
+        w.done_writing()
         self.pkg_writer.add_module(file_name, w)
 
     def run(self):
