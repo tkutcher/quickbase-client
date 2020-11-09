@@ -7,15 +7,19 @@ A High-Level QuickBase Python API Client & Model Generator
 
 .. image:: https://gitlab.com/tkutcher/quickbase-client/badges/dev/pipeline.svg
     :target: https://gitlab.com/tkutcher/quickbase-client/-/commits/dev
-    :alt: pipeline status
+    :alt: Pipeline Status
 
 .. image:: https://gitlab.com/tkutcher/quickbase-client/badges/dev/coverage.svg
     :target: https://gitlab.com/tkutcher/quickbase-client/-/commits/dev
-    :alt: coverage report
+    :alt: Coverage Report
 
 .. image:: https://readthedocs.org/projects/quickbase-client/badge/?version=latest
     :target: https://quickbase-client.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
+
+.. image:: https://badge.fury.io/py/quickbase-client.svg
+    :target: https://badge.fury.io/py/quickbase-client
+    :alt: PyPI
 
 |
 
@@ -172,6 +176,11 @@ With this, we could make the exact same request as before:
 
 
 .. exclusion-marker-do-not-remove
+
+More Resources
+==========
+- `examples </examples>`_ directory.
+
 
 Contributing
 ============
