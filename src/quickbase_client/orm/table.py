@@ -22,13 +22,13 @@ class QuickBaseTableMeta(type):
     def __new__(mcs, name, bases, attrs):
         mappings = {}
         fidmap = {}
-        mcs._schema = QuickBaseTableSchema()
+        _schema = QuickBaseTableSchema()
 
         for k, v in attrs.items():
             if isinstance(v, QuickBaseField):
                 mappings[k] = v
                 fidmap[v.fid] = k
-                setattr(mcs._schema, k, v)
+                setattr(_schema, k, v)
 
         # Delete these properties that are already stored in the dictionary
         for k in mappings.keys():
@@ -36,12 +36,12 @@ class QuickBaseTableMeta(type):
 
         attrs['__mappings__'] = mappings
         attrs['__fidmap__'] = fidmap
-        attrs['__schema__'] = mcs._schema
+        attrs['__schema__'] = _schema
         return type.__new__(mcs, name, bases, attrs)
 
     @property
     def schema(cls):
-        return cls._schema
+        return cls.__schema__
 
 
 class QuickBaseTableSchema(object):
