@@ -178,7 +178,7 @@ With this, we could make the exact same request as before:
 .. exclusion-marker-do-not-remove
 
 More Resources
-==========
+==============
 - `examples </examples>`_ directory.
 
 
