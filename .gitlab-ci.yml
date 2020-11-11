@@ -16,7 +16,7 @@ lint:
   allow_failure: true
   needs: []
   script:
-    - poetry run python -m pytest --flake8 --junitxml=.xunit/flake8.xml
+    - poetry run python -m pytest --flake8 src/ tests/ --junitxml=.xunit/flake8.xml
   artifacts:
     reports:
       junit: .xunit/flake8.xml
