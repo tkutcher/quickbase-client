@@ -183,8 +183,5 @@ With this, we could make the exact same request as before:
 More Resources
 ==============
 - `examples </examples>`_ directory.
-
-
-Contributing
-============
-- Coming soon
+- `CONTRIBUTING </CONTRIBUTING.md>`_
+- `LICENSE </LICENSE.md>`_
