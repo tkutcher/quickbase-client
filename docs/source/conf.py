@@ -16,7 +16,7 @@ import pathlib
 import sphinx_rtd_theme
 
 
-app_root = pathlib.Path(__file__).absolute().parents[1] / 'src'
+app_root = pathlib.Path(__file__).absolute().parents[2] / 'src'
 sys.path.insert(0, str(app_root))
 
 
