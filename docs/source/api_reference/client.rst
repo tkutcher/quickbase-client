@@ -30,3 +30,10 @@ RequestFactory
 
 .. autoclass:: quickbase_client.client.request_factory.QuickBaseRequestFactory
     :members:
+
+
+ResponsePager
+--------------
+
+.. autoclass:: quickbase_client.ResponsePager
+   :members:

@@ -3,6 +3,7 @@ from typing import List
 from typing import Type
 from typing import Union
 
+from quickbase_client import ResponsePager
 from quickbase_client.client.api import QuickBaseApiClient
 from quickbase_client.orm.field import QuickBaseField
 from quickbase_client.orm.report import QuickBaseReport
@@ -123,21 +124,28 @@ class QuickBaseTableClient(object):
         """Aliased to :meth:`~add_records` making rec a list."""
         return self.add_records([rec], *args, **kwargs)
 
-    def query(self, query_obj: QuickBaseQuery = None, raw=False):
+    def query(self, query_obj: QuickBaseQuery = None, raw=False, pager: ResponsePager = None):
         """Do a query per https://developer.quickbase.com/operation/runQuery.
 
         See :mod:`~quickbase_client.query` for more.
 
+        See :class:`~quickbase_client.ResponsePager` for handling pagination.
+
         :param query_obj: The :class:`~QuickBaseQuery` object to use.
         :param raw: If true, returns a requests.Response, else the data is serialized to a table
             object.
+        :param pager: A :class:`~ResponsePager` to handle making paginated requests.
         """
+        pager = ResponsePager() if pager is None else pager
         query_obj = QuickBaseQuery(where=None) if query_obj is None else query_obj
+        options = pager.get_options()
+        options = {**options, **(query_obj.options if query_obj.options else {})}
         data = self.api.query(
             table_id=self.table_id,
             fields_to_select=query_obj.select,
             where_str=query_obj.where,
             sort_by=query_obj.sort_by,
             group_by=query_obj.group_by,
-            options=query_obj.options)
+            options=options)
+        pager.update_from_metadata(data.json()['metadata'])
         return data if raw else [self.serializer.deserialize(x) for x in data.json()['data']]
