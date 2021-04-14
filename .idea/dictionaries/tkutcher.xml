@@ -6,9 +6,12 @@
       <w>abcdefg</w>
       <w>argparse</w>
       <w>autodoc</w>
+      <w>bleh</w>
+      <w>builderprogram</w>
       <w>dbid</w>
       <w>dicorp</w>
       <w>dunder</w>
+      <w>eafp</w>
       <w>envlist</w>
       <w>kutcher</w>
       <w>mutlichoice</w>
@@ -19,6 +22,7 @@
       <w>snakecase</w>
       <w>subparser</w>
       <w>tablename</w>
+      <w>tkutcher</w>
       <w>versionid</w>
       <w>whocares</w>
     </words>
