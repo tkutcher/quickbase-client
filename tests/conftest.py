@@ -3,6 +3,7 @@ import pathlib
 
 import pytest
 
+from quickbase_client.client import request_factory
 from quickbase_client.orm.app import QuickBaseApp
 from quickbase_client.orm.field import QB_CHECKBOX
 from quickbase_client.orm.field import QB_DATE
@@ -75,3 +76,10 @@ def qb_api_mock(requests_mock):
 @pytest.fixture()
 def mock_json_loader():
     return _data_from_file
+
+
+@pytest.fixture()
+def request_spy(monkeypatch):
+    def _spy(*args_, **kwargs_):
+        return args_, kwargs_
+    monkeypatch.setattr(request_factory.requests, 'request', _spy)
