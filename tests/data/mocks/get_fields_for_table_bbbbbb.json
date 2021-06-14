@@ -52,7 +52,7 @@
       "maxLength": 0,
       "appendOnly": false,
       "allowHTML": false,
-      "formula": "[Description]",
+      "formula": "var text desc = [Description];\n\n$desc",
       "defaultValue": ""
     }
   },
