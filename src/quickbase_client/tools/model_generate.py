@@ -61,6 +61,7 @@ class TablePyFileWriter(PyFileWriter):
     def add_table_class_decl(self, table_ident, table_id, app_var_name):
         class_name = make_var_name(table_ident, case='pascal')
         self.pyfile\
+            .space()\
             .add_line(f'class {class_name}(QuickBaseTable):')\
             .indent()\
             .add_line(f"__dbid__ = '{table_id}'")\
@@ -82,7 +83,7 @@ class TablePyFileWriter(PyFileWriter):
         formula_str = ''
         if properties['formula'] != '':
             self.formula_outlet\
-                .add_line(f"{var_name}_formula = '{properties['formula']}'")\
+                .add_line(f"{var_name}_formula = '''{properties['formula']}'''")\
                 .space()
             formula_str = f', formula={var_name}_formula'
 

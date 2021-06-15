@@ -96,7 +96,8 @@ class TestModelGenerator:
         gen = run_generator()
         m = gen.pkg_writer.modules['idea']
         s = m.get_file_as_string()
-        assert '[Description]' in s
+        assert "'''var text desc = [Description]" in s
+        assert "$desc'''" in s
         assert 'formula=' in s
 
     def test_script_args(self, monkeypatch, run_generator):
