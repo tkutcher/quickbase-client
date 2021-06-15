@@ -3,7 +3,7 @@ import sys
 from typing import Optional
 
 from quickbase_client.client.api import QuickBaseApiClient
-from quickbase_client.orm.field import get_field_type_by_string, get_field_type_hint
+from quickbase_client.orm.field import get_field_type_by_string
 from quickbase_client.tools.script import Script
 from quickbase_client.utils.pywriting_utils import BasicPyFileWriter
 from quickbase_client.utils.pywriting_utils import PyFileWriter
@@ -49,9 +49,6 @@ class TablePyFileWriter(PyFileWriter):
         self.pyfile\
             .add_comment(f'{file_name}.py - QuickBaseTable for {table_name}')\
             .space()\
-            .add_line('from datetime import datetime, date')\
-            .add_line('from typing import Any')\
-            .space()\
             .add_line('from quickbase_client import QuickBaseField')\
             .add_line('from quickbase_client import QuickBaseFieldType as Qb')\
             .add_line('# from quickbase_client import QuickBaseReport')\
@@ -69,11 +66,11 @@ class TablePyFileWriter(PyFileWriter):
             .add_line(f"__dbid__ = '{table_id}'")\
             .add_line(f'__app__ = {app_var_name}')\
             .space()\
-            .add_line('date_created: datetime = QuickBaseField(fid=1, field_type=Qb.DATETIME)')\
-            .add_line('date_modified: datetime = QuickBaseField(fid=2, field_type=Qb.DATETIME)')\
-            .add_line('recordid: int = QuickBaseField(fid=3, field_type=Qb.NUMERIC)')\
-            .add_line('record_owner: Any = QuickBaseField(fid=4, field_type=Qb.USER)')\
-            .add_line('last_modified: Any = QuickBaseField(fid=5, field_type=Qb.USER)')\
+            .add_line('date_created = QuickBaseField(fid=1, field_type=Qb.DATETIME)')\
+            .add_line('date_modified = QuickBaseField(fid=2, field_type=Qb.DATETIME)')\
+            .add_line('recordid = QuickBaseField(fid=3, field_type=Qb.NUMERIC)')\
+            .add_line('record_owner = QuickBaseField(fid=4, field_type=Qb.USER)')\
+            .add_line('last_modified = QuickBaseField(fid=5, field_type=Qb.USER)')\
             .space()
 
     def add_table_field(self, field_name, field_id, field_kind, properties):
@@ -81,7 +78,6 @@ class TablePyFileWriter(PyFileWriter):
             return  # the special reserved ones already accounted for more or less.
         var_name = make_unique_var_name(field_name, taken=self.field_vars)
         field_kind = str(get_field_type_by_string(field_kind)).split('.')[1]
-        type_hint = get_field_type_hint(field_kind, field_id, False)
 
         formula_str = ''
         if properties['formula'] != '':
@@ -91,7 +87,7 @@ class TablePyFileWriter(PyFileWriter):
             formula_str = f', formula={var_name}_formula'
 
         self.pyfile\
-            .add_line(f'{var_name}: {type_hint} = QuickBaseField('
+            .add_line(f'{var_name} = QuickBaseField('
                       f'fid={field_id}, '
                       f'field_type=Qb.{field_kind}{formula_str})')
 
