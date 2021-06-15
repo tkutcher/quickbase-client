@@ -123,7 +123,7 @@ class TestModelGenerator:
             monkeypatch.setattr(model_generate.os, 'getcwd', lambda: d)
             c = qbc.main(['run', 'model-generate', '--app-url',
                           'https://example.quickbase.com/db/abcdef', '-t', 'whocares',
-                          '-o', 'table123', '--tbl-obj', 'bx123sdf'])
+                          '-i', 'table123', '--include', 'bx123sdf'])
             assert c.realm_hostname == 'example.quickbase.com'
             assert c.app_id == 'abcdef'
             assert 'table123' in c.table_ids
