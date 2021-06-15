@@ -21,5 +21,11 @@ reference the relevant GitHub Issue(s) via `(#ID)`
 
 ### Updating Dependencies
 - Use the poetry commands for adding and updating dependencies.
-- For sphinx to get the requirements.txt you must run 
+- For general dependency updates it is `poetry update`
+- For sphinx to get the new requirements.txt you must run 
   `poetry export -f requirements.txt --output docs/requirements.txt --without-hashes --dev`
+  
+### Building Documentation
+- To build the documentation locally you can run `poetry run make html`
+- Then you can inspect what the readthedocs documentation will look like by opening 
+  docs/build/html/index.html
