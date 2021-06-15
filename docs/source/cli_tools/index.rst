@@ -33,7 +33,7 @@ Running ``model-generate`` you can pass your user token on the command line or s
 .. code-block::
 
     $ qbc run model-generate -h
-    usage: qbc run model-generate [-h] -a [APP_URL] [-d [PKG_DIR]] [-t [USER_TOK]]
+    usage: qbc run model-generate [-h] -a [APP_URL] [-d [PKG_DIR]] [-t [USER_TOK]] [-i [INCLUDE]]
 
     optional arguments:
       -h, --help            show this help message and exit
