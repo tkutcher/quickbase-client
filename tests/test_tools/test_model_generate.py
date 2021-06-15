@@ -59,7 +59,6 @@ class TestModelGenerator:
 
     def test_creates_table_files(self, run_generator):
         def _asserts(d, _):
-            print(os.listdir(os.path.join(d, 'qbcpy')))
             assert os.path.exists(os.path.join(d, 'qbcpy', 'debug.py'))
             assert os.path.exists(os.path.join(d, 'qbcpy', 'idea.py'))
             assert os.path.exists(os.path.join(d, 'qbcpy', 'ideas_2.py'))
