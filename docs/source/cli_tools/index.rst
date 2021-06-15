@@ -44,4 +44,6 @@ Running ``model-generate`` you can pass your user token on the command line or s
       -t [USER_TOK], --user-tok [USER_TOK]
                             the user token to authenticate - if not provided will read from
                             environment variable QB_USER_TOKEN
-
+      -i [INCLUDE], --include [INCLUDE]
+                            ID or name of a table to include - can be specified
+                            multiple times; if present, excludes all other tables

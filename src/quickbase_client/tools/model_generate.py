@@ -101,13 +101,14 @@ class TablePyFileWriter(PyFileWriter):
 class ModelGenerator(Script):
     registration_name = 'model-generate'
 
-    def __init__(self, realm_hostname, app_id, user_token, pkg_dir=None):
+    def __init__(self, realm_hostname, app_id, user_token, pkg_dir=None, table_ids=None):
         self.realm_hostname = realm_hostname
         self.app_id = app_id
         self.user_token = user_token
         self.app_var_name = None
         self.table_vars = {}
         self.pkg_import_stmt = ''
+        self.table_ids = table_ids if table_ids else []
 
         if pkg_dir is None:
             models_pkg = PyPackageWriter(pkg_name='models', parent_dir=os.getcwd())
@@ -125,15 +126,19 @@ class ModelGenerator(Script):
         parser.add_argument('-d', '--pkg-dir', nargs='?', default=None,
                             help='the directory to put the package in, defaults to "models"')
         parser.add_argument('-t', '--user-tok', nargs='?', default=None,
-                            help='the user token to authenticate - if not provided will read from'
+                            help='the user token to authenticate - if not provided will read from '
                                  'environment variable QB_USER_TOKEN')
+        parser.add_argument('-i', '--include', nargs='?', default=None, action='append',
+                            help='ID or name of a table to include - can be specified '
+                                 'multiple times; if present, excludes all other tables')
 
     @staticmethod
     def instantiate_from_ns(ns) -> 'Script':
         realm_hostname, app_id = parse_realm_and_app_id_from_url(ns.app_url)
         try:
             user_tok = ns.user_tok if ns.user_tok is not None else os.environ['QB_USER_TOKEN']
-            return ModelGenerator(realm_hostname, app_id, user_token=user_tok, pkg_dir=ns.pkg_dir)
+            return ModelGenerator(realm_hostname, app_id, user_token=user_tok, pkg_dir=ns.pkg_dir,
+                                  table_ids=ns.include)
         except (KeyError, OSError):
             raise EnvironmentError('ERROR: expected either a -t argument or a '
                                    'QB_USER_TOKEN environment variable')
@@ -155,6 +160,12 @@ class ModelGenerator(Script):
     def add_table_file(self, table, fields):
         table_ident = table['singleRecordName']
         file_name = make_var_name(table_ident)
+        if len(self.table_ids) and not any(
+            x in self.table_ids for x in [table_ident, file_name, table['id']]
+        ):
+            # if table_ids have been specified, and this table's ID, single record name, or var name
+            # is not in the list, skip it
+            return
         if file_name in self.pkg_writer.modules:
             table_ident = table['alias'].replace('_DBID_', '')
             file_name = make_var_name(table_ident)
