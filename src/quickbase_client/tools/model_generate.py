@@ -133,7 +133,7 @@ class ModelGenerator(Script):
                             help='the user token to authenticate - if not provided will read from '
                                  'environment variable QB_USER_TOKEN')
         parser.add_argument('-i', '--include', nargs='?', default=None, action='append',
-                            help='ID or name of a table to include in generation - can be specified '
+                            help='ID or name of a table to include - can be specified '
                                  'multiple times; if present, excludes all other tables')
 
     @staticmethod
@@ -164,8 +164,8 @@ class ModelGenerator(Script):
     def add_table_file(self, table, fields):
         table_ident = table['singleRecordName']
         file_name = make_var_name(table_ident)
-        if len(self.table_ids) and not (
-            table_ident in self.table_ids or file_name in self.table_ids or table['id'] in self.table_ids # noqa
+        if len(self.table_ids) and not any(
+            x in self.table_ids for x in [table_ident, file_name, table['id']]
         ):
             # if table_ids have been specified, and this table's ID, single record name, or var name
             # is not in the list, skip it
