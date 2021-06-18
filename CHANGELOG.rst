@@ -3,6 +3,12 @@ CHANGELOG
 ==========
 
 
+`0.3.1`_ (2021-6-18)
+---------------------
+
+* Don't make unnecessary calls for skipped tables in ``model-generate`` (`#44`_)
+
+
 `0.3.0`_ (2021-6-15)
 ---------------------
 
@@ -37,6 +43,7 @@ CHANGELOG
 .. _`0.1.0`: https://github.com/tkutcher/quickbase-client/releases/tag/v0.1.0
 .. _`0.2.0`: https://github.com/tkutcher/quickbase-client/releases/tag/v0.2.0
 .. _`0.3.0`: https://github.com/tkutcher/quickbase-client/releases/tag/v0.3.0
+.. _`0.3.1`: https://github.com/tkutcher/quickbase-client/releases/tag/v0.3.1
 
 
 ..
@@ -48,6 +55,7 @@ CHANGELOG
 .. _`#38`: https://github.com/tkutcher/quickbase-client/issues/38
 .. _`#40`: https://github.com/tkutcher/quickbase-client/issues/40
 .. _`#41`: https://github.com/tkutcher/quickbase-client/issues/41
+.. _`#44`: https://github.com/tkutcher/quickbase-client/issues/44
 
 
 ..
