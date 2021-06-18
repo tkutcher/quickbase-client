@@ -161,12 +161,6 @@ class ModelGenerator(Script):
     def add_table_file(self, table, fields):
         table_ident = table['singleRecordName']
         file_name = make_var_name(table_ident)
-        if len(self.table_ids) and not any(
-            x in self.table_ids for x in [table_ident, file_name, table['id']]
-        ):
-            # if table_ids have been specified, and this table's ID, single record name, or var name
-            # is not in the list, skip it
-            return
         if file_name in self.pkg_writer.modules:
             table_ident = table['alias'].replace('_DBID_', '')
             file_name = make_var_name(table_ident)
@@ -196,8 +190,15 @@ class ModelGenerator(Script):
         tables = api.get_tables_for_app(self.app_id)
         for table in tables.json():
             table_id = table['id']
-            fields = api.get_fields_for_table(table_id)
-            self.add_table_file(table, fields.json())
+            table_ident = table['singleRecordName']
+            table_var = make_var_name(table_ident)
+            if not len(self.table_ids) or any(
+                x in self.table_ids for x in [table_var, table_ident, table_id]
+            ):
+                # if not table_ids have been specified, or they have but this table's ID, 
+                # single record name, or var name are in the list, generate it
+                fields = api.get_fields_for_table(table_id)
+                self.add_table_file(table, fields.json())
 
         self.pkg_writer.write()
         return True

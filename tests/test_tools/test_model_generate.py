@@ -1,5 +1,6 @@
 import os
 from tempfile import TemporaryDirectory
+from unittest.mock import ANY
 
 import pytest
 from requests import Response
@@ -70,6 +71,12 @@ class TestModelGenerator:
             assert os.path.exists(os.path.join(d, 'qbcpy', 'idea.py'))
             assert os.path.exists(os.path.join(d, 'qbcpy', 'ideas_2.py'))
         run_generator(_asserts, table_ids=['idea', 'cccccc'])
+
+    def test_gets_fields_only_for_requested_tables(self, run_generator, mocker):
+        spy = mocker.spy(model_generate.QuickBaseApiClient, 'get_fields_for_table')
+        run_generator(table_ids=['aaaaaa'])
+        # first arg is `self` because it is an instance method
+        spy.assert_called_once_with(ANY, 'aaaaaa')
 
     def test_writes_table_class(self, run_generator):
         gen = run_generator()
