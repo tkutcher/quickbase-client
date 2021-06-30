@@ -2,6 +2,11 @@
 CHANGELOG
 ==========
 
+`0.4.0`_ (2021-MM-DD)
+---------------------
+
+* Sorting fields in ``model-generate`` to enforce deterministic order  (`#45`_) [Credit: `@mklaber`_]
+
 
 `0.3.1`_ (2021-6-18)
 ---------------------
@@ -44,6 +49,7 @@ CHANGELOG
 .. _`0.2.0`: https://github.com/tkutcher/quickbase-client/releases/tag/v0.2.0
 .. _`0.3.0`: https://github.com/tkutcher/quickbase-client/releases/tag/v0.3.0
 .. _`0.3.1`: https://github.com/tkutcher/quickbase-client/releases/tag/v0.3.1
+.. _`0.4.0`: https://github.com/tkutcher/quickbase-client/releases/tag/v0.4.0
 
 
 ..
@@ -56,6 +62,7 @@ CHANGELOG
 .. _`#40`: https://github.com/tkutcher/quickbase-client/issues/40
 .. _`#41`: https://github.com/tkutcher/quickbase-client/issues/41
 .. _`#44`: https://github.com/tkutcher/quickbase-client/issues/44
+.. _`#45`: https://github.com/tkutcher/quickbase-client/issues/45
 
 
 ..
