@@ -1,6 +1,7 @@
 from quickbase_client.utils.string_utils import id_from_iso_string
 from quickbase_client.utils.string_utils import make_unique_var_name
 from quickbase_client.utils.string_utils import make_var_name
+from quickbase_client.utils.string_utils import normalize_unicode
 from quickbase_client.utils.string_utils import parse_realm_and_app_id_from_url
 
 
@@ -81,3 +82,12 @@ class TestParseRealmAndAppIdFromUrl:
         realm, app_id = parse_realm_and_app_id_from_url(url)
         assert realm == 'dicorp.quickbase.com'
         assert app_id == 'bqx7xre7a'
+
+
+class TestNormalizeUnicode:
+
+    def test_all_ascii_is_same(self):
+        assert normalize_unicode('foo') == 'foo'
+
+    def test_normalizes_if_accent(self):
+        assert normalize_unicode('Carlos Pe\u00F1a') == 'Carlos Pena'
