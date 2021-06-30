@@ -107,6 +107,17 @@ class TestModelGenerator:
         assert "$desc'''" in s
         assert 'formula=' in s
 
+    def test_fields_added_in_order(self, run_generator, mocker):
+        spy = mocker.spy(model_generate.TablePyFileWriter, 'add_table_field')
+        # aaaaaa has been deliberately modified to return fields out of order
+        run_generator(table_ids=['aaaaaa'])
+        fid_order = [int(args[2]) for args, _ in spy.call_args_list]
+        # because this test does not care how many fields are in aaaaaa and
+        # does not test whether every field is accounted for, we can just make
+        # a range that is the size of the number of calls to add_table_field
+        expected_order = [i for i in range(1, spy.call_count + 1)]
+        assert fid_order == expected_order
+
     def test_script_args(self, monkeypatch, run_generator):
         def _intercept_run(self_):
             return self_

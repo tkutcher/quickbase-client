@@ -168,7 +168,7 @@ class ModelGenerator(Script):
         w.add_header_comments_and_imports(self.pkg_import_stmt, self.app_var_name, file_name,
                                           table['name'])
         w.add_table_class_decl(table_ident, table['id'], self.app_var_name)
-        for f in fields:
+        for f in sorted(fields, key=lambda f: int(f['id'])):
             w.add_table_field(f['label'], f['id'], f['fieldType'], f['properties'])
         w.done_writing()
         self.pkg_writer.add_module(file_name, w)
@@ -195,7 +195,7 @@ class ModelGenerator(Script):
             if not len(self.table_ids) or any(
                 x in self.table_ids for x in [table_var, table_ident, table_id]
             ):
-                # if not table_ids have been specified, or they have but this table's ID, 
+                # if not table_ids have been specified, or they have but this table's ID,
                 # single record name, or var name are in the list, generate it
                 fields = api.get_fields_for_table(table_id)
                 self.add_table_file(table, fields.json())
