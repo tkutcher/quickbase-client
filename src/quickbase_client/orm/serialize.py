@@ -44,8 +44,7 @@ class RecordJsonSerializer(RecordSerializer):
             if attr[0] == '_' or v is None:
                 continue
             field_info = record.get_field_info(attr)
-            if field_info.field_type == QuickBaseFieldType.DATE and isinstance(
-                    v, datetime):
+            if field_info.field_type == QuickBaseFieldType.DATE and isinstance(v, datetime):
                 v = v.date()
             if self.normalize_unicode and field_info.field_type in [
                     QuickBaseFieldType.TEXT,

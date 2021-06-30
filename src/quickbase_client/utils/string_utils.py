@@ -2,7 +2,8 @@ from collections import namedtuple
 import keyword
 import re
 import string
-from unicodedata import combining, normalize
+from unicodedata import combining
+from unicodedata import normalize
 from urllib.parse import urlparse
 
 import stringcase
