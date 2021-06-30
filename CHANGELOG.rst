@@ -2,10 +2,12 @@
 CHANGELOG
 ==========
 
-`0.4.0`_ (2021-MM-DD)
+`0.4.0`_ (2021-6-30)
 ---------------------
 
 * Sorting fields in ``model-generate`` to enforce deterministic order  (`#45`_) [Credit: `@mklaber`_]
+* Option to normalize unicode to remove characters that aren't rendered when posted as data through the API  (`#47`_)
+* Serializing datetime fields as dates when the Quickbase field is a date  (`#47`_)
 
 
 `0.3.1`_ (2021-6-18)
@@ -63,6 +65,7 @@ CHANGELOG
 .. _`#41`: https://github.com/tkutcher/quickbase-client/issues/41
 .. _`#44`: https://github.com/tkutcher/quickbase-client/issues/44
 .. _`#45`: https://github.com/tkutcher/quickbase-client/issues/45
+.. _`#47`: https://github.com/tkutcher/quickbase-client/issues/47
 
 
 ..
