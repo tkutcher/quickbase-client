@@ -2,10 +2,10 @@ from collections import namedtuple
 import keyword
 import re
 import string
+from unicodedata import combining, normalize
 from urllib.parse import urlparse
 
 import stringcase
-
 
 VarMakerStrategy = namedtuple('VarMakerStrategy', 'case_func,special_replacer')
 
@@ -70,3 +70,9 @@ def parse_realm_and_app_id_from_url(url):
     url = f'https://{url}' if 'https://' not in url else url
     parsed = urlparse(url)
     return parsed.hostname, parsed.path.split('/')[-1]
+
+
+def normalize_unicode(s: str) -> str:
+    # from: https://stackoverflow.com/a/517974/612166
+    nfkd_form = normalize('NFKD', s)
+    return ''.join([c for c in nfkd_form if not combining(c)])

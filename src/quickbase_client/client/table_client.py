@@ -28,16 +28,24 @@ class QuickBaseTableClient(object):
     :ivar api: The wrapped :class:`~QuickBaseApiClient`
     """
 
-    def __init__(self, table: Type[QuickBaseTable], user_token, agent='python'):
+    def __init__(self,
+                 table: Type[QuickBaseTable],
+                 user_token,
+                 agent='python',
+                 normalize_unicode=True):
         """Create a client instance.
 
         :param table: The table this client is metaphorically "connected" to.
         :param user_token: The user token to authenticate.
         :param agent: The agent header to send in requests.
+        :param normalize_unicode: Whether the JSON Serializer should normalize accented characters.
         """
         self.table = table
-        self.serializer = RecordJsonSerializer(table_cls=self.table)
-        self.api = QuickBaseApiClient(user_token, table.realm_hostname(), agent=agent)
+        self.serializer = RecordJsonSerializer(
+            table_cls=self.table, normalize_unicode=normalize_unicode)
+        self.api = QuickBaseApiClient(user_token,
+                                      table.realm_hostname(),
+                                      agent=agent)
 
     @property
     def app_id(self):

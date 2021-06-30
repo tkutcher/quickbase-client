@@ -6,8 +6,13 @@ import pytest
 
 from quickbase_client.orm.app import QuickBaseApp
 from quickbase_client.orm.field import QB_CHECKBOX
+from quickbase_client.orm.field import QB_DATE
 from quickbase_client.orm.field import QB_DATETIME
+from quickbase_client.orm.field import QB_RICH_TEXT
 from quickbase_client.orm.field import QB_TEXT
+from quickbase_client.orm.field import QB_TEXT_MULTI_SELECT
+from quickbase_client.orm.field import QB_TEXT_MULTILINE
+from quickbase_client.orm.field import QB_TEXT_MULTIPLE_CHOICE
 from quickbase_client.orm.field import QuickBaseField
 from quickbase_client.orm.serialize import QuickBaseJsonEncoder
 from quickbase_client.orm.serialize import RecordJsonSerializer
@@ -23,6 +28,13 @@ def example_table():
         text_field = QuickBaseField(fid=8, field_type=QB_TEXT)
         date_field = QuickBaseField(fid=6, field_type=QB_DATETIME)
         bool_field = QuickBaseField(fid=7, field_type=QB_CHECKBOX)
+        date_time_as_date = QuickBaseField(fid=900, field_type=QB_DATE)
+        date_time_as_date_time = QuickBaseField(fid=901, field_type=QB_DATETIME)
+        rich_text_as_rich_text = QuickBaseField(fid=902, field_type=QB_RICH_TEXT)
+        text_as_ascii_text = QuickBaseField(fid=903, field_type=QB_TEXT)
+        text_multiline_as_ascii_text = QuickBaseField(fid=904, field_type=QB_TEXT_MULTILINE)
+        text_multi_select_as_ascii_text = QuickBaseField(fid=905, field_type=QB_TEXT_MULTI_SELECT)
+        text_multiple_choice_as_ascii_text = QuickBaseField(fid=906, field_type=QB_TEXT_MULTIPLE_CHOICE)
     return ExampleTable
 
 
@@ -45,6 +57,76 @@ class TestRecordJsonSerializer:
         serializer = RecordJsonSerializer(example_table)
         data = serializer.serialize(rec)
         assert all('value' in data[x + 1] for x in range(6, 8))
+
+    def test_serialize_datetime_as_date(self, example_table):
+        # arrange
+        dt = datetime.now()
+        rec = example_table(date_time_as_date=dt)
+        serializer = RecordJsonSerializer(example_table)
+        # act
+        data = serializer.serialize(rec)
+        # assert
+        assert data[example_table.schema.date_time_as_date.fid]['value'] == dt.date()
+
+    def test_serialize_datetime_as_datetime(self, example_table):
+        # arrange
+        dt = datetime.now()
+        rec = example_table(date_time_as_date_time=dt)
+        serializer = RecordJsonSerializer(example_table)
+        # act
+        data = serializer.serialize(rec)
+        # assert
+        assert data[example_table.schema.date_time_as_date_time.fid]['value'] == dt
+
+    def test_serialize_rich_text_as_rich_text(self, example_table):
+        # arrange
+        s = '<p>Tobias Fünke has been to <b>Juárez</b>, \nMéxico with his niña &amp; hermosa.</p>'
+        rec = example_table(rich_text_as_rich_text=s)
+        serializer = RecordJsonSerializer(example_table)
+        # act
+        data = serializer.serialize(rec)
+        # assert
+        assert data[example_table.schema.rich_text_as_rich_text.fid]['value'] == s, 'Rich Text should be left untouched'
+
+    def test_serialize_accented_text_as_accented_text_with_option(self, example_table):
+        # arrange
+        s = 'Tobias Fünke has been to Juárez, México with his niña'
+        rec = example_table(text_field=s)
+        serializer = RecordJsonSerializer(example_table, normalize_unicode=False)
+        # act
+        data = serializer.serialize(rec)
+        # assert
+        assert data[example_table.schema.text_field.fid]['value'] == s
+
+    def test_serialize_ignores_non_strings(self, example_table):
+        # arrange
+        non_string = 42
+        rec = example_table(text_field=non_string)
+        serializer = RecordJsonSerializer(example_table)
+        # act
+        data = serializer.serialize(rec)
+        # assert
+        assert data[example_table.schema.text_field.fid]['value'] == non_string
+
+    @pytest.mark.parametrize(
+        'attr_name',
+        [
+            ('text_as_ascii_text'),
+            ('text_multiline_as_ascii_text'),
+            ('text_multi_select_as_ascii_text'),
+            ('text_multiple_choice_as_ascii_text'),
+        ],
+    )
+    def test_serialize_accented_text_as_ascii_text(self, attr_name, example_table):
+        # arrange
+        s = 'Tobias Fünke has been to Juárez, México with his niña'
+        rec = example_table(**{attr_name: s})
+        fid = example_table.get_field_info(attr_name).fid
+        serializer = RecordJsonSerializer(example_table)
+        # act
+        data = serializer.serialize(rec)
+        # assert
+        assert data[fid]['value'] == 'Tobias Funke has been to Juarez, Mexico with his nina'
 
     def test_deserialize_to_debugs_table(self, debugs_table, mock_json_loader):
         data = mock_json_loader('get_records_for_table_aaaaaa.json')
