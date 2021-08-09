@@ -15,7 +15,7 @@ class ScriptManager(object):
     def register_script(self, script_cls: Type[Script]):
         name = script_cls.registration_name
         if name in self.scripts:
-            raise KeyError(f'Script {name} already registered!')
+            raise KeyError(f"Script {name} already registered!")
         self.scripts[name] = script_cls
 
     def get_script_by_name(self, name):
@@ -23,14 +23,12 @@ class ScriptManager(object):
 
 
 class ScriptLoader(abc.ABC):
-
     @abc.abstractmethod
     def load_scripts(self) -> ScriptManager:
         pass
 
 
 class CoreScriptLoader(ScriptLoader):
-
     def load_scripts(self):
         mgr = ScriptManager()
         mgr.register_script(ModelGenerator)

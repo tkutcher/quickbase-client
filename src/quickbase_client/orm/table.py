@@ -16,9 +16,10 @@ from quickbase_client.orm.report import QuickBaseReport
 
 
 class QuickBaseTableMeta(type):
-    """ Meta-class which builds a dunder to store the mappings of attribute
-        name --> QuickBaseFieldType
+    """Meta-class which builds a dunder to store the mappings of attribute
+    name --> QuickBaseFieldType
     """
+
     def __new__(mcs, name, bases, attrs):
         mappings = {}
         fidmap = {}
@@ -34,9 +35,9 @@ class QuickBaseTableMeta(type):
         for k in mappings.keys():
             attrs.pop(k)
 
-        attrs['__mappings__'] = mappings
-        attrs['__fidmap__'] = fidmap
-        attrs['__schema__'] = _schema
+        attrs["__mappings__"] = mappings
+        attrs["__fidmap__"] = fidmap
+        attrs["__schema__"] = _schema
         return type.__new__(mcs, name, bases, attrs)
 
     @property
@@ -57,8 +58,9 @@ class QuickBaseTable(metaclass=QuickBaseTableMeta):
     :ivar __app__: The :class:`~QuickBaseApp` the table belongs to.
     :ivar __reports__: Lookup of :class:`~QuickBaseReport` objects for this table.
     """
+
     __dbid__ = None
-    __tablename__ = ''
+    __tablename__ = ""
     __app__: QuickBaseApp = None
 
     __reports__: Dict[str, QuickBaseReport] = {}
@@ -70,7 +72,7 @@ class QuickBaseTable(metaclass=QuickBaseTableMeta):
             setattr(self, attr, v)
 
         for name, _ in kwargs.items():  # simple way to get the kwarg name if not empty
-            raise AttributeError(f'no attribute named {name}')
+            raise AttributeError(f"no attribute named {name}")
 
     @classmethod
     def app_id(cls) -> str:
@@ -84,7 +86,7 @@ class QuickBaseTable(metaclass=QuickBaseTableMeta):
 
     @classmethod
     def get_field_info(cls, attr: str) -> QuickBaseField:
-        """ Get the field info for a given attribute rather than the data.
+        """Get the field info for a given attribute rather than the data.
 
         :param attr: String name of the attribute.
         """
@@ -92,7 +94,7 @@ class QuickBaseTable(metaclass=QuickBaseTableMeta):
 
     @classmethod
     def get_report(cls, name: str):
-        """ Get a report by it's name.
+        """Get a report by it's name.
 
         :param name: The name of the report
         """
@@ -100,7 +102,7 @@ class QuickBaseTable(metaclass=QuickBaseTableMeta):
 
     @classmethod
     def get_attr_from_fid(cls, fid: int):
-        """ Lookup an attribute name by it's field ID.
+        """Lookup an attribute name by it's field ID.
 
         :param fid: The field ID.
         """
@@ -108,9 +110,10 @@ class QuickBaseTable(metaclass=QuickBaseTableMeta):
 
     @classmethod
     def client(cls, user_token: str):
-        """ Factory method to create a :class:`~QuickBaseTableClient` for this table.
+        """Factory method to create a :class:`~QuickBaseTableClient` for this table.
 
         :param user_token: The user token for authentication.
         """
         from quickbase_client.client.table_client import QuickBaseTableClient
+
         return QuickBaseTableClient(cls, user_token)

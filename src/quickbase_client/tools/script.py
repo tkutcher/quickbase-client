@@ -15,5 +15,5 @@ class Script(abc.ABC):
 
     @staticmethod
     @abc.abstractmethod
-    def instantiate_from_ns(ns) -> 'Script':
+    def instantiate_from_ns(ns) -> "Script":
         pass

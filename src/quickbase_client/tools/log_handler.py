@@ -1,19 +1,12 @@
-from collections import Callable
-from datetime import datetime
 import logging
 import threading
+from collections import Callable
+from datetime import datetime
 
 from quickbase_client import QuickBaseTableClient
 
-
 _mock_record = logging.LogRecord(
-    name='',
-    level=0,
-    pathname='',
-    lineno=1,
-    msg='',
-    args=None,
-    exc_info=None
+    name="", level=0, pathname="", lineno=1, msg="", args=None, exc_info=None
 )
 
 
@@ -33,17 +26,22 @@ class QuickbaseLogHandler(logging.Handler):
         try:
             self.record_factory(_mock_record)
         except Exception:
-            raise TypeError('Invalid record_factory - could not create a log record. If using'
-                            'the default, either ensure your table has properties "when", '
-                            '"level", and "message", OR implement a custom record_factory.')
+            raise TypeError(
+                "Invalid record_factory - could not create a log record. If using"
+                'the default, either ensure your table has properties "when", '
+                '"level", and "message", OR implement a custom record_factory.'
+            )
 
         super().__init__()
 
     @staticmethod
-    def with_record_factory(logs_table_client: QuickBaseTableClient, record_factory: Callable):
+    def with_record_factory(
+        logs_table_client: QuickBaseTableClient, record_factory: Callable
+    ):
         class _CustomRecordFactoryHandler(QuickbaseLogHandler):
             def record_factory(self, record: logging.LogRecord):
                 return record_factory(record)
+
         return _CustomRecordFactoryHandler(logs_table_client)
 
     def record_factory(self, record: logging.LogRecord):

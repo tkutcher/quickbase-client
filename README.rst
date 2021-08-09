@@ -21,6 +21,10 @@ A High-Level QuickBase Python API Client & Model Generator
     :target: https://badge.fury.io/py/quickbase-client
     :alt: PyPI
 
+.. image:: https://img.shields.io/badge/code%20style-black-000000.svg
+    :target: https://github.com/psf/black
+    :alt: Black Code Style
+
 |
 
 

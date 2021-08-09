@@ -15,9 +15,11 @@ reference the relevant GitHub Issue(s) via `(#ID)`
   - You can add `--cov-report=html` for an HTML coverage report
 - Make sure unit tests are passing for any merge request
 
-### Linting
-- Flake8 linting can be run via running `poetry run flake8`
-- Make sure flake8 is passing for any merge request
+### Linting & Style
+- This project uses [black](https://github.com/psf/black) for code formatting
+- To run black, run `poetry run black src/ tests/` from the root of this repository
+- Flake8 linting can be run via running `poetry run flake8`, which has some basic checks.
+- Make sure that you have run black and flake8 is passing for any merge request
 
 ### Updating Dependencies
 - Use the poetry commands for adding and updating dependencies.

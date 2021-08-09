@@ -10,13 +10,13 @@ from quickbase_client.orm.table import QuickBaseTable
 
 
 __all__ = [
-    'QuickBaseApp',
-    'ResponsePager',
-    'QuickBaseField',
-    'QuickBaseFieldType',
-    'QuickBaseReport',
-    'QuickBaseTable',
-    'QuickBaseApiClient',
-    'QuickBaseTableClient',
-    'QuickBaseQuery'
+    "QuickBaseApp",
+    "ResponsePager",
+    "QuickBaseField",
+    "QuickBaseFieldType",
+    "QuickBaseReport",
+    "QuickBaseTable",
+    "QuickBaseApiClient",
+    "QuickBaseTableClient",
+    "QuickBaseQuery",
 ]

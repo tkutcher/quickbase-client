@@ -7,10 +7,9 @@ from quickbase_client.tools.script_loader import ScriptManager
 
 
 class TestScriptManager:
-
     def test_add_script(self):
         class MyScript(Script):
-            registration_name = 'myscript'
+            registration_name = "myscript"
 
             def run(self):
                 pass
@@ -20,16 +19,16 @@ class TestScriptManager:
                 pass
 
             @staticmethod
-            def instantiate_from_ns(ns) -> 'Script':
+            def instantiate_from_ns(ns) -> "Script":
                 return MyScript()
 
         mgr = ScriptManager()
         mgr.register_script(MyScript)
-        assert mgr.get_script_by_name('myscript') is MyScript
+        assert mgr.get_script_by_name("myscript") is MyScript
 
     def test_error_add_duplicate_script(self):
         class MyScript(Script):
-            registration_name = 'myscript'
+            registration_name = "myscript"
 
             def run(self):
                 pass
@@ -39,11 +38,11 @@ class TestScriptManager:
                 pass
 
             @staticmethod
-            def instantiate_from_ns(ns) -> 'Script':
+            def instantiate_from_ns(ns) -> "Script":
                 return MyScript()
 
         class MyScript2(MyScript):
-            registration_name = 'myscript'
+            registration_name = "myscript"
 
         mgr = ScriptManager()
         mgr.register_script(MyScript)
@@ -52,10 +51,7 @@ class TestScriptManager:
 
 
 class TestCoreScriptLoader:
-
-    @pytest.mark.parametrize('script_cls', [
-        ModelGenerator
-    ])
+    @pytest.mark.parametrize("script_cls", [ModelGenerator])
     def test_loads_script(self, script_cls):
         mgr = CoreScriptLoader().load_scripts()
         assert mgr.get_script_by_name(script_cls.registration_name) is script_cls

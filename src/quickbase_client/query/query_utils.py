@@ -3,9 +3,8 @@ from datetime import datetime
 
 from quickbase_client.orm.field import QuickBaseField
 
-
-DATE_FMT = '%m-%d-%Y'
-DATETIME_FMT = '%m-%d-%Y %l:%M%p'
+DATE_FMT = "%m-%d-%Y"
+DATETIME_FMT = "%m-%d-%Y %l:%M%p"
 
 
 def query_value_stringify(val, _quote=True):
@@ -17,11 +16,11 @@ def query_value_stringify(val, _quote=True):
     if isinstance(val, date):
         return quoter(val.strftime(DATE_FMT))
     if isinstance(val, bool):
-        return quoter('true' if val else 'false')
+        return quoter("true" if val else "false")
     if isinstance(val, list):
-        return quoter('; '.join([query_value_stringify(v, _quote=False) for v in val]))
+        return quoter("; ".join([query_value_stringify(v, _quote=False) for v in val]))
     if isinstance(val, QuickBaseField):
-        return quoter(f'_FID_{val.fid}')
+        return quoter(f"_FID_{val.fid}")
     if isinstance(val, int) or isinstance(val, float):
         return str(val)  # don't quote
     return quoter(str(val))

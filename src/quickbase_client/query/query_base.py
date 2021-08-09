@@ -1,4 +1,3 @@
-
 class QuickBaseQuery(object):
     """A base object for all of the data for a query.
 

@@ -20,18 +20,18 @@ from quickbase_client.orm.table import QuickBaseTable
 
 @pytest.fixture()
 def example_app():
-    return QuickBaseApp(app_id='abcdefg', name='QBCPY', realm_hostname='dicorp.quickbase.com')
+    return QuickBaseApp(
+        app_id="abcdefg", name="QBCPY", realm_hostname="dicorp.quickbase.com"
+    )
 
 
 @pytest.fixture()
 def debugs_table(example_app):
     class DebugsTable(QuickBaseTable):
-        __dbid__ = 'aaaaaa'
-        __tablename__ = 'Debugs'
+        __dbid__ = "aaaaaa"
+        __tablename__ = "Debugs"
         __app__ = example_app
-        __reports__ = {
-            'List All': QuickBaseReport(report_id=1, name='List All')
-        }
+        __reports__ = {"List All": QuickBaseReport(report_id=1, name="List All")}
 
         some_basic_text_field = QuickBaseField(fid=6, field_type=QB_TEXT)
         a_multiline_text_field = QuickBaseField(fid=7, field_type=QB_TEXT_MULTILINE)
@@ -47,22 +47,23 @@ def debugs_table(example_app):
         record_id = QuickBaseField(fid=3, field_type=QB_NUMERIC)
         record_owner = QuickBaseField(fid=4, field_type=QB_NUMERIC)
         last_modified_by = QuickBaseField(fid=5, field_type=QB_NUMERIC)
+
     return DebugsTable
 
 
 def _data_from_file(data_file):
-    p = pathlib.Path(__file__).parent / 'data' / 'mocks' / data_file
-    with open(str(p), 'r') as f:
+    p = pathlib.Path(__file__).parent / "data" / "mocks" / data_file
+    with open(str(p), "r") as f:
         return json.load(f)
 
 
 _mocks = [
-    ('GET', '/apps/abcdef', 'get_app_abcdef.json'),
-    ('GET', '/tables?appId=abcdef', 'get_tables_for_app_abcdef.json'),
-    ('GET', '/fields?tableId=aaaaaa', 'get_fields_for_table_aaaaaa.json'),
-    ('GET', '/fields?tableId=bbbbbb', 'get_fields_for_table_bbbbbb.json'),
-    ('GET', '/fields?tableId=cccccc', 'get_fields_for_table_cccccc.json'),
-    ('POST', '/records/query', 'get_records_for_table_aaaaaa.json'),
+    ("GET", "/apps/abcdef", "get_app_abcdef.json"),
+    ("GET", "/tables?appId=abcdef", "get_tables_for_app_abcdef.json"),
+    ("GET", "/fields?tableId=aaaaaa", "get_fields_for_table_aaaaaa.json"),
+    ("GET", "/fields?tableId=bbbbbb", "get_fields_for_table_bbbbbb.json"),
+    ("GET", "/fields?tableId=cccccc", "get_fields_for_table_cccccc.json"),
+    ("POST", "/records/query", "get_records_for_table_aaaaaa.json"),
 ]
 
 
@@ -70,7 +71,8 @@ _mocks = [
 def qb_api_mock(requests_mock):
     for method, endpoint, f in _mocks:
         requests_mock.request(
-            method, f'https://api.quickbase.com/v1{endpoint}', json=_data_from_file(f))
+            method, f"https://api.quickbase.com/v1{endpoint}", json=_data_from_file(f)
+        )
 
 
 @pytest.fixture()
@@ -82,4 +84,5 @@ def mock_json_loader():
 def request_spy(monkeypatch):
     def _spy(*args_, **kwargs_):
         return args_, kwargs_
-    monkeypatch.setattr(request_factory.requests, 'request', _spy)
+
+    monkeypatch.setattr(request_factory.requests, "request", _spy)

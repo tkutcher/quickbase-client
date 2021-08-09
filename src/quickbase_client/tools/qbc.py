@@ -7,12 +7,12 @@ scripts = CoreScriptLoader().load_scripts()
 
 
 def _run(ns):
-    print('running...')
+    print("running...")
     script_instance = ns.script_cls.instantiate_from_ns(ns)
     if script_instance:
         retval = script_instance.run()
         if retval:
-            print('done!')
+            print("done!")
         return retval
     else:
         return 1
@@ -20,14 +20,14 @@ def _run(ns):
 
 def main(args=None):
     parser = argparse.ArgumentParser()
-    parser.add_argument('--show-stacktrace', action='store_true')
+    parser.add_argument("--show-stacktrace", action="store_true")
 
-    cmd_parsers = parser.add_subparsers(help='command help')
+    cmd_parsers = parser.add_subparsers(help="command help")
 
-    run_parser = cmd_parsers.add_parser('run', help='run a script.')
+    run_parser = cmd_parsers.add_parser("run", help="run a script.")
     run_parser.set_defaults(func=_run)
 
-    script_parsers = run_parser.add_subparsers(help='script help')
+    script_parsers = run_parser.add_subparsers(help="script help")
     for script_name in scripts.all_scripts():
         script = scripts.get_script_by_name(script_name)
         script_parser = script_parsers.add_parser(script_name)
@@ -41,11 +41,11 @@ def main(args=None):
     except Exception as e:  # noqa
         if ns.show_stacktrace:
             raise e
-        sys.stderr.write(str(e) + '\n'),
-        sys.stderr.write('\trerun with qbc --show-stacktrace for more output\n')
-        sys.stderr.write('\texample: qbc --show-stacktrace run blah\n')
+        sys.stderr.write(str(e) + "\n"),
+        sys.stderr.write("\trerun with qbc --show-stacktrace for more output\n")
+        sys.stderr.write("\texample: qbc --show-stacktrace run blah\n")
         exit(1)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

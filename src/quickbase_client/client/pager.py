@@ -1,4 +1,3 @@
-
 class ResponsePager:
     """Object to pass to methods (query) to manage pagination.
 
@@ -12,6 +11,7 @@ class ResponsePager:
            recs = my_client.query(pager=pager)
 
     """
+
     def __init__(self):
         self.num_calls = 0
         self.next_skip = 0
@@ -19,13 +19,11 @@ class ResponsePager:
 
     def update_from_metadata(self, metadata):
         self.num_calls += 1
-        self.total_records = metadata['totalRecords']
-        self.next_skip = metadata['skip'] + metadata['numRecords']
+        self.total_records = metadata["totalRecords"]
+        self.next_skip = metadata["skip"] + metadata["numRecords"]
 
     def get_options(self):
-        return {
-            'skip': self.next_skip
-        }
+        return {"skip": self.next_skip}
 
     def more_remaining(self) -> bool:
         """Returns true if there is another request to be made."""

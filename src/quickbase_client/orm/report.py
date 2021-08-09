@@ -5,5 +5,5 @@ import attr
 class QuickBaseReport(object):
     report_id: int
     name: str
-    type: str = ''
-    description: str = ''
+    type: str = ""
+    description: str = ""

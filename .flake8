@@ -2,15 +2,16 @@
 max-line-length = 100
 count = True
 enable-extensions = Q I
+extend-ignore = E203,W503
 ignore = examples/*
 exclude = dist,build,*.pyc,build,*.egg,.git,.pytest_cache,.venv,docs,.tox,examples
 per-file-ignores=
     tests/*:E5,E702
 
 # flake8:quotes
-inline-quotes = single
-multiline-quotes = single
+inline-quotes = double
+multiline-quotes = double
 
 # flake8:import-order
-import-order-style = appnexus
+import-order-style = pycharm
 application-import-names = tests,quickbase_client
