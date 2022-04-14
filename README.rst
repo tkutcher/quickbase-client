@@ -1,8 +1,8 @@
 #####################
-QuickBase-Client
+Quickbase-Client
 #####################
 
-A High-Level QuickBase Python API Client & Model Generator
+A High-Level Quickbase Python API Client & Model Generator
 
 
 .. image:: https://gitlab.com/tkutcher/quickbase-client/badges/dev/pipeline.svg
@@ -190,15 +190,13 @@ More Resources
 - `CONTRIBUTING </CONTRIBUTING.md>`_
 - `LICENSE </LICENSE.md>`_
 
-Notes
-===============
 
-Naming
------------
+Other Notes
+====================
+
 
 Currently a bunch of duplicate aliases for ``QuickBase`` to ``Quickbase`` since this
 was originally released with everything prefixed as ``QuickBase-``. But since Quickbase
 is branding more to "Quickbase", this will eventually be the main naming for
 version 1.0 in an effort to keep more consistent. So prefer to use `Quickbase-` prefixed classes
 as in the future the other aliases will be dropped.
-
