@@ -52,16 +52,6 @@ class QuickbaseRequestFactory(object):
             method=method.upper(), url=url, headers=headers, json=data, params=params
         )
 
-    # primarily for testing mock/spy convenience
-    # def _session_request(self, method, url, headers, data, params):
-    #     return self.session.request(
-    #         method=method.upper(),
-    #         url=url,
-    #         headers=headers,
-    #         json=data,
-    #         params=params,
-    #     )
-
     def get(self, endpoint, additional_headers=None, params=None):
         return self.make_request("GET", endpoint, additional_headers, params=params)
 

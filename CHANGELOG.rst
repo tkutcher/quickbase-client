@@ -9,6 +9,7 @@ CHANGELOG
 * Rename ``QuickBase-`` class prefixes to ``Quickbase-`` and make aliases  (`#54`_)
 * Switch to Git Flow branching model with a ``main`` branch (`#54`_)
 * Add more documentation for query endpoint usage (`#53`_)
+* Add ``QuickbaseLegacyApiClient`` with ability to update a record owner (`#52`_)
 
 
 `0.4.0`_ (2021-6-30)
@@ -76,6 +77,7 @@ CHANGELOG
 .. _`#44`: https://github.com/tkutcher/quickbase-client/issues/44
 .. _`#45`: https://github.com/tkutcher/quickbase-client/issues/45
 .. _`#47`: https://github.com/tkutcher/quickbase-client/issues/47
+.. _`#52`: https://github.com/tkutcher/quickbase-client/issues/52
 .. _`#53`: https://github.com/tkutcher/quickbase-client/issues/53
 .. _`#54`: https://github.com/tkutcher/quickbase-client/issues/54
 

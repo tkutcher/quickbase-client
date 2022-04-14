@@ -75,6 +75,10 @@ def parse_realm_and_app_id_from_url(url):
     return parsed.hostname, parsed.path.split("/")[-1]
 
 
+def normalize_hostname(realm_hostname: str) -> str:
+    return realm_hostname.lstrip("https://").lstrip("http://").rstrip("/")
+
+
 def normalize_unicode(s: str) -> str:
     # from: https://stackoverflow.com/a/517974/612166
     nfkd_form = normalize("NFKD", s)

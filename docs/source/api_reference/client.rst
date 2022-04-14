@@ -25,6 +25,14 @@ QuickbaseApiClient
     :undoc-members:
 
 
+
+QuickbaseLegacyApiClient
+-------------------------------
+
+.. autoclass:: quickbase_client.QuickbaseLegacyApiClient
+    :members:
+
+
 RequestFactory
 ----------------
 

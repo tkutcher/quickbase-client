@@ -237,5 +237,18 @@ class QuickbaseTableClient(object):
             else [self.serializer.deserialize(x) for x in data.json()["data"]]
         )
 
+    def change_record_owner(self, rid, new_owner):
+        """Use the legacy API to change a Record's owner.
+
+        See https://help.quickbase.com/api-guide/change_record_owner.html
+
+        :param rid:
+            The record ID to change the owner of
+
+        :param new_owner:
+            The email address, or user ID, of the user to change to the owner.
+        """
+        return self.api.legacy_api.change_record_owner(self.table_id, rid, new_owner)
+
 
 QuickBaseTableClient = QuickbaseTableClient  # alias - TODO - delete in future

@@ -1,3 +1,4 @@
+from quickbase_client.client.legacy_client import QuickbaseLegacyApiClient
 from quickbase_client.client.request_factory import QuickbaseRequestFactory
 
 
@@ -14,12 +15,16 @@ class QuickbaseApiClient(object):
 
     Use :meth:`~request` to make an arbitrary request that forwards to
     :meth:`~QuickbaseRequestFactory.make_request`
+
+    :ivar legacy_api:
+        The :class:`~QuickbaseLegacyApiClient` for making requests to the XML API.
     """
 
     def __init__(self, user_token, realm_hostname, agent="python", allow_deletes=False):
         self.rf = QuickbaseRequestFactory(
             user_token, realm_hostname, agent, allow_deletes=allow_deletes
         )
+        self.legacy_api = QuickbaseLegacyApiClient(user_token, realm_hostname)
 
     def request(self, *args, **kwargs):
         return self.rf.make_request(*args, **kwargs)

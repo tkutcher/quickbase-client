@@ -3,6 +3,7 @@ from quickbase_client.client.api import QuickbaseApiClient
 from quickbase_client.client.pager import ResponsePager
 from quickbase_client.client.table_client import QuickBaseTableClient
 from quickbase_client.client.table_client import QuickbaseTableClient
+from quickbase_client.client.legacy_client import QuickbaseLegacyApiClient
 from quickbase_client.orm.app import QuickBaseApp
 from quickbase_client.orm.app import QuickbaseApp
 from quickbase_client.orm.field import QuickBaseField
@@ -40,4 +41,5 @@ __all__ = [
     "QuickbaseTable",
     "QuickBaseQuery",
     "QuickbaseQuery",
+    "QuickbaseLegacyApiClient",
 ]
