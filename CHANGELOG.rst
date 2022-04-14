@@ -2,6 +2,17 @@
 CHANGELOG
 ==========
 
+`0.5.2`_ (2022-4-14)
+---------------------
+
+* Remove import from ``collections.Callable`` in ``log_handler.py`` so it works above Python 3.8 (`#54`_)
+
+
+`0.5.1`_ (2022-4-14)
+---------------------
+
+* Could not publish to PyPi because of some wierd rendering issue in the README...
+
 `0.5.0`_ (2022-4-14)
 ---------------------
 

@@ -1,6 +1,5 @@
 import logging
 import threading
-from collections import Callable
 from datetime import datetime
 
 from quickbase_client import QuickbaseTableClient
@@ -13,11 +12,11 @@ _mock_record = logging.LogRecord(
 class QuickbaseLogHandler(logging.Handler):
     """Class for sending logs to a specific Quickbase table.
 
-    You supply it with a table client to the logs table, and the handler will send logs to that
-    table in a non-blocking background thread.
+    You supply it with a table client to the logs table, and the handler will send logs
+    to that table in a non-blocking background thread.
 
-    This uses the higher-level QuickbaseTableClient APIs. So you will have to create a class for
-    your table you want to send logs to.
+    This uses the higher-level QuickbaseTableClient APIs. So you will have to
+    create a class for your table you want to send logs to.
     """
 
     def __init__(self, logs_table_client: QuickbaseTableClient):
@@ -35,9 +34,17 @@ class QuickbaseLogHandler(logging.Handler):
         super().__init__()
 
     @staticmethod
-    def with_record_factory(
-        logs_table_client: QuickbaseTableClient, record_factory: Callable
-    ):
+    def with_record_factory(logs_table_client: QuickbaseTableClient, record_factory):
+        """Create a logger using a function to make records.
+
+        :param logs_table_client:
+            The QuickbaseTableClient for the logs to go to.
+
+        :param record_factory:
+            A function which takes a `logging.LogRecord` and creates the relevant
+            record (instance of a :class:`~QuickbaseTable`).
+        """
+
         class _CustomRecordFactoryHandler(QuickbaseLogHandler):
             def record_factory(self, record: logging.LogRecord):
                 return record_factory(record)
@@ -46,9 +53,9 @@ class QuickbaseLogHandler(logging.Handler):
 
     def record_factory(self, record: logging.LogRecord):
         """
-        Create a :class:`~QuickbaseTable` record object given a LogRecord. By default, this
-        assumes the associated table, under the handlers table client, has properties `when`,
-        `level`, and `message`.
+        Create a :class:`~QuickbaseTable` record object given a LogRecord. By default,
+        this assumes the associated table, under the handlers table client, has
+        properties ``when``, ``level``, and ``message``.
 
         :param record: The logging.LogRecord.
         :return: A QuickbaseTable record object.
@@ -60,7 +67,7 @@ class QuickbaseLogHandler(logging.Handler):
         )
 
     def emit(self, record):
-        """Calls :meth:`~record_factory` and starts a separate thread to send it to Quickbase."""
+        """Calls :meth:`~record_factory` and starts a thread to send it to Quickbase."""
         t = threading.Thread(target=self._do_emit, args=[record])
         t.start()
 
