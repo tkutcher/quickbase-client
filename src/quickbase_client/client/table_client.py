@@ -1,3 +1,4 @@
+import copy
 from typing import Any
 from typing import List
 from typing import Type
@@ -24,8 +25,21 @@ class QuickbaseTableClient(object):
 
         Pagination is not handled in any of these methods (yet).
 
-    :ivar table: The underlying :class:`~QuickbaseTable`
-    :ivar api: The wrapped :class:`~QuickbaseApiClient`
+    :ivar table:
+        The underlying :class:`~QuickbaseTable`
+
+    :ivar api:
+        The wrapped :class:`~QuickbaseApiClient`
+
+    :param user_token:
+        The user token to authenticate.
+
+    :param agent:
+        The agent header to send in requests.
+
+    :param normalize_unicode:
+        Whether the JSON Serializer should normalize accented characters so that they
+        can be encoded in Quickbase.
     """
 
     def __init__(
@@ -34,20 +48,14 @@ class QuickbaseTableClient(object):
         user_token,
         agent="python",
         normalize_unicode=True,
+        default_select=None,
     ):
-        """Create a client instance.
-
-        :param table: The table this client is metaphorically "connected" to.
-        :param user_token: The user token to authenticate.
-        :param agent: The agent header to send in requests.
-        :param normalize_unicode: Whether the JSON Serializer should normalize accented
-                                  characters.
-        """
         self.table = table
         self.serializer = RecordJsonSerializer(
             table_cls=self.table, normalize_unicode=normalize_unicode
         )
         self.api = QuickbaseApiClient(user_token, table.realm_hostname(), agent=agent)
+        self._default_select = default_select
 
     @property
     def app_id(self):
@@ -85,7 +93,8 @@ class QuickbaseTableClient(object):
         """
         return self.api.get_fields_for_table(self.table_id)
 
-    def _get_field_id(self, field: Union[QuickbaseField, int]):
+    @staticmethod
+    def _get_field_id(field: Union[QuickbaseField, int]):
         return field if isinstance(field, int) else field.fid
 
     def get_field(self, field: Union[QuickbaseField, int]):
@@ -130,8 +139,15 @@ class QuickbaseTableClient(object):
 
         https://developer.quickbase.com/operation/runReport.
 
-        :param report: Either the report name to lookup, the report id, or a
+        :param report:
+            Either the report name to lookup, the report id, or a
             :class:`~QuickbaseReport` object.
+
+        :param int skip:
+            For paging (see Quickbase API)
+
+        :param int top:
+            For paging (see Quickbase API)
         """
         report_id = self._get_report_id(report)
         return self.api.run_report(report_id, self.table_id, skip=skip, top=top)
@@ -151,10 +167,15 @@ class QuickbaseTableClient(object):
 
         https://developer.quickbase.com/operation/upsert
 
-        :param recs: A list of items that are either the raw record data to post, or the
+        :param recs:
+            A list of items that are either the raw record data to post, or the
             :class:`~QuickbaseTable` object/record.
-        :param merge_field_id: The list of fields to merge on.
-        :param fields_to_return: The list of field ID's to return (default None which means all).
+
+        :param merge_field_id:
+            The list of fields to merge on.
+
+        :param fields_to_return:
+            The list of field ID's to return (default None which means all).
         """
         data = [self._encode_rec(rec) for rec in recs]
         return self.api.add_records(
@@ -179,10 +200,23 @@ class QuickbaseTableClient(object):
 
         See :class:`~quickbase_client.ResponsePager` for handling pagination.
 
-        :param query_obj: The :class:`~QuickbaseQuery` object to use.
-        :param raw: If true, returns a requests.Response, else the data is serialized to a table
-            object.
-        :param pager: A :class:`~ResponsePager` to handle making paginated requests.
+        If some fields are coming back as null, a common "gotcha" is that the
+        Quickbase API by default only returns fields listed as "default" in a table.
+        In that case you would have to explicitly specify a ``select`` in the
+        query, or you can edit the fields in Quickbase to be default fields.
+
+        :param query_obj:
+            The :class:`~QuickbaseQuery` object to use. Note that this object also
+            specifies the ``select``, ``group_by``, ``sort_by``, etc. So to specify
+            those you need to specify them in the provided :class:`~QuickbaseQuery`.
+            See its documentation for more details.
+
+        :param raw:
+            If true, returns a requests.Response, else the data is
+            serialized to a table object.
+
+        :param pager:
+            A :class:`~ResponsePager` to handle making paginated requests.
         """
         pager = ResponsePager() if pager is None else pager
         query_obj = QuickbaseQuery(where=None) if query_obj is None else query_obj

@@ -4,10 +4,21 @@ class QuickbaseQuery(object):
     .. note::
         Current alias of ``QuickbaseQuery`` for backwards compatibility.
 
-    :ivar str where: The where string, e.g. ``"{7.EX.'18'}"``
-    :ivar dict options: Additional options to pass to the Quickbase runQuery endpoint
-    :ivar list[dict] group_by: The groupBy for the Quickbase runQuery endpoint
-    :ivar list[int] select: The list of field ID's to return
+    :param str where: The where string, e.g. ``"{7.EX.'18'}"``
+
+    :param dict options:
+        Additional options to pass to the Quickbase runQuery endpoint.
+
+    :param list[dict] group_by:
+        The groupBy for the Quickbase runQuery endpoint.
+
+    :param list[dict] sort_by:
+        The sortBy for the Quickbase runQuery endpoint.
+
+    :param list[int] select:
+        The list of field ID's to return. Note that Quickbase by default (i.e. if
+        this parameter is left as ``None``) only returns the "default" fields for
+        the table.
     """
 
     def __init__(self, where, options=None, group_by=None, sort_by=None, select=None):
