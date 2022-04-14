@@ -1,25 +1,25 @@
 import pytest
 
-from quickbase_client.client.table_client import QuickBaseTableClient
-from quickbase_client.orm.app import QuickBaseApp
+from quickbase_client.client.table_client import QuickbaseTableClient
+from quickbase_client.orm.app import QuickbaseApp
 from quickbase_client.orm.field import QB_NUMERIC
 from quickbase_client.orm.field import QB_TEXT
-from quickbase_client.orm.field import QuickBaseField
-from quickbase_client.orm.report import QuickBaseReport
-from quickbase_client.orm.table import QuickBaseTable
+from quickbase_client.orm.field import QuickbaseField
+from quickbase_client.orm.report import QuickbaseReport
+from quickbase_client.orm.table import QuickbaseTable
 
 
 @pytest.fixture()
 def example_table():
-    class ExampleTable(QuickBaseTable):
+    class ExampleTable(QuickbaseTable):
         __dbid__ = "bqx7xre7a"
         __tablename__ = "Examples"
-        __app__ = QuickBaseApp(
+        __app__ = QuickbaseApp(
             app_id="abcdefg", name="QBCPY", realm_hostname="example.quickbase.com"
         )
-        __reports__ = {"Report A": QuickBaseReport(report_id=1, name="Report A")}
-        field_1 = QuickBaseField(fid=6, field_type=QB_TEXT)
-        field_2 = QuickBaseField(fid=7, field_type=QB_NUMERIC)
+        __reports__ = {"Report A": QuickbaseReport(report_id=1, name="Report A")}
+        field_1 = QuickbaseField(fid=6, field_type=QB_TEXT)
+        field_2 = QuickbaseField(fid=7, field_type=QB_NUMERIC)
 
     return ExampleTable
 
@@ -59,4 +59,4 @@ class TestQuickBaseTable:
 
     def test_make_client(self, example_table):
         c = example_table.client("foo")
-        assert isinstance(c, QuickBaseTableClient)
+        assert isinstance(c, QuickbaseTableClient)

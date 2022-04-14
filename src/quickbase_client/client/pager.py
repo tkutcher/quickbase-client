@@ -1,7 +1,7 @@
 class ResponsePager:
     """Object to pass to methods (query) to manage pagination.
 
-    When calling something like QuickBaseTableClient.query, you can pass a ResponsePager,
+    When calling something like QuickbaseTableClient.query, you can pass a ResponsePager,
     and repeatedly make requests while :meth:`~more_remaining` is True.
 
     .. code:: python

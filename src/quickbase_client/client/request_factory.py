@@ -2,10 +2,10 @@ import json
 
 import requests
 
-from quickbase_client.orm.serialize import QuickBaseJsonEncoder
+from quickbase_client.orm.serialize import QuickbaseJsonEncoder
 
 
-class QuickBaseRequestFactory(object):
+class QuickbaseRequestFactory(object):
     def __init__(
         self,
         user_token,
@@ -17,8 +17,9 @@ class QuickBaseRequestFactory(object):
         self.user_token = user_token
         self.realm_hostname = realm_hostname
         self.agent = agent
-        self.encoder = QuickBaseJsonEncoder() if encoder is None else encoder
+        self.encoder = QuickbaseJsonEncoder() if encoder is None else encoder
         self.allow_deletes = allow_deletes
+        self.session = requests.Session()
 
     @property
     def base_headers(self):
@@ -31,12 +32,12 @@ class QuickBaseRequestFactory(object):
 
     def make_request(
         self, method, endpoint, additional_headers=None, params=None, data=None
-    ):
+    ) -> requests.Response:
         """Make a request (synchronously) and return the Response.
 
-        :param method: The (string) HTTP method.
-        :param endpoint: The endpoint of the API (starting after "v1/" for example).
-        :param additional_headers: A dict of extra headers.
+        :param string method: The (string) HTTP method.
+        :param string endpoint: The endpoint of the API (starting after "v1/" for example).
+        :param dict additional_headers: A dict of extra headers.
         :param params: Query parameters.
         :param data: The data to send in the body.
         """
@@ -45,12 +46,21 @@ class QuickBaseRequestFactory(object):
         url = f'https://api.quickbase.com/v1/{endpoint.lstrip("/")}'
         if method == "DELETE" and not self.allow_deletes:
             raise RuntimeError("to allow deletes, please set allow_deletes=True")
-        data = json.loads(
-            self.encoder.encode(data)
-        )  # ew - but easiest way to serialize dates
-        return requests.request(
+        # ew - but easiest way to serialize dates
+        data = json.loads(self.encoder.encode(data))
+        return self.session.request(
             method=method.upper(), url=url, headers=headers, json=data, params=params
         )
+
+    # primarily for testing mock/spy convenience
+    # def _session_request(self, method, url, headers, data, params):
+    #     return self.session.request(
+    #         method=method.upper(),
+    #         url=url,
+    #         headers=headers,
+    #         json=data,
+    #         params=params,
+    #     )
 
     def get(self, endpoint, additional_headers=None, params=None):
         return self.make_request("GET", endpoint, additional_headers, params=params)
@@ -62,3 +72,6 @@ class QuickBaseRequestFactory(object):
 
     def delete(self, endpoint, additional_headers=None, data=None):
         return self.make_request("DELETE", endpoint, additional_headers, data=data)
+
+
+QuickBaseRequestFactory = QuickbaseRequestFactory  # alias - TODO - delete in future

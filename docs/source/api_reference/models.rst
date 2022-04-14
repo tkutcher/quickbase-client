@@ -8,33 +8,33 @@ Models
    :caption: Contents:
 
 
-QuickBaseApp
+QuickbaseApp
 ---------------
 
-.. autoclass:: quickbase_client.QuickBaseApp
+.. autoclass:: quickbase_client.QuickbaseApp
     :members:
     :undoc-members:
 
 |
 
-QuickBaseTable
+QuickbaseTable
 ---------------
 
-.. autoclass:: quickbase_client.QuickBaseTable
+.. autoclass:: quickbase_client.QuickbaseTable
     :members:
 
 |
 
-QuickBaseField
+QuickbaseField
 ---------------
 
-.. autoclass:: quickbase_client.QuickBaseField
+.. autoclass:: quickbase_client.QuickbaseField
     :members:
 
 |
 
-QuickBaseFieldType
+QuickbaseFieldType
 ------------------
-.. autoclass:: quickbase_client.QuickBaseFieldType
+.. autoclass:: quickbase_client.QuickbaseFieldType
     :members:
     :undoc-members:

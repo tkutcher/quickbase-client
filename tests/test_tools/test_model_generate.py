@@ -66,7 +66,7 @@ class TestModelGenerator:
         gen = run_generator()
         app_module = gen.pkg_writer.modules["app"]
         s = app_module.get_file_as_string()
-        assert "Qbcpy = QuickBaseApp(" in s
+        assert "Qbcpy = QuickbaseApp(" in s
 
     def test_creates_table_files(self, run_generator):
         def _asserts(d, _):
@@ -85,7 +85,7 @@ class TestModelGenerator:
         run_generator(_asserts, table_ids=["idea", "cccccc"])
 
     def test_gets_fields_only_for_requested_tables(self, run_generator, mocker):
-        spy = mocker.spy(model_generate.QuickBaseApiClient, "get_fields_for_table")
+        spy = mocker.spy(model_generate.QuickbaseApiClient, "get_fields_for_table")
         run_generator(table_ids=["aaaaaa"])
         # first arg is `self` because it is an instance method
         spy.assert_called_once_with(ANY, "aaaaaa")
@@ -94,7 +94,7 @@ class TestModelGenerator:
         gen = run_generator()
         m = gen.pkg_writer.modules["debug"]
         s = m.get_file_as_string()
-        assert "QuickBaseTable):" in s
+        assert "QuickbaseTable):" in s
         assert "class" in s
         assert "field_type=" in s
 
@@ -230,7 +230,7 @@ class TestModelGenerator:
             assert not run_result
 
         monkeypatch.setattr(
-            model_generate.QuickBaseApiClient, "get_app", lambda _1, _2: r
+            model_generate.QuickbaseApiClient, "get_app", lambda _1, _2: r
         )
         run_generator(_asserts)
 
@@ -239,7 +239,7 @@ class TestModelGenerator:
         r.status_code = 400
         r._content = b'{"message": "some other issue"}'
         monkeypatch.setattr(
-            model_generate.QuickBaseApiClient, "get_app", lambda _1, _2: r
+            model_generate.QuickbaseApiClient, "get_app", lambda _1, _2: r
         )
 
         with pytest.raises(ValueError):

@@ -1,32 +1,33 @@
 """
-The table module includes a class :class:`~QuickBaseTable` that facilitates an ORM
-to QuickBase API JSON through a meta class also defined in this module. There
-is a dummy ~QuickBaseSchema object to allow easily getting
-:class:`~QuickBaseField` data and not the value of the field.
+The table module includes a class :class:`~QuickbaseTable` that facilitates an ORM
+to QuickBase API JSON through a meta class also defined in this module.
 """
 
 from typing import Dict
 
-from quickbase_client.orm.app import QuickBaseApp
-from quickbase_client.orm.field import QuickBaseField
-from quickbase_client.orm.report import QuickBaseReport
+from quickbase_client.orm.app import QuickbaseApp
+from quickbase_client.orm.field import QuickbaseField
+from quickbase_client.orm.report import QuickbaseReport
 
 
-# help from https://programmer.help/blogs/python-how-to-implement-orm-with-metaclasses.html
+# help from
+# https://programmer.help/blogs/python-how-to-implement-orm-with-metaclasses.html
 
 
-class QuickBaseTableMeta(type):
-    """Meta-class which builds a dunder to store the mappings of attribute
-    name --> QuickBaseFieldType
+class QuickbaseTableMeta(type):
+    """Meta-class which builds a dunder to store field data.
+
+    Stores a mapping of attribute name --> QuickbaseFieldType in ``__mappings__``,
+
     """
 
     def __new__(mcs, name, bases, attrs):
         mappings = {}
         fidmap = {}
-        _schema = QuickBaseTableSchema()
+        _schema = QuickbaseTableSchema()
 
         for k, v in attrs.items():
-            if isinstance(v, QuickBaseField):
+            if isinstance(v, QuickbaseField):
                 mappings[k] = v
                 fidmap[v.fid] = k
                 setattr(_schema, k, v)
@@ -42,32 +43,35 @@ class QuickBaseTableMeta(type):
 
     @property
     def schema(cls):
-        return cls.__schema__
+        return cls.__schema__  # noqa
 
 
-class QuickBaseTableSchema(object):
+class QuickbaseTableSchema(object):
+    """Used to get :class:`~QuickbaseField` data and not the value of the field."""
+
     pass
 
 
-class QuickBaseTable(metaclass=QuickBaseTableMeta):
+class QuickbaseTable(metaclass=QuickbaseTableMeta):
     """
     Base class for a table object.
 
     :ivar __dbid__: The string table ID (the part after /db in the URL).
     :ivar __tablename__: The english name of the table.
-    :ivar __app__: The :class:`~QuickBaseApp` the table belongs to.
-    :ivar __reports__: Lookup of :class:`~QuickBaseReport` objects for this table.
+    :ivar __app__: The :class:`~QuickbaseApp` the table belongs to.
+    :ivar __reports__: Lookup of :class:`~QuickbaseReport` objects for this table.
+    :cvar schema: The object to reference field types (rather than field data).
     """
 
     __dbid__ = None
     __tablename__ = ""
-    __app__: QuickBaseApp = None
+    __app__: QuickbaseApp = None
 
-    __reports__: Dict[str, QuickBaseReport] = {}
+    __reports__: Dict[str, QuickbaseReport] = {}
 
     def __init__(self, **kwargs):
 
-        for attr, field_def in self.__mappings__.items():
+        for attr, field_def in self.__mappings__.items():  # noqa
             v = kwargs.pop(attr) if attr in kwargs else None
             setattr(self, attr, v)
 
@@ -85,12 +89,12 @@ class QuickBaseTable(metaclass=QuickBaseTableMeta):
         return cls.__app__.realm_hostname
 
     @classmethod
-    def get_field_info(cls, attr: str) -> QuickBaseField:
+    def get_field_info(cls, attr: str) -> QuickbaseField:
         """Get the field info for a given attribute rather than the data.
 
         :param attr: String name of the attribute.
         """
-        return cls.__mappings__[attr]
+        return cls.__mappings__[attr]  # noqa
 
     @classmethod
     def get_report(cls, name: str):
@@ -106,14 +110,17 @@ class QuickBaseTable(metaclass=QuickBaseTableMeta):
 
         :param fid: The field ID.
         """
-        return cls.__fidmap__[fid]
+        return cls.__fidmap__[fid]  # noqa
 
     @classmethod
     def client(cls, user_token: str):
-        """Factory method to create a :class:`~QuickBaseTableClient` for this table.
+        """Factory method to create a :class:`~QuickbaseTableClient` for this table.
 
         :param user_token: The user token for authentication.
         """
-        from quickbase_client.client.table_client import QuickBaseTableClient
+        from quickbase_client.client.table_client import QuickbaseTableClient
 
-        return QuickBaseTableClient(cls, user_token)
+        return QuickbaseTableClient(cls, user_token)
+
+
+QuickBaseTable = QuickbaseTable  # alias - TODO - delete in future.

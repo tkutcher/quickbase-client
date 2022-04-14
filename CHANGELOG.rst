@@ -2,6 +2,14 @@
 CHANGELOG
 ==========
 
+`0.5.0`_ (2022-4-14)
+---------------------
+
+* Update development dependencies and better pytest practices for mocks/spies (`#54`_)
+* Rename ``QuickBase-`` class prefixes to ``Quickbase-`` and make aliases  (`#54`_)
+* Add Python 3.9 & 3.10 as tested python versions.
+
+
 `0.4.0`_ (2021-6-30)
 ---------------------
 
@@ -52,6 +60,7 @@ CHANGELOG
 .. _`0.3.0`: https://github.com/tkutcher/quickbase-client/releases/tag/v0.3.0
 .. _`0.3.1`: https://github.com/tkutcher/quickbase-client/releases/tag/v0.3.1
 .. _`0.4.0`: https://github.com/tkutcher/quickbase-client/releases/tag/v0.4.0
+.. _`0.5.0`: https://github.com/tkutcher/quickbase-client/releases/tag/v0.5.0
 
 
 ..
@@ -66,6 +75,7 @@ CHANGELOG
 .. _`#44`: https://github.com/tkutcher/quickbase-client/issues/44
 .. _`#45`: https://github.com/tkutcher/quickbase-client/issues/45
 .. _`#47`: https://github.com/tkutcher/quickbase-client/issues/47
+.. _`#54`: https://github.com/tkutcher/quickbase-client/issues/54
 
 
 ..

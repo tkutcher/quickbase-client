@@ -1,9 +1,9 @@
-.. QuickBase-Client documentation master file, created by
+.. Quickbase-Client documentation master file, created by
    sphinx-quickstart on Thu Nov  5 20:34:55 2020.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to QuickBase-Client's documentation!
+Welcome to Quickbase-Client's documentation!
 ============================================
 
 .. toctree::

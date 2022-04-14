@@ -1,7 +1,7 @@
-from quickbase_client.query.query_base import QuickBaseQuery
+from quickbase_client.query.query_base import QuickbaseQuery
 
 
-class TestQuickBaseQuery:
+class TestQuickbaseQuery:
     def test_create(self):
-        q = QuickBaseQuery(where="{'18'.EX.19}")
+        q = QuickbaseQuery(where="{'18'.EX.19}")
         assert q.where == "{'18'.EX.19}"

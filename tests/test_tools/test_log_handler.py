@@ -2,29 +2,29 @@ import logging
 
 import pytest
 
-from quickbase_client import QuickBaseApp
-from quickbase_client import QuickBaseField
-from quickbase_client import QuickBaseFieldType as Qb
-from quickbase_client import QuickBaseTable
+from quickbase_client import QuickbaseApp
+from quickbase_client import QuickbaseField
+from quickbase_client import QuickbaseFieldType as Qb
+from quickbase_client import QuickbaseTable
 from quickbase_client.tools.log_handler import QuickbaseLogHandler
 
-_MyApp = QuickBaseApp(
+_MyApp = QuickbaseApp(
     app_id="blah", name="bleh", realm_hostname="builderprogram-tkutcher.quickbase.com"
 )
 
 
-class _MyLogsTable(QuickBaseTable):
+class _MyLogsTable(QuickbaseTable):
     __dbid__ = "log"
     __app__ = _MyApp
-    level = QuickBaseField(fid=6, field_type=Qb.TEXT)
-    message = QuickBaseField(fid=7, field_type=Qb.TEXT)
-    when = QuickBaseField(fid=8, field_type=Qb.DATETIME)
+    level = QuickbaseField(fid=6, field_type=Qb.TEXT)
+    message = QuickbaseField(fid=7, field_type=Qb.TEXT)
+    when = QuickbaseField(fid=8, field_type=Qb.DATETIME)
 
 
-class _NotALogTable(QuickBaseTable):
+class _NotALogTable(QuickbaseTable):
     __dbid__ = "log"
     __app__ = _MyApp
-    level = QuickBaseField(fid=6, field_type=Qb.TEXT)
+    level = QuickbaseField(fid=6, field_type=Qb.TEXT)
 
 
 MOCK_LOG_LEVEL = 10
@@ -46,20 +46,24 @@ class TestLogHandler:
             client = _NotALogTable.client("foo")
             QuickbaseLogHandler(client)
 
-    def test_posts_log_record(self, request_spy):
+    def test_posts_log_record(self, mocker):
         client = _MyLogsTable.client("foo")
         handler = QuickbaseLogHandler(client)
-        _, k = handler._do_emit(MOCK_LOG)
+        spy = mocker.spy(client.api.rf.session, "request")
+        handler._do_emit(MOCK_LOG)
+        _, k = spy.call_args
         fid = str(_MyLogsTable.schema.level.fid)
         assert k["json"]["data"][0][fid]["value"] == MOCK_LOG_LEVEL
 
-    def test_create_with_record_factory(self, request_spy):
+    def test_create_with_record_factory(self, mocker):
         client = _MyLogsTable.client("foo")
+        spy = mocker.spy(client.api.rf.session, "request")
 
         def _mock_rf(record):
             return _MyLogsTable(message=record.msg)
 
         handler = QuickbaseLogHandler.with_record_factory(client, _mock_rf)
-        _, k = handler._do_emit(MOCK_LOG)
+        handler._do_emit(MOCK_LOG)
+        _, k = spy.call_args
         assert str(_MyLogsTable.schema.level.fid) not in k["json"]["data"][0]
         assert str(_MyLogsTable.schema.message.fid) in k["json"]["data"][0]

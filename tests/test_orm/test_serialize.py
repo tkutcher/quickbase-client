@@ -4,7 +4,7 @@ from datetime import datetime
 
 import pytest
 
-from quickbase_client.orm.app import QuickBaseApp
+from quickbase_client.orm.app import QuickbaseApp
 from quickbase_client.orm.field import QB_CHECKBOX
 from quickbase_client.orm.field import QB_DATE
 from quickbase_client.orm.field import QB_DATETIME
@@ -13,34 +13,34 @@ from quickbase_client.orm.field import QB_TEXT
 from quickbase_client.orm.field import QB_TEXT_MULTILINE
 from quickbase_client.orm.field import QB_TEXT_MULTIPLE_CHOICE
 from quickbase_client.orm.field import QB_TEXT_MULTI_SELECT
-from quickbase_client.orm.field import QuickBaseField
-from quickbase_client.orm.serialize import QuickBaseJsonEncoder
+from quickbase_client.orm.field import QuickbaseField
+from quickbase_client.orm.serialize import QuickbaseJsonEncoder
 from quickbase_client.orm.serialize import RecordJsonSerializer
-from quickbase_client.orm.table import QuickBaseTable
+from quickbase_client.orm.table import QuickbaseTable
 
 
 @pytest.fixture()
 def example_table():
-    class ExampleTable(QuickBaseTable):
+    class ExampleTable(QuickbaseTable):
         __dbid__ = "bqx7xre7a"
         __tablename__ = "Examples"
-        __app__ = QuickBaseApp(
+        __app__ = QuickbaseApp(
             app_id="abcdefg", name="QBCPY", realm_hostname="example.quickbase.com"
         )
-        text_field = QuickBaseField(fid=8, field_type=QB_TEXT)
-        date_field = QuickBaseField(fid=6, field_type=QB_DATETIME)
-        bool_field = QuickBaseField(fid=7, field_type=QB_CHECKBOX)
-        date_time_as_date = QuickBaseField(fid=900, field_type=QB_DATE)
-        date_time_as_date_time = QuickBaseField(fid=901, field_type=QB_DATETIME)
-        rich_text_as_rich_text = QuickBaseField(fid=902, field_type=QB_RICH_TEXT)
-        text_as_ascii_text = QuickBaseField(fid=903, field_type=QB_TEXT)
-        text_multiline_as_ascii_text = QuickBaseField(
+        text_field = QuickbaseField(fid=8, field_type=QB_TEXT)
+        date_field = QuickbaseField(fid=6, field_type=QB_DATETIME)
+        bool_field = QuickbaseField(fid=7, field_type=QB_CHECKBOX)
+        date_time_as_date = QuickbaseField(fid=900, field_type=QB_DATE)
+        date_time_as_date_time = QuickbaseField(fid=901, field_type=QB_DATETIME)
+        rich_text_as_rich_text = QuickbaseField(fid=902, field_type=QB_RICH_TEXT)
+        text_as_ascii_text = QuickbaseField(fid=903, field_type=QB_TEXT)
+        text_multiline_as_ascii_text = QuickbaseField(
             fid=904, field_type=QB_TEXT_MULTILINE
         )
-        text_multi_select_as_ascii_text = QuickBaseField(
+        text_multi_select_as_ascii_text = QuickbaseField(
             fid=905, field_type=QB_TEXT_MULTI_SELECT
         )
-        text_multiple_choice_as_ascii_text = QuickBaseField(
+        text_multiple_choice_as_ascii_text = QuickbaseField(
             fid=906, field_type=QB_TEXT_MULTIPLE_CHOICE
         )
 
@@ -153,13 +153,13 @@ class TestRecordJsonSerializer:
 class TestJsonEncoder:
     def test_encodes_dates(self):
         data = {1: date(year=2020, month=12, day=9), 2: True, 3: "hello"}
-        s = json.dumps(data, cls=QuickBaseJsonEncoder)
+        s = json.dumps(data, cls=QuickbaseJsonEncoder)
         assert "2020-12-09" in s
         assert "true" in s
         assert "hello" in s
 
     def test_encodes_datetimes(self):
         data = {1: datetime(year=2020, month=12, day=9, hour=2), 2: True, 3: "hello"}
-        s = json.dumps(data, cls=QuickBaseJsonEncoder)
+        s = json.dumps(data, cls=QuickbaseJsonEncoder)
         assert "2020-12-09T02:00:00" in s
         assert "." not in json.loads(s)["1"]

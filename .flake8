@@ -2,11 +2,12 @@
 max-line-length = 100
 count = True
 enable-extensions = Q I
-extend-ignore = E203,W503
-ignore = examples/*
+extend-ignore = E203,I202
 exclude = dist,build,*.pyc,build,*.egg,.git,.pytest_cache,.venv,docs,.tox,examples
 per-file-ignores=
-    tests/*:E5,E702
+    tests/*:E5,E702,I100,I201
+    __init__.py:F401
+
 
 # flake8:quotes
 inline-quotes = double

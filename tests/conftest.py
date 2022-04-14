@@ -3,8 +3,7 @@ import pathlib
 
 import pytest
 
-from quickbase_client.client import request_factory
-from quickbase_client.orm.app import QuickBaseApp
+from quickbase_client.orm.app import QuickbaseApp
 from quickbase_client.orm.field import QB_CHECKBOX
 from quickbase_client.orm.field import QB_DATE
 from quickbase_client.orm.field import QB_DATETIME
@@ -13,40 +12,41 @@ from quickbase_client.orm.field import QB_RICH_TEXT
 from quickbase_client.orm.field import QB_TEXT
 from quickbase_client.orm.field import QB_TEXT_MULTILINE
 from quickbase_client.orm.field import QB_TEXT_MULTIPLE_CHOICE
-from quickbase_client.orm.field import QuickBaseField
-from quickbase_client.orm.report import QuickBaseReport
-from quickbase_client.orm.table import QuickBaseTable
+from quickbase_client.orm.field import QuickbaseField
+from quickbase_client.orm.report import QuickbaseReport
+from quickbase_client.orm.table import QuickbaseTable
+import requests_mock as requests_mock_
 
 
 @pytest.fixture()
 def example_app():
-    return QuickBaseApp(
+    return QuickbaseApp(
         app_id="abcdefg", name="QBCPY", realm_hostname="dicorp.quickbase.com"
     )
 
 
 @pytest.fixture()
 def debugs_table(example_app):
-    class DebugsTable(QuickBaseTable):
+    class DebugsTable(QuickbaseTable):
         __dbid__ = "aaaaaa"
         __tablename__ = "Debugs"
         __app__ = example_app
-        __reports__ = {"List All": QuickBaseReport(report_id=1, name="List All")}
+        __reports__ = {"List All": QuickbaseReport(report_id=1, name="List All")}
 
-        some_basic_text_field = QuickBaseField(fid=6, field_type=QB_TEXT)
-        a_multiline_text_field = QuickBaseField(fid=7, field_type=QB_TEXT_MULTILINE)
-        some_checkbox = QuickBaseField(fid=8, field_type=QB_CHECKBOX)
-        a_datetime = QuickBaseField(fid=9, field_type=QB_DATETIME)
-        my_number = QuickBaseField(fid=10, field_type=QB_NUMERIC)
-        just_a_date = QuickBaseField(fid=11, field_type=QB_DATE)
-        funky_label = QuickBaseField(fid=12, field_type=QB_RICH_TEXT)
-        mutlichoice = QuickBaseField(fid=13, field_type=QB_TEXT_MULTIPLE_CHOICE)
-        def_ = QuickBaseField(fid=14, field_type=QB_TEXT)
-        date_created = QuickBaseField(fid=1, field_type=QB_DATETIME)
-        date_modified = QuickBaseField(fid=2, field_type=QB_DATETIME)
-        record_id = QuickBaseField(fid=3, field_type=QB_NUMERIC)
-        record_owner = QuickBaseField(fid=4, field_type=QB_NUMERIC)
-        last_modified_by = QuickBaseField(fid=5, field_type=QB_NUMERIC)
+        some_basic_text_field = QuickbaseField(fid=6, field_type=QB_TEXT)
+        a_multiline_text_field = QuickbaseField(fid=7, field_type=QB_TEXT_MULTILINE)
+        some_checkbox = QuickbaseField(fid=8, field_type=QB_CHECKBOX)
+        a_datetime = QuickbaseField(fid=9, field_type=QB_DATETIME)
+        my_number = QuickbaseField(fid=10, field_type=QB_NUMERIC)
+        just_a_date = QuickbaseField(fid=11, field_type=QB_DATE)
+        funky_label = QuickbaseField(fid=12, field_type=QB_RICH_TEXT)
+        mutlichoice = QuickbaseField(fid=13, field_type=QB_TEXT_MULTIPLE_CHOICE)
+        def_ = QuickbaseField(fid=14, field_type=QB_TEXT)
+        date_created = QuickbaseField(fid=1, field_type=QB_DATETIME)
+        date_modified = QuickbaseField(fid=2, field_type=QB_DATETIME)
+        record_id = QuickbaseField(fid=3, field_type=QB_NUMERIC)
+        record_owner = QuickbaseField(fid=4, field_type=QB_NUMERIC)
+        last_modified_by = QuickbaseField(fid=5, field_type=QB_NUMERIC)
 
     return DebugsTable
 
@@ -75,14 +75,12 @@ def qb_api_mock(requests_mock):
         )
 
 
+@pytest.fixture(autouse=True)
+def _no_real_requests(requests_mock):
+    """Make sure no real HTTP requests are sent."""
+    requests_mock.request(requests_mock_.ANY, requests_mock_.ANY, json={})
+
+
 @pytest.fixture()
 def mock_json_loader():
     return _data_from_file
-
-
-@pytest.fixture()
-def request_spy(monkeypatch):
-    def _spy(*args_, **kwargs_):
-        return args_, kwargs_
-
-    monkeypatch.setattr(request_factory.requests, "request", _spy)

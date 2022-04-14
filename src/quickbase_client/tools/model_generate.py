@@ -2,7 +2,7 @@ import os
 import sys
 from typing import Optional
 
-from quickbase_client.client.api import QuickBaseApiClient
+from quickbase_client.client.api import QuickbaseApiClient
 from quickbase_client.orm.field import get_field_type_by_string
 from quickbase_client.tools.script import Script
 from quickbase_client.utils.pywriting_utils import BasicPyFileWriter
@@ -20,9 +20,9 @@ class AppPyFileWriter(PyFileWriter):
 
     def add_header_comments_and_imports(self, app_name, description):
         self.pyfile.add_comment(
-            f"app.py - model QuickBaseApp for {app_name} QuickBase App."
+            f"app.py - model QuickbaseApp for {app_name} QuickBase App."
         ).add_comment(f"{app_name} - {description}").space().add_line(
-            "from quickbase_client.orm.app import QuickBaseApp"
+            "from quickbase_client.orm.app import QuickbaseApp"
         ).space()
 
     def add_module_vars(self, version_id):
@@ -30,7 +30,7 @@ class AppPyFileWriter(PyFileWriter):
 
     def add_app_var(self, app_id, app_name, var_name, realm_hostname):
         self.pyfile.add_line(
-            f"{var_name} = QuickBaseApp(app_id='{app_id}', name='{app_name}', "
+            f"{var_name} = QuickbaseApp(app_id='{app_id}', name='{app_name}', "
             f"realm_hostname='{realm_hostname}')"
         ).space()
 
@@ -48,13 +48,13 @@ class TablePyFileWriter(PyFileWriter):
         self, app_import_path, app_var_name, file_name, table_name
     ):
         self.pyfile.add_comment(
-            f"{file_name}.py - QuickBaseTable for {table_name}"
-        ).space().add_line("from quickbase_client import QuickBaseField").add_line(
-            "from quickbase_client import QuickBaseFieldType as Qb"
+            f"{file_name}.py - QuickbaseTable for {table_name}"
+        ).space().add_line("from quickbase_client import QuickbaseField").add_line(
+            "from quickbase_client import QuickbaseFieldType as Qb"
         ).add_line(
-            "# from quickbase_client import QuickBaseReport"
+            "# from quickbase_client import QuickbaseReport"
         ).add_line(
-            "from quickbase_client import QuickBaseTable"
+            "from quickbase_client import QuickbaseTable"
         ).space().add_line(
             f"from {app_import_path}.app import {app_var_name}"
         ).space().space()
@@ -63,19 +63,19 @@ class TablePyFileWriter(PyFileWriter):
     def add_table_class_decl(self, table_ident, table_id, app_var_name):
         class_name = make_var_name(table_ident, case="pascal")
         self.pyfile.space().add_line(
-            f"class {class_name}(QuickBaseTable):"
+            f"class {class_name}(QuickbaseTable):"
         ).indent().add_line(f"__dbid__ = '{table_id}'").add_line(
             f"__app__ = {app_var_name}"
         ).space().add_line(
-            "date_created = QuickBaseField(fid=1, field_type=Qb.DATETIME)"
+            "date_created = QuickbaseField(fid=1, field_type=Qb.DATETIME)"
         ).add_line(
-            "date_modified = QuickBaseField(fid=2, field_type=Qb.DATETIME)"
+            "date_modified = QuickbaseField(fid=2, field_type=Qb.DATETIME)"
         ).add_line(
-            "recordid = QuickBaseField(fid=3, field_type=Qb.NUMERIC)"
+            "recordid = QuickbaseField(fid=3, field_type=Qb.NUMERIC)"
         ).add_line(
-            "record_owner = QuickBaseField(fid=4, field_type=Qb.USER)"
+            "record_owner = QuickbaseField(fid=4, field_type=Qb.USER)"
         ).add_line(
-            "last_modified = QuickBaseField(fid=5, field_type=Qb.USER)"
+            "last_modified = QuickbaseField(fid=5, field_type=Qb.USER)"
         ).space()
 
     def add_table_field(self, field_name, field_id, field_kind, properties):
@@ -92,7 +92,7 @@ class TablePyFileWriter(PyFileWriter):
             formula_str = f", formula={var_name}_formula"
 
         self.pyfile.add_line(
-            f"{var_name} = QuickBaseField("
+            f"{var_name} = QuickbaseField("
             f"fid={field_id}, "
             f"field_type=Qb.{field_kind}{formula_str})"
         )
@@ -214,7 +214,7 @@ class ModelGenerator(Script):
         self.pkg_writer.add_module(file_name, w)
 
     def run(self):
-        api = QuickBaseApiClient(
+        api = QuickbaseApiClient(
             user_token=self.user_token, realm_hostname=self.realm_hostname
         )
 

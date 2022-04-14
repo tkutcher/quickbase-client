@@ -8,19 +8,19 @@ Clients
    :caption: Contents:
 
 
-QuickBaseTableClient
+QuickbaseTableClient
 ----------------------
 
-.. autoclass:: quickbase_client.QuickBaseTableClient
+.. autoclass:: quickbase_client.QuickbaseTableClient
     :members:
 
     .. automethod:: __init__
 
 
-QuickBaseApiClient
+QuickbaseApiClient
 ----------------------
 
-.. autoclass:: quickbase_client.QuickBaseApiClient
+.. autoclass:: quickbase_client.QuickbaseApiClient
     :members:
     :undoc-members:
 
@@ -28,7 +28,7 @@ QuickBaseApiClient
 RequestFactory
 ----------------
 
-.. autoclass:: quickbase_client.client.request_factory.QuickBaseRequestFactory
+.. autoclass:: quickbase_client.client.request_factory.QuickbaseRequestFactory
     :members:
 
 

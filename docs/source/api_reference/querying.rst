@@ -1,17 +1,17 @@
 Querying
 ================
 
-.. automodule:: quickbase_client.orm
+.. automodule:: quickbase_client.query
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
 
-QueryBase
----------------
+Query Base Class
+-------------------
 
-.. autoclass:: quickbase_client.QuickBaseQuery
+.. autoclass:: quickbase_client.QuickbaseQuery
     :members:
     :undoc-members:
 
@@ -22,8 +22,6 @@ AST Query Building Methods
 --------------------------
 
 .. automodule:: quickbase_client.query.ast
-
-.. automodule:: quickbase_client.query
 
     .. py:function:: or_(*clauses)
 

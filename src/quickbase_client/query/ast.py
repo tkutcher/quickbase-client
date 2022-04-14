@@ -1,8 +1,9 @@
-"""This module includes functions which create :class:`~QuickBaseQuery` objects.
+"""This module includes functions which create :class:`~QuickbaseQuery` objects.
 
-These can be assembled in an AST-like fashion to build a complex query using higher-level
-english-readable functions rather than going through the query language (note you can always
-create a :class:`~QuickBaseQuery` and provide the where string to use that).
+These can be assembled in an AST-like fashion to build a complex query using
+higher-level english-readable functions rather than going through the query
+language (note you can always create a :class:`~QuickbaseQuery` and provide
+the ``where`` string to use that).
 
 Example:
 
@@ -16,11 +17,11 @@ Example:
     print(my_query.where) # ({'9'.EX.'_FID_1'}AND{'10'.OBF.'11-16-2020'})
 
 All of the methods (except the two conjunction ones), take a
-:class:`~QuickBaseField` and a value as a parameter. If you pass a `QuickBaseField`
+:class:`~QuickbaseField` and a value as a parameter. If you pass a `QuickbaseField`
 for the value, it will compare to the actual field (see above). But note if you pass
-an attribute of a QuickBaseTable class it would be the value in memory of that attribute.
+an attribute of a QuickbaseTable class it would be the value in memory of that attribute.
 If you want to compare to the actual field, use the schema property of the table or
-:meth:`quickbase_client.QuickBaseTable.get_field_info`.
+:meth:`quickbase_client.QuickbaseTable.get_field_info`.
 
 
 Note all of these methods are named with a trailing ``_`` to maintain consistency and
@@ -28,13 +29,13 @@ never clash with a python keyword or anything.
 """
 
 
-from quickbase_client.query.query_base import QuickBaseQuery
+from quickbase_client.query.query_base import QuickbaseQuery
 from quickbase_client.query.query_utils import make_query_string
 
 
 def qb_query_ast(func):
     def _wrap(*args, **kwargs):
-        return QuickBaseQuery(where=func(*args, **kwargs))
+        return QuickbaseQuery(where=func(*args, **kwargs))
 
     return _wrap
 

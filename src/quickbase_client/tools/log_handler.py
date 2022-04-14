@@ -3,7 +3,7 @@ import threading
 from collections import Callable
 from datetime import datetime
 
-from quickbase_client import QuickBaseTableClient
+from quickbase_client import QuickbaseTableClient
 
 _mock_record = logging.LogRecord(
     name="", level=0, pathname="", lineno=1, msg="", args=None, exc_info=None
@@ -20,7 +20,7 @@ class QuickbaseLogHandler(logging.Handler):
     your table you want to send logs to.
     """
 
-    def __init__(self, logs_table_client: QuickBaseTableClient):
+    def __init__(self, logs_table_client: QuickbaseTableClient):
         self.client = logs_table_client
 
         try:
@@ -36,7 +36,7 @@ class QuickbaseLogHandler(logging.Handler):
 
     @staticmethod
     def with_record_factory(
-        logs_table_client: QuickBaseTableClient, record_factory: Callable
+        logs_table_client: QuickbaseTableClient, record_factory: Callable
     ):
         class _CustomRecordFactoryHandler(QuickbaseLogHandler):
             def record_factory(self, record: logging.LogRecord):
@@ -46,12 +46,12 @@ class QuickbaseLogHandler(logging.Handler):
 
     def record_factory(self, record: logging.LogRecord):
         """
-        Create a :class:`~QuickBaseTable` record object given a LogRecord. By default, this
+        Create a :class:`~QuickbaseTable` record object given a LogRecord. By default, this
         assumes the associated table, under the handlers table client, has properties `when`,
         `level`, and `message`.
 
         :param record: The logging.LogRecord.
-        :return: A QuickBaseTable record object.
+        :return: A QuickbaseTable record object.
         """
         return self.client.table(
             when=datetime.utcnow(),

@@ -4,15 +4,15 @@ from typing import Type
 from typing import Union
 
 from quickbase_client import ResponsePager
-from quickbase_client.client.api import QuickBaseApiClient
-from quickbase_client.orm.field import QuickBaseField
-from quickbase_client.orm.report import QuickBaseReport
+from quickbase_client.client.api import QuickbaseApiClient
+from quickbase_client.orm.field import QuickbaseField
+from quickbase_client.orm.report import QuickbaseReport
 from quickbase_client.orm.serialize import RecordJsonSerializer
-from quickbase_client.orm.table import QuickBaseTable
-from quickbase_client.query.query_base import QuickBaseQuery
+from quickbase_client.orm.table import QuickbaseTable
+from quickbase_client.query.query_base import QuickbaseQuery
 
 
-class QuickBaseTableClient(object):
+class QuickbaseTableClient(object):
     """Class for making API calls relative to a specific QuickBase table.
 
     This includes making calls for the app in general.
@@ -24,13 +24,13 @@ class QuickBaseTableClient(object):
 
         Pagination is not handled in any of these methods (yet).
 
-    :ivar table: The underlying :class:`~QuickBaseTable`
-    :ivar api: The wrapped :class:`~QuickBaseApiClient`
+    :ivar table: The underlying :class:`~QuickbaseTable`
+    :ivar api: The wrapped :class:`~QuickbaseApiClient`
     """
 
     def __init__(
         self,
-        table: Type[QuickBaseTable],
+        table: Type[QuickbaseTable],
         user_token,
         agent="python",
         normalize_unicode=True,
@@ -47,7 +47,7 @@ class QuickBaseTableClient(object):
         self.serializer = RecordJsonSerializer(
             table_cls=self.table, normalize_unicode=normalize_unicode
         )
-        self.api = QuickBaseApiClient(user_token, table.realm_hostname(), agent=agent)
+        self.api = QuickbaseApiClient(user_token, table.realm_hostname(), agent=agent)
 
     @property
     def app_id(self):
@@ -85,15 +85,15 @@ class QuickBaseTableClient(object):
         """
         return self.api.get_fields_for_table(self.table_id)
 
-    def _get_field_id(self, field: Union[QuickBaseField, int]):
+    def _get_field_id(self, field: Union[QuickbaseField, int]):
         return field if isinstance(field, int) else field.fid
 
-    def get_field(self, field: Union[QuickBaseField, int]):
+    def get_field(self, field: Union[QuickbaseField, int]):
         """Get fields for a table.
 
         https://developer.quickbase.com/operation/getField
 
-        :param field: either the field ID or a :class:`~QuickBaseField`
+        :param field: either the field ID or a :class:`~QuickbaseField`
         """
         field_id = self._get_field_id(field)
         return self.api.get_field(field_id, self.table_id)
@@ -105,12 +105,12 @@ class QuickBaseTableClient(object):
         """
         return self.api.get_reports_for_table(self.table_id)
 
-    def _get_report_id(self, report: Union[QuickBaseReport, str, int]):
+    def _get_report_id(self, report: Union[QuickbaseReport, str, int]):
         return (
             report
             if isinstance(report, int)
             else report.report_id
-            if isinstance(report, QuickBaseReport)
+            if isinstance(report, QuickbaseReport)
             else self.table.get_report(report).report_id
         )
 
@@ -120,7 +120,7 @@ class QuickBaseTableClient(object):
         https://developer.quickbase.com/operation/getRepor
 
         :param report: Either the report name to lookup, the report id, or a
-            :class:`~QuickBaseReport` object.
+            :class:`~QuickbaseReport` object.
         """
         report_id = self._get_report_id(report)
         return self.api.get_report(report_id, self.table_id)
@@ -131,19 +131,19 @@ class QuickBaseTableClient(object):
         https://developer.quickbase.com/operation/runReport.
 
         :param report: Either the report name to lookup, the report id, or a
-            :class:`~QuickBaseReport` object.
+            :class:`~QuickbaseReport` object.
         """
         report_id = self._get_report_id(report)
         return self.api.run_report(report_id, self.table_id, skip=skip, top=top)
 
     def _encode_rec(self, rec):
         return (
-            self.serializer.serialize(rec) if isinstance(rec, QuickBaseTable) else rec
+            self.serializer.serialize(rec) if isinstance(rec, QuickbaseTable) else rec
         )
 
     def add_records(
         self,
-        recs: List[Union[QuickBaseTable, Any]],
+        recs: List[Union[QuickbaseTable, Any]],
         merge_field_id=None,
         fields_to_return=None,
     ):
@@ -152,7 +152,7 @@ class QuickBaseTableClient(object):
         https://developer.quickbase.com/operation/upsert
 
         :param recs: A list of items that are either the raw record data to post, or the
-            :class:`~QuickBaseTable` object/record.
+            :class:`~QuickbaseTable` object/record.
         :param merge_field_id: The list of fields to merge on.
         :param fields_to_return: The list of field ID's to return (default None which means all).
         """
@@ -169,7 +169,7 @@ class QuickBaseTableClient(object):
         return self.add_records([rec], *args, **kwargs)
 
     def query(
-        self, query_obj: QuickBaseQuery = None, raw=False, pager: ResponsePager = None
+        self, query_obj: QuickbaseQuery = None, raw=False, pager: ResponsePager = None
     ):
         """Do a query.
 
@@ -179,13 +179,13 @@ class QuickBaseTableClient(object):
 
         See :class:`~quickbase_client.ResponsePager` for handling pagination.
 
-        :param query_obj: The :class:`~QuickBaseQuery` object to use.
+        :param query_obj: The :class:`~QuickbaseQuery` object to use.
         :param raw: If true, returns a requests.Response, else the data is serialized to a table
             object.
         :param pager: A :class:`~ResponsePager` to handle making paginated requests.
         """
         pager = ResponsePager() if pager is None else pager
-        query_obj = QuickBaseQuery(where=None) if query_obj is None else query_obj
+        query_obj = QuickbaseQuery(where=None) if query_obj is None else query_obj
         options = pager.get_options()
         options = {**options, **(query_obj.options if query_obj.options else {})}
         data = self.api.query(
@@ -202,3 +202,6 @@ class QuickBaseTableClient(object):
             if raw
             else [self.serializer.deserialize(x) for x in data.json()["data"]]
         )
+
+
+QuickBaseTableClient = QuickbaseTableClient  # alias - TODO - delete in future

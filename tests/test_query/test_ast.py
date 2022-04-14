@@ -4,14 +4,14 @@ import pytest
 
 from quickbase_client.orm.field import QB_DATE
 from quickbase_client.orm.field import QB_TEXT
-from quickbase_client.orm.field import QuickBaseField
+from quickbase_client.orm.field import QuickbaseField
 from quickbase_client.query import ast
 from quickbase_client.query.ast import eq_
 from quickbase_client.query.ast import qb_query_ast
-from quickbase_client.query.query_base import QuickBaseQuery
+from quickbase_client.query.query_base import QuickbaseQuery
 
-mock_field = QuickBaseField(fid=18, field_type=QB_TEXT)
-mock_field_2 = QuickBaseField(fid=19, field_type=QB_DATE)
+mock_field = QuickbaseField(fid=18, field_type=QB_TEXT)
+mock_field_2 = QuickbaseField(fid=19, field_type=QB_DATE)
 
 
 class TestAstQueryBuilding:
@@ -21,7 +21,7 @@ class TestAstQueryBuilding:
             return "{'18'.EX.19}"
 
         x = foo()
-        assert isinstance(x, QuickBaseQuery)
+        assert isinstance(x, QuickbaseQuery)
         assert x.where == "{'18'.EX.19}"
 
     def test_makes_string(self):

@@ -17,22 +17,22 @@ By default, the class assumes the table has attributes for "when", "level", and 
 can supply a custom record factory via passing a function to `with_record_factory`, or
 by extending this class and overriding `record_factory`.
 
-For example, say you have a QuickBaseTable class called MyLog. You can create a class like so:
+For example, say you have a QuickbaseTable class called MyLog. You can create a class like so:
 
 .. code:: python
 
-    class InvocationLog(QuickBaseTable):
+    class InvocationLog(QuickbaseTable):
         __dbid__ = 'abcdef'
-        __app__ = QuickBaseApp(app_id='aaappp', name='APP', realm_hostname='foo.quickbase.com')
+        __app__ = QuickbaseApp(app_id='aaappp', name='APP', realm_hostname='foo.quickbase.com')
 
-        date_created = QuickBaseField(fid=1, field_type=Qb.DATETIME)
-        date_modified = QuickBaseField(fid=2, field_type=Qb.DATETIME)
-        recordid = QuickBaseField(fid=3, field_type=Qb.NUMERIC)
-        record_owner = QuickBaseField(fid=4, field_type=Qb.USER)
-        last_modified = QuickBaseField(fid=5, field_type=Qb.USER)
+        date_created = QuickbaseField(fid=1, field_type=Qb.DATETIME)
+        date_modified = QuickbaseField(fid=2, field_type=Qb.DATETIME)
+        recordid = QuickbaseField(fid=3, field_type=Qb.NUMERIC)
+        record_owner = QuickbaseField(fid=4, field_type=Qb.USER)
+        last_modified = QuickbaseField(fid=5, field_type=Qb.USER)
 
-        log_message = QuickBaseField(fid=6, field_type=Qb.TEXT)
-        logged_when = QuickBaseField(fid=7, field_type=Qb.DATETIME)
+        log_message = QuickbaseField(fid=6, field_type=Qb.TEXT)
+        logged_when = QuickbaseField(fid=7, field_type=Qb.DATETIME)
 
 
    class MyLogHandler(QuickbaseLogHandler):

@@ -3,7 +3,7 @@ from enum import Enum
 import attr
 
 
-class QuickBaseFieldType(Enum):
+class QuickbaseFieldType(Enum):
     """An Enumeration of Field Types.
 
     .. note::
@@ -36,60 +36,63 @@ class QuickBaseFieldType(Enum):
     OTHER = 900
 
 
-QB_TEXT = QuickBaseFieldType.TEXT
-QB_TEXT_MULTILINE = QuickBaseFieldType.TEXT_MULTILINE
-QB_TEXT_MULTIPLE_CHOICE = QuickBaseFieldType.TEXT_MULTIPLE_CHOICE
-QB_TEXT_MULTI_SELECT = QuickBaseFieldType.TEXT_MULTI_SELECT
-QB_RICH_TEXT = QuickBaseFieldType.RICH_TEXT
-QB_NUMERIC = QuickBaseFieldType.NUMERIC
-QB_NUMERIC_CURRENCY = QuickBaseFieldType.NUMERIC_CURRENCY
-QB_NUMERIC_PERCENT = QuickBaseFieldType.NUMERIC_PERCENT
-QB_NUMERIC_RATING = QuickBaseFieldType.NUMERIC_RATING
-QB_DATE = QuickBaseFieldType.DATE
-QB_DATETIME = QuickBaseFieldType.DATETIME
-QB_TIME_OF_DAY = QuickBaseFieldType.TIME_OF_DAY
-QB_DURATION = QuickBaseFieldType.DURATION
-QB_CHECKBOX = QuickBaseFieldType.CHECKBOX
-QB_ADDRESS = QuickBaseFieldType.ADDRESS
-QB_EMAIL_ADDRESS = QuickBaseFieldType.EMAIL_ADDRESS
-QB_USER = QuickBaseFieldType.USER
-QB_OTHER = QuickBaseFieldType.OTHER
+QuickBaseFieldType = QuickbaseFieldType  # alias - TODO - delete in future
+
+
+QB_TEXT = QuickbaseFieldType.TEXT
+QB_TEXT_MULTILINE = QuickbaseFieldType.TEXT_MULTILINE
+QB_TEXT_MULTIPLE_CHOICE = QuickbaseFieldType.TEXT_MULTIPLE_CHOICE
+QB_TEXT_MULTI_SELECT = QuickbaseFieldType.TEXT_MULTI_SELECT
+QB_RICH_TEXT = QuickbaseFieldType.RICH_TEXT
+QB_NUMERIC = QuickbaseFieldType.NUMERIC
+QB_NUMERIC_CURRENCY = QuickbaseFieldType.NUMERIC_CURRENCY
+QB_NUMERIC_PERCENT = QuickbaseFieldType.NUMERIC_PERCENT
+QB_NUMERIC_RATING = QuickbaseFieldType.NUMERIC_RATING
+QB_DATE = QuickbaseFieldType.DATE
+QB_DATETIME = QuickbaseFieldType.DATETIME
+QB_TIME_OF_DAY = QuickbaseFieldType.TIME_OF_DAY
+QB_DURATION = QuickbaseFieldType.DURATION
+QB_CHECKBOX = QuickbaseFieldType.CHECKBOX
+QB_ADDRESS = QuickbaseFieldType.ADDRESS
+QB_EMAIL_ADDRESS = QuickbaseFieldType.EMAIL_ADDRESS
+QB_USER = QuickbaseFieldType.USER
+QB_OTHER = QuickbaseFieldType.OTHER
 
 
 _qb_api_type_lookup = {
-    "text": QuickBaseFieldType.TEXT,
-    "text-multi-line": QuickBaseFieldType.TEXT_MULTILINE,
-    "multitext": QuickBaseFieldType.TEXT_MULTI_SELECT,
-    "checkbox": QuickBaseFieldType.CHECKBOX,
-    "timestamp": QuickBaseFieldType.DATETIME,
-    "numeric": QuickBaseFieldType.NUMERIC,
-    "currency": QuickBaseFieldType.NUMERIC_CURRENCY,
-    "percent": QuickBaseFieldType.NUMERIC_PERCENT,
-    "rating": QuickBaseFieldType.NUMERIC_RATING,
-    "duration": QuickBaseFieldType.DURATION,
-    "date": QuickBaseFieldType.DATE,
-    "timeofday": QuickBaseFieldType.TIME_OF_DAY,
-    "rich-text": QuickBaseFieldType.RICH_TEXT,
-    "text-multiple-choice": QuickBaseFieldType.TEXT_MULTIPLE_CHOICE,
+    "text": QuickbaseFieldType.TEXT,
+    "text-multi-line": QuickbaseFieldType.TEXT_MULTILINE,
+    "multitext": QuickbaseFieldType.TEXT_MULTI_SELECT,
+    "checkbox": QuickbaseFieldType.CHECKBOX,
+    "timestamp": QuickbaseFieldType.DATETIME,
+    "numeric": QuickbaseFieldType.NUMERIC,
+    "currency": QuickbaseFieldType.NUMERIC_CURRENCY,
+    "percent": QuickbaseFieldType.NUMERIC_PERCENT,
+    "rating": QuickbaseFieldType.NUMERIC_RATING,
+    "duration": QuickbaseFieldType.DURATION,
+    "date": QuickbaseFieldType.DATE,
+    "timeofday": QuickbaseFieldType.TIME_OF_DAY,
+    "rich-text": QuickbaseFieldType.RICH_TEXT,
+    "text-multiple-choice": QuickbaseFieldType.TEXT_MULTIPLE_CHOICE,
 }
 
 
 def get_field_type_by_string(s):
-    return _qb_api_type_lookup.get(s, QuickBaseFieldType.OTHER)
+    return _qb_api_type_lookup.get(s, QuickbaseFieldType.OTHER)
 
 
 @attr.s(auto_attribs=True)
-class QuickBaseField(object):
+class QuickbaseField(object):
     """The metadata for a specific field.
 
-    :ivar fid: The field id.
-    :ivar field_type: The :class:`~QuickBaseFieldType` of the field.
-    :ivar label: The label for the field.
-    :ivar formula: The QuickBase string formula.
+    :var int fid: The field id.
+    :ivar QuickbaseFieldType field_type: The :class:`~QuickbaseFieldType` of the field.
+    :ivar str label: The label for the field.
+    :ivar Optional[str] formula: The Quickbase string formula.
     """
 
     fid: int
-    field_type: QuickBaseFieldType
+    field_type: QuickbaseFieldType
     label: str = ""
     formula: str = None
 
@@ -99,3 +102,5 @@ class QuickBaseField(object):
 
 
 # FUTURE - could actually store more type-specific field metadata
+
+QuickBaseField = QuickbaseField  # alias - TODO - delete in future

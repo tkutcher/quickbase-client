@@ -1,19 +1,23 @@
-from quickbase_client.client.request_factory import QuickBaseRequestFactory
+from quickbase_client.client.request_factory import QuickbaseRequestFactory
 
 
 def make_payload(d):
     return {k: v for k, v in d.items() if v is not None}
 
 
-class QuickBaseApiClient(object):
+class QuickbaseApiClient(object):
     """The lower-level client to make API requests.
 
+    .. note::
+        Current alias of ``QuickBaseApiClient`` for backwards compatibility - will be
+        removed in version 1.0
+
     Use :meth:`~request` to make an arbitrary request that forwards to
-    :meth:`~QuickBaseRequestFactory.make_request`
+    :meth:`~QuickbaseRequestFactory.make_request`
     """
 
     def __init__(self, user_token, realm_hostname, agent="python", allow_deletes=False):
-        self.rf = QuickBaseRequestFactory(
+        self.rf = QuickbaseRequestFactory(
             user_token, realm_hostname, agent, allow_deletes=allow_deletes
         )
 
@@ -88,3 +92,6 @@ class QuickBaseApiClient(object):
                 }
             ),
         )
+
+
+QuickBaseApiClient = QuickbaseApiClient  # alias - TODO - delete in future

@@ -28,10 +28,10 @@ A High-Level QuickBase Python API Client & Model Generator
 |
 
 
-*QuickBase-Client is a library for interacting with QuickBase applications through their
+*Quickbase-Client is a library for interacting with Quickbase applications through their
 RESTful JSON API (https://developer.quickbase.com/). It has features to generate model classes
-for tables in your QuickBase app, and provides high level classes to interface between Python
-objects and the QuickBase tables.*
+for tables in your Quickbase app, and provides high level classes to interface between Python
+objects and the Quickbase tables.*
 
 |
 
@@ -58,8 +58,8 @@ running some handy scripts.
 Generating your Models
 ----------------------
 
-To interact and authenticate with your QuickBase applications you need a User Token. You can read
-the QuickBase documentation `here <https://developer.quickbase.com/auth>`_ on how to create one.
+To interact and authenticate with your Quickbase applications you need a User Token. You can read
+the Quickbase documentation `here <https://developer.quickbase.com/auth>`_ on how to create one.
 It is recommended to set an environment variable ``QB_USER_TOKEN`` with this value:
 
 .. code-block:: bash
@@ -67,7 +67,7 @@ It is recommended to set an environment variable ``QB_USER_TOKEN`` with this val
     export QB_USER_TOKEN=mytokenfromquickbase;
 
 
-Next, say you have a hypothetical QuickBase Application named MyApp at
+Next, say you have a hypothetical Quickbase Application named MyApp at
 ``https://foo.quickbase.com/db/abcdef`` that has tables for tracking things
 against a repository like Issues & Pipelines.
 
@@ -99,11 +99,11 @@ Would generate a directory structure like
 And classes like ``GitHubIssue`` where you can interact with the data model through a Python object.
 
 
-Writing Records to QuickBase
+Writing Records to Quickbase
 ----------------------------
 
-Classes like ``GitHubIssue`` that subclass ``QuickBaseTable`` also get a factory class-method
-``client(user_tok)`` which creates an instance of the higher-level ``QuickBaseTableClient`` to
+Classes like ``GitHubIssue`` that subclass ``QuickbaseTable`` also get a factory class-method
+``client(user_tok)`` which creates an instance of the higher-level ``QuickbaseTableClient`` to
 make API requests for things related to that table:
 
 .. code-block:: python
@@ -118,12 +118,12 @@ make API requests for things related to that table:
     print(response.json())  # all methods (except for query) return the requests Response object
 
 
-Querying Records from QuickBase
+Querying Records from Quickbase
 -------------------------------
 
-You can also use the client object to send queries to the QuickBase API through the ``query``
+You can also use the client object to send queries to the Quickbase API through the ``query``
 method. This method will serialize the data back in to a Python object. The `query` method on the
-table class takes a ``QuickBaseQuery`` object which is high level wrapper around the parameters
+table class takes a ``QuickbaseQuery`` object which is high level wrapper around the parameters
 needed to make a query.
 
 Notably, the ``where`` parameter for specifying the query string. There is one (and in the future
@@ -154,13 +154,13 @@ You can use the methods exposed in the ``quickbase_client.query`` module like so
 Controlling Lower-Level API Calls
 ---------------------------------
 
-Lastly, say you want to deal with just posting the specific json/data QuickBase is looking for.
-The ``QuickBaseTableClient`` object wraps the lower-level ``QuickBaseApiClient`` object which has
+Lastly, say you want to deal with just posting the specific json/data Quickbase is looking for.
+The ``QuickbaseTableClient`` object wraps the lower-level ``QuickbaseApiClient`` object which has
 methods for just sending the actual data (with an even lower-level utility
-``QuickBaseRequestFactory`` you could also use). These classes manage hanging on to the user token,
+``QuickbaseRequestFactory`` you could also use). These classes manage hanging on to the user token,
 and the realm hostname, etc. for each request that is made.
 
-For example, note the signature of ``query`` in ``QuickBaseApiClient``:
+For example, note the signature of ``query`` in ``QuickbaseApiClient``:
 
 .. code-block:: python
 
@@ -169,13 +169,13 @@ For example, note the signature of ``query`` in ``QuickBaseApiClient``:
 
 
 You can get to this class by going through the table client: ``api = client.api``, or from
-instantiating it directly ``api = QuickBaseApiClient(my_user_token, my_realm)``
+instantiating it directly ``api = QuickbaseApiClient(my_user_token, my_realm)``
 
 With this, we could make the exact same request as before:
 
 .. code-block:: python
 
-    api = QuickBaseApiClient(user_token='my_token', realm_hostname='foo.quickbase.com')
+    api = QuickbaseApiClient(user_token='my_token', realm_hostname='foo.quickbase.com')
     response = api.query(
         table_id='abcdef',
         where_str="({'9'.EX.'_FID_1'}AND{'10'.OBF.'11-16-2020'})")
@@ -189,3 +189,16 @@ More Resources
 - `examples </examples>`_ directory.
 - `CONTRIBUTING </CONTRIBUTING.md>`_
 - `LICENSE </LICENSE.md>`_
+
+Notes
+===============
+
+Naming
+-----------
+
+Currently a bunch of duplicate aliases for ``QuickBase`` to ``Quickbase`` since this
+was originally released with everything prefixed as ``QuickBase-``. But since Quickbase
+is branding more to "Quickbase", this will eventually be the main naming for
+version 1.0 in an effort to keep more consistent. So prefer to use `Quickbase-` prefixed classes
+as in the future the other aliases will be dropped.
+
