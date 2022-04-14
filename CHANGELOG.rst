@@ -7,7 +7,7 @@ CHANGELOG
 
 * Update development dependencies and better pytest practices for mocks/spies (`#54`_)
 * Rename ``QuickBase-`` class prefixes to ``Quickbase-`` and make aliases  (`#54`_)
-* Add Python 3.9 & 3.10 as tested python versions.
+* Switch to Git Flow branching model with a main branch (`#54`_)
 
 
 `0.4.0`_ (2021-6-30)
