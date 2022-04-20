@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "quickbase-client"
-version = "0.5.2"
+version = "0.5.3"
 description = "A Quickbase Python API Client Generator"
 authors = ["Tim Kutcher <tim@tkutcher.com>"]
 maintainers = ["Tim Kutcher <tim@tkutcher.com>"]
@@ -27,9 +27,9 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.7"
-requests = "^2.24.0"
+requests = "^2.27.1"
 stringcase = "^1.2.0"
-attrs = "^20.3.0"
+attrs = "^21.4.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.1"
