@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "quickbase-client"
-version = "0.5.3"
+version = "0.6.0"
 description = "A Quickbase Python API Client Generator"
 authors = ["Tim Kutcher <tim@tkutcher.com>"]
 maintainers = ["Tim Kutcher <tim@tkutcher.com>"]

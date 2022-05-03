@@ -39,6 +39,11 @@ class QuickbaseTableClient(object):
     :param normalize_unicode:
         Whether the JSON Serializer should normalize accented characters so that they
         can be encoded in Quickbase.
+
+    :param bool allow_deletes:
+        Whether the client should be allowed to perform delete requests. Defaulted to
+        False for now. But note that this is subject to change in 1.0 if there is a
+        different general preference.
     """
 
     def __init__(
@@ -47,14 +52,18 @@ class QuickbaseTableClient(object):
         user_token,
         agent="python",
         normalize_unicode=True,
-        default_select=None,
+        allow_deletes=False,
     ):
         self.table = table
         self.serializer = RecordJsonSerializer(
             table_cls=self.table, normalize_unicode=normalize_unicode
         )
-        self.api = QuickbaseApiClient(user_token, table.realm_hostname(), agent=agent)
-        self._default_select = default_select
+        self.api = QuickbaseApiClient(
+            user_token,
+            table.realm_hostname(),
+            agent=agent,
+            allow_deletes=allow_deletes,
+        )
 
     @property
     def app_id(self):

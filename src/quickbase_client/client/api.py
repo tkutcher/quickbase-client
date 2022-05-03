@@ -21,49 +21,49 @@ class QuickbaseApiClient(object):
     """
 
     def __init__(self, user_token, realm_hostname, agent="python", allow_deletes=False):
-        self.rf = QuickbaseRequestFactory(
+        self._rf = QuickbaseRequestFactory(
             user_token, realm_hostname, agent, allow_deletes=allow_deletes
         )
         self.legacy_api = QuickbaseLegacyApiClient(user_token, realm_hostname)
 
     def request(self, *args, **kwargs):
-        return self.rf.make_request(*args, **kwargs)
+        return self._rf.make_request(*args, **kwargs)
 
     # FUTURE - Can add more of these methods, even refactoring in to separate classes
     #   for each main endpoint. Initially just including some of the more common
     #   functions.
 
     def get_app(self, app_id):
-        return self.rf.get(f"/apps/{app_id}")
+        return self._rf.get(f"/apps/{app_id}")
 
     def get_tables_for_app(self, app_id):
-        return self.rf.get("/tables", params={"appId": app_id})
+        return self._rf.get("/tables", params={"appId": app_id})
 
     def get_table(self, app_id, table_id):
-        return self.rf.get(f"/tables/{table_id}", params={"appId": app_id})
+        return self._rf.get(f"/tables/{table_id}", params={"appId": app_id})
 
     def get_fields_for_table(self, table_id):
-        return self.rf.get("/fields", params={"tableId": table_id})
+        return self._rf.get("/fields", params={"tableId": table_id})
 
     def get_field(self, field_id, table_id):
-        return self.rf.get(f"/fields/{field_id}", params={"tableId": table_id})
+        return self._rf.get(f"/fields/{field_id}", params={"tableId": table_id})
 
     def get_reports_for_table(self, table_id):
-        return self.rf.get("/reports", params={"tableId": table_id})
+        return self._rf.get("/reports", params={"tableId": table_id})
 
     def get_report(self, report_id, table_id):
-        return self.rf.get(f"/reports/{report_id}", params={"tableId": table_id})
+        return self._rf.get(f"/reports/{report_id}", params={"tableId": table_id})
 
     def run_report(self, report_id, table_id, skip=None, top=None):
         payload = make_payload({"skip": skip, "top": top})
-        return self.rf.post(
+        return self._rf.post(
             f"/reports/{report_id}/run", params={"tableId": table_id}, data=payload
         )
 
     def add_records(
         self, table_id, data=None, merge_field_id=None, fields_to_return=None
     ):
-        return self.rf.post(
+        return self._rf.post(
             "/records",
             data=make_payload(
                 {
@@ -84,7 +84,7 @@ class QuickbaseApiClient(object):
         group_by=None,
         options=None,
     ):
-        return self.rf.post(
+        return self._rf.post(
             "/records/query",
             data=make_payload(
                 {

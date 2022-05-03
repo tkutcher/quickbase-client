@@ -44,7 +44,7 @@ class TestQuickbaseTableClient(object):
     )
     def test_request_includes_proper_headers(self, mocker, debugs_table, header, val):
         client = QuickbaseTableClient(debugs_table, user_token="myusertoken")
-        spy = mocker.spy(client.api.rf.session, "request")
+        spy = mocker.spy(client.api._rf.session, "request")
         client.get_table()
         args, kwargs = spy.call_args
         headers = kwargs["headers"]
@@ -56,7 +56,7 @@ class TestQuickbaseTableClient(object):
             "https://api.quickbase.com/v1/records", json={"blah": "bleh"}
         )
         client = QuickbaseTableClient(debugs_table, user_token="doesnotmatter")
-        spy = mocker.spy(client.api.rf.session, "request")
+        spy = mocker.spy(client.api._rf.session, "request")
         record = debugs_table(some_basic_text_field="hi", some_checkbox=False)
         client.add_record(record)
         args, kwargs = spy.call_args
@@ -69,7 +69,7 @@ class TestQuickbaseTableClient(object):
             "https://api.quickbase.com/v1/records", json={"blah": "bleh"}
         )
         client = QuickbaseTableClient(debugs_table, user_token="doesnotmatter")
-        spy = mocker.spy(client.api.rf.session, "request")
+        spy = mocker.spy(client.api._rf.session, "request")
         record = debugs_table(
             some_basic_text_field="hi", just_a_date=date(year=2020, month=2, day=7)
         )
@@ -80,7 +80,7 @@ class TestQuickbaseTableClient(object):
 
     def test_add_record_does_not_post_null_values(self, mocker, debugs_table):
         client = QuickbaseTableClient(debugs_table, user_token="doesnotmatter")
-        spy = mocker.spy(client.api.rf.session, "request")
+        spy = mocker.spy(client.api._rf.session, "request")
         record = debugs_table(some_basic_text_field="hi", some_checkbox=False)
         client.add_record(record)
         args, kwargs = spy.call_args
@@ -107,3 +107,11 @@ class TestQuickbaseTableClient(object):
         client.query(pager=pager)
         assert pager.total_records == 4
         assert not pager.more_remaining()
+
+    def test_wrapped_request_factory_forwards_allow_deletes(
+        self, debugs_table, qb_api_mock
+    ):
+        client = QuickbaseTableClient(debugs_table, user_token="doesnotmatter")
+        assert not client.api._rf.allow_deletes
+        client = QuickbaseTableClient(debugs_table, user_token="a", allow_deletes=True)
+        assert client.api._rf.allow_deletes

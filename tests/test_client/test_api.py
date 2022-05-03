@@ -12,14 +12,14 @@ class TestQuickbaseApiClient(object):
         client = QuickbaseApiClient(
             user_token="foo", realm_hostname="dicorp.quickbase.com"
         )
-        assert client.rf.user_token == "foo"
-        assert client.rf.realm_hostname == "dicorp.quickbase.com"
+        assert client._rf.user_token == "foo"
+        assert client._rf.realm_hostname == "dicorp.quickbase.com"
 
     def test_request_alias(self, mocker):
         client = QuickbaseApiClient(
             user_token="foo", realm_hostname="dicorp.quickbase.com"
         )
-        spy = mocker.spy(client.rf.session, "request")
+        spy = mocker.spy(client._rf.session, "request")
         client.request(method="POST", endpoint="/blah")
         _, kwargs = spy.call_args
         assert kwargs["method"] == "POST"
@@ -30,7 +30,7 @@ class TestQuickbaseApiClient(object):
         client = QuickBaseApiClient(
             user_token="foo", realm_hostname="dicorp.quickbase.com"
         )
-        spy = mocker.spy(client.rf.session, "request")
+        spy = mocker.spy(client._rf.session, "request")
         client.request(method="POST", endpoint="/blah")
         _, kwargs = spy.call_args
         assert kwargs["method"] == "POST"
@@ -39,7 +39,7 @@ class TestQuickbaseApiClient(object):
         client = QuickbaseApiClient(
             user_token="foo", realm_hostname="dicorp.quickbase.com"
         )
-        spy = mocker.spy(client.rf.session, "request")
+        spy = mocker.spy(client._rf.session, "request")
         client.query(table_id="aaaaaa", where_str="{'18'.EX.19}")
         _, kwargs = spy.call_args
         assert "{'18'.EX.19}" in json.dumps(kwargs["json"])

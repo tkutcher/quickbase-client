@@ -49,7 +49,7 @@ class TestLogHandler:
     def test_posts_log_record(self, mocker):
         client = _MyLogsTable.client("foo")
         handler = QuickbaseLogHandler(client)
-        spy = mocker.spy(client.api.rf.session, "request")
+        spy = mocker.spy(client.api._rf.session, "request")
         handler._do_emit(MOCK_LOG)
         _, k = spy.call_args
         fid = str(_MyLogsTable.schema.level.fid)
@@ -57,7 +57,7 @@ class TestLogHandler:
 
     def test_create_with_record_factory(self, mocker):
         client = _MyLogsTable.client("foo")
-        spy = mocker.spy(client.api.rf.session, "request")
+        spy = mocker.spy(client.api._rf.session, "request")
 
         def _mock_rf(record):
             return _MyLogsTable(message=record.msg)

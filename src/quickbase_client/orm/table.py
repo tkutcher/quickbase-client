@@ -113,14 +113,15 @@ class QuickbaseTable(metaclass=QuickbaseTableMeta):
         return cls.__fidmap__[fid]  # noqa
 
     @classmethod
-    def client(cls, user_token: str):
+    def client(cls, user_token: str, **kwargs):
         """Factory method to create a :class:`~QuickbaseTableClient` for this table.
 
         :param user_token: The user token for authentication.
+        :param kwargs: Forwarded to :class:`~QuickbaseTableClient`.
         """
         from quickbase_client.client.table_client import QuickbaseTableClient
 
-        return QuickbaseTableClient(cls, user_token)
+        return QuickbaseTableClient(cls, user_token, **kwargs)
 
 
 QuickBaseTable = QuickbaseTable  # alias - TODO - delete in future.

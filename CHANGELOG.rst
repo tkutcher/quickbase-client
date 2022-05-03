@@ -2,6 +2,14 @@
 CHANGELOG
 ==========
 
+`0.6.0`_ (2022-5-2)
+---------------------
+
+* Add ``allow_deletes`` option to ``QuickbaseTableClient`` (`#56`_)
+* Forward kwargs from ``QuickbaseTable.client`` to ``QuickbaseTableClient`` (`#56`_)
+* Make the ``rf`` prop of ``QuickbaseApiClient`` private as it is not really part of the API
+
+
 `0.5.2`_ (2022-4-14)
 ---------------------
 
@@ -74,6 +82,9 @@ CHANGELOG
 .. _`0.3.1`: https://github.com/tkutcher/quickbase-client/releases/tag/v0.3.1
 .. _`0.4.0`: https://github.com/tkutcher/quickbase-client/releases/tag/v0.4.0
 .. _`0.5.0`: https://github.com/tkutcher/quickbase-client/releases/tag/v0.5.0
+.. _`0.5.1`: https://github.com/tkutcher/quickbase-client/releases/tag/v0.5.1
+.. _`0.5.2`: https://github.com/tkutcher/quickbase-client/releases/tag/v0.5.2
+.. _`0.6.0`: https://github.com/tkutcher/quickbase-client/releases/tag/v0.6.0
 
 
 ..
@@ -91,6 +102,7 @@ CHANGELOG
 .. _`#52`: https://github.com/tkutcher/quickbase-client/issues/52
 .. _`#53`: https://github.com/tkutcher/quickbase-client/issues/53
 .. _`#54`: https://github.com/tkutcher/quickbase-client/issues/54
+.. _`#56`: https://github.com/tkutcher/quickbase-client/issues/56
 
 
 ..

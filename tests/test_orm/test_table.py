@@ -60,3 +60,7 @@ class TestQuickBaseTable:
     def test_make_client(self, example_table):
         c = example_table.client("foo")
         assert isinstance(c, QuickbaseTableClient)
+
+    def test_make_client_forwards_kwargs(self, example_table):
+        c = example_table.client("foo", agent="foo")
+        assert c.api._rf.agent == "foo"

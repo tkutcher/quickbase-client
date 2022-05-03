@@ -4,7 +4,7 @@ class QuickbaseQuery(object):
     .. note::
         Current alias of ``QuickbaseQuery`` for backwards compatibility.
 
-    :param str where: The where string, e.g. ``"{7.EX.'18'}"``
+    :param Optional[str] where: The where string, e.g. ``"{7.EX.'18'}"``
 
     :param dict options:
         Additional options to pass to the Quickbase runQuery endpoint.
