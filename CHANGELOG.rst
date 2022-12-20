@@ -2,6 +2,15 @@
 CHANGELOG
 ==========
 
+`0.6.1`_ (2022-12-20)
+---------------------
+
+Note - New features and better approaches will be coming soon!
+
+* Update dependencies from poetry.lock
+* Test on Python 3.9 and 3.10 distributions
+
+
 `0.6.0`_ (2022-5-2)
 ---------------------
 
@@ -85,6 +94,7 @@ CHANGELOG
 .. _`0.5.1`: https://github.com/tkutcher/quickbase-client/releases/tag/v0.5.1
 .. _`0.5.2`: https://github.com/tkutcher/quickbase-client/releases/tag/v0.5.2
 .. _`0.6.0`: https://github.com/tkutcher/quickbase-client/releases/tag/v0.6.0
+.. _`0.6.1`: https://github.com/tkutcher/quickbase-client/releases/tag/v0.6.1
 
 
 ..
