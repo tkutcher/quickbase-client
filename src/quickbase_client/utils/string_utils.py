@@ -16,8 +16,14 @@ _case_map = {
     "camel": VarMakerStrategy(stringcase.camelcase, ""),  # :(
 }
 
+
+def _drop_numbers_strategy(v: str):
+    dropped = v.lstrip(string.digits)
+    return f"x{v}" if len(dropped) == 0 else dropped
+
+
 _number_map = {
-    "drop": lambda v: v.lstrip(string.digits),
+    "drop": _drop_numbers_strategy,
     "underscore": lambda v: f"_{v}",
 }
 

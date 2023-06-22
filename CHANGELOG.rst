@@ -2,6 +2,12 @@
 CHANGELOG
 ==========
 
+`0.6.2`_ (2023-06-22)
+---------------------
+
+* Handle edge case in variable names that only contain numbers (`#62`_)
+
+
 `0.6.1`_ (2022-12-20)
 ---------------------
 
@@ -95,6 +101,7 @@ Note - New features and better approaches will be coming soon!
 .. _`0.5.2`: https://github.com/tkutcher/quickbase-client/releases/tag/v0.5.2
 .. _`0.6.0`: https://github.com/tkutcher/quickbase-client/releases/tag/v0.6.0
 .. _`0.6.1`: https://github.com/tkutcher/quickbase-client/releases/tag/v0.6.1
+.. _`0.6.2`: https://github.com/tkutcher/quickbase-client/releases/tag/v0.6.2
 
 
 ..
@@ -113,6 +120,7 @@ Note - New features and better approaches will be coming soon!
 .. _`#53`: https://github.com/tkutcher/quickbase-client/issues/53
 .. _`#54`: https://github.com/tkutcher/quickbase-client/issues/54
 .. _`#56`: https://github.com/tkutcher/quickbase-client/issues/56
+.. _`#62`: https://github.com/tkutcher/quickbase-client/issues/62
 
 
 ..

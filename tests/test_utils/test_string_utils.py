@@ -18,6 +18,14 @@ class TestMakeVarName:
         v = make_var_name("1bc", number_strategy="underscore")
         assert v == "_1bc"
 
+    def test_number_only_ident_is_not_empty(self):
+        v = make_var_name("1", number_strategy="drop")
+        assert v == "x1"
+
+    def test_number_only_ident_is_not_empty_multiple_digits(self):
+        v = make_var_name("123", number_strategy="drop")
+        assert v == "x123"
+
     def test_no_special_chars(self):
         v = make_var_name("abc-123")
         assert "-" not in v
