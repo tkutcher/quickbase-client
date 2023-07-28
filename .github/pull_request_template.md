@@ -3,7 +3,7 @@ Description of what this pull request adds.
 
 **Checklist:**
 
-- [ ] Submitting to `dev` branch
+- [ ] Submitting to `main` branch
 - [ ] pytest tests passing
 - [ ] Includes tests to cover the changes
 - [ ] flake8 passing

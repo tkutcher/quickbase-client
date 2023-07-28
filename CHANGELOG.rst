@@ -2,6 +2,14 @@
 CHANGELOG
 ==========
 
+`0.6.3`_ (2023-07-28)
+---------------------
+
+* Patch missing return statement in legacy API client (`#63`_)
+* Update docs to reflect GitHub flow model
+
+
+
 `0.6.2`_ (2023-06-22)
 ---------------------
 
@@ -102,6 +110,7 @@ Note - New features and better approaches will be coming soon!
 .. _`0.6.0`: https://github.com/tkutcher/quickbase-client/releases/tag/v0.6.0
 .. _`0.6.1`: https://github.com/tkutcher/quickbase-client/releases/tag/v0.6.1
 .. _`0.6.2`: https://github.com/tkutcher/quickbase-client/releases/tag/v0.6.2
+.. _`0.6.3`: https://github.com/tkutcher/quickbase-client/releases/tag/v0.6.3
 
 
 ..
@@ -121,6 +130,7 @@ Note - New features and better approaches will be coming soon!
 .. _`#54`: https://github.com/tkutcher/quickbase-client/issues/54
 .. _`#56`: https://github.com/tkutcher/quickbase-client/issues/56
 .. _`#62`: https://github.com/tkutcher/quickbase-client/issues/62
+.. _`#63`: https://github.com/tkutcher/quickbase-client/issues/63
 
 
 ..
@@ -128,5 +138,6 @@ Note - New features and better approaches will be coming soon!
 
 
 .. _`@mklaber`: https://github.com/mklaber
+.. _`@sanelson`: https://github.com/sanelson
 
 

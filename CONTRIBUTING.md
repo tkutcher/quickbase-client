@@ -5,7 +5,7 @@
 - This project uses poetry for dependency management
 - All features or bug requests should be tracked against a GitHub Issue and each commit should
 reference the relevant GitHub Issue(s) via `(#ID)`
-- Merge requests should be to the `dev` branch
+- Merge requests should be to the `main` branch after having switched to a GitHub-Flow model
   - Make sure updates have tests where applicable (maintain coverage)
   - Make sure tests and flake8 checks are passing
 
