@@ -68,7 +68,7 @@ class QuickbaseLegacyApiClient:
             "QUICKBASE-ACTION": quickbase_action,
         }
         url = f"https://{self.realm_hostname}/{endpoint.lstrip('/')}"
-        self.session.request(
+        return self.session.request(
             method=http_method,
             url=url,
             headers=headers,
