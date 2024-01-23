@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "quickbase-client"
-version = "0.6.3"
+version = "0.7.0"
 description = "A Quickbase Python API Client Generator"
 authors = ["Tim Kutcher <tim@tkutcher.com>"]
 maintainers = ["Tim Kutcher <tim@tkutcher.com>"]
@@ -13,10 +13,10 @@ keywords = ["quickbase", "client", "quickbase-api", "orm", "generator"]
 classifiers = [
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
     "Operating System :: OS Independent",
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers"
@@ -26,10 +26,10 @@ classifiers = [
 "Bug Tracker" = "https://github.com/tkutcher/quickbase-client/issues"
 
 [tool.poetry.dependencies]
-python = "^3.7"
-requests = "^2.27.1"
+python = "^3.8"
+requests = "^2.31.0"
 stringcase = "^1.2.0"
-attrs = "^21.4.0"
+attrs = "^23.2.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.1"
@@ -44,8 +44,8 @@ Sphinx = "^4.5.0"
 sphinx-rtd-theme = "^0.5.0"
 python-dotenv = "^0.15.0"
 six = "^1.15.0"
-pytest-mock = "^3.6.1"
-black = "^22.3.0"
+pytest-mock = "^3.12.0"
+black = "^23.12.0"
 
 [tool.poetry.scripts]
 qbc = 'quickbase_client.tools.qbc:main'
