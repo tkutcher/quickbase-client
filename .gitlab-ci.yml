@@ -1,9 +1,10 @@
 image: "python:3"
 
 before_script:
-  - curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
-  - PATH=$PATH:$HOME/.poetry/bin
-  - poetry config experimental.new-installer false
+  - curl -sSL https://install.python-poetry.org | POETRY_HOME=$PWD/.poetry python -
+  - export PATH=$PWD/.poetry/bin:$PATH
+  - poetry config --local cache-dir "$PWD/.poetry/cache"
+  - poetry config --local virtualenvs.in-project true
   - poetry install
 
 stages:
@@ -11,29 +12,47 @@ stages:
   - Test
 
 
-# Run flake8 using flake8-pytest to see results in GitLab
 lint:
   stage: Static Analysis
   allow_failure: true
   needs: []
   script:
-    - poetry run python -m pytest --flake8 src/ tests/ --junitxml=.xunit/flake8.xml
-  artifacts:
-    reports:
-      junit: .xunit/flake8.xml
+    - poetry run flake8
 
 
-# Run pytest tests in different environments using tox
-test:
+# Run pytest tests in Python 3.8
+test-py3.8:
+  image: "python:3.8"
   stage: Test
   needs: []
-  image: themattrix/tox
-  before_script:
-    - curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
-    - PATH=$PATH:$HOME/.poetry/bin
-    - poetry install
   script:
-    - tox
+    - poetry run pytest
+
+
+# Run pytest tests in Python 3.9
+test-py3.9:
+  image: "python:3.9"
+  stage: Test
+  needs: []
+  script:
+    - poetry run pytest
+
+
+# Run pytest tests in Python 3.10
+test-py3.10:
+  image: "python:3.10"
+  stage: Test
+  needs: []
+  script:
+    - poetry run pytest
+
+
+# Run pytest tests in Python 3.11
+test-py3.11:
+  image: "python:3.11"
+  stage: Test
+  needs: []
+  script:
     - poetry run pytest --cov
   artifacts:
     reports:

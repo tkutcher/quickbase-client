@@ -7,6 +7,7 @@ CHANGELOG
 
 * Update dependencies (`#66`_)
 * Drop "official" Python 3.7 support since most dependent libraries are starting to
+* Update repository scripts for latest dependencies, poetry installing, supported docker images for CI, etc.
 
 
 `0.6.3`_ (2023-07-28)
