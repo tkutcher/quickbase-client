@@ -134,7 +134,7 @@ class QuickbaseTableClient(object):
     def get_report(self, report):
         """Get report.
 
-        https://developer.quickbase.com/operation/getRepor
+        https://developer.quickbase.com/operation/getReport
 
         :param report: Either the report name to lookup, the report id, or a
             :class:`~QuickbaseReport` object.
@@ -145,7 +145,7 @@ class QuickbaseTableClient(object):
     def run_report(self, report, skip=None, top=None):
         """Run report.
 
-        https://developer.quickbase.com/operation/runReport.
+        https://developer.quickbase.com/operation/runReport
 
         :param report:
             Either the report name to lookup, the report id, or a
@@ -196,6 +196,15 @@ class QuickbaseTableClient(object):
     def add_record(self, rec, *args, **kwargs):
         """Aliased to :meth:`~add_records` making rec a list."""
         return self.add_records([rec], *args, **kwargs)
+
+    def delete_records(self, where_str: str):
+        """Delete records.
+
+        https://developer.quickbase.com/operation/deleteRecords
+
+        :param where_str: The string with the selector/query for records to delete.
+        """
+        return self.api.delete_records(table_id=self.table_id, where_str=where_str)
 
     def query(
         self, query_obj: QuickbaseQuery = None, raw=False, pager: ResponsePager = None

@@ -60,6 +60,11 @@ class QuickbaseApiClient(object):
             f"/reports/{report_id}/run", params={"tableId": table_id}, data=payload
         )
 
+    def delete_records(self, table_id: str, where_str: str):
+        return self._rf.delete(
+            "/records", data=make_payload({"from": table_id, "where": where_str})
+        )
+
     def add_records(
         self, table_id, data=None, merge_field_id=None, fields_to_return=None
     ):

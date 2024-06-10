@@ -2,6 +2,12 @@
 CHANGELOG
 ==========
 
+`0.8.0`_ (2024-06-10)
+---------------------
+
+* Include methods for deleteRecords
+
+
 `0.7.0`_ (2024-01-23)
 ---------------------
 
@@ -120,6 +126,7 @@ Note - New features and better approaches will be coming soon!
 .. _`0.6.2`: https://github.com/tkutcher/quickbase-client/releases/tag/v0.6.2
 .. _`0.6.3`: https://github.com/tkutcher/quickbase-client/releases/tag/v0.6.3
 .. _`0.7.0`: https://github.com/tkutcher/quickbase-client/releases/tag/v0.7.0
+.. _`0.8.0`: https://github.com/tkutcher/quickbase-client/releases/tag/v0.8.0
 
 
 ..
